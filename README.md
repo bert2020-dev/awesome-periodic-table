@@ -7,8 +7,9 @@ Open the HTML file. That's the whole install process.
 ![Overview](docs/screenshot-overview.svg)
 ![Search features](docs/screenshot-search-features.svg)
 
-> The two images above are illustrative diagrams built from the app's actual color palette and layout, not photographic screenshots — this repository doesn't have a browser available to capture real ones. Swap them for genuine screenshots whenever it's convenient (drop PNGs into `docs/` with the same file names).
+> The two images above are illustrative diagrams built from the app's actual color palette and layout (wil be replaced by screenshots soon)
 
+![Live Demo](awesome-periodic-tabl.html)
 ---
 
 ## What this is
@@ -63,7 +64,7 @@ Then try the things that aren't a single query:
 - **No persistence of anything except search history.** Temperature, selection, and comparison state reset on reload; only your query history survives (via localStorage, falling back to a cookie, falling back to memory-only for the session if both are blocked — e.g. some browsers restrict storage on `file://` pages).
 - **Superlatives and comparisons trust the bundled data.** A handful of properties for synthetic, extremely short-lived superheavy elements (thermal/electrical conductivity, density) are theoretical/predicted values, not measurements — this is noted in the data but easy to miss if you're skimming.
 - **No mobile-specific input handling beyond responsive CSS.** Mouse-mode right-click and hold-to-clear gestures both work with touch equivalents, but haven't been tested across every mobile browser.
-- **Not a substitute for a reference textbook.** It's a fast way to explore and cross-filter the periodic table, not a citable source for exact physical constants.
+- **Not a substitute for a reference textbook.** It's a fast way to explore and cross-filter the periodic table, not a citable source for exact physical constants. Meant for educational purposes.
 
 ## Project structure
 
