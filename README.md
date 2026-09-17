@@ -9,7 +9,7 @@ Open the HTML file. That's the whole install process.
 
 > The two images above are illustrative diagrams built from the app's actual color palette and layout (wil be replaced by screenshots soon)
 
-![Live Demo](awesome-periodic-tabl.html)
+![Live Demo](demo/packed_awesome-periodic-tabl.html)
 ---
 
 ## What this is
