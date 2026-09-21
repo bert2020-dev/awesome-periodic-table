@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const HERE=path.dirname(fileURLToPath(import.meta.url)),ROOT=path.resolve(HERE,'..');
+execFileSync(process.execPath,[path.join(HERE,'build.mjs'),'--mode=arcager','--adapter=mock'],{cwd:ROOT,stdio:'inherit'});
+const out=path.join(ROOT,'dist/mock/awesome-periodic-table.html');
+const html=fs.readFileSync(out,'utf8');
+if(!html.includes('function __APT_mockDecode'))throw new Error('Mock adapter runtime missing');
+if(!html.includes('function __APT_decodePipe'))throw new Error('Pipe decoder missing');
+if(!html.includes('__APT_mockDecode'))throw new Error('Mock payload decoder missing');
+console.log('Arcager adapter contract test passed (using explicit test-only mock, not Arcager itself).');

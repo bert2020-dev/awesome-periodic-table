@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+const HERE=path.dirname(fileURLToPath(import.meta.url)),ROOT=path.resolve(HERE,'..');
+execFileSync(process.execPath,[path.join(HERE,'build.mjs'),'--mode=plain'],{cwd:ROOT,stdio:'inherit'});
+const out=path.join(ROOT,'dist/plain/awesome-periodic-table.html');
+const html=fs.readFileSync(out,'utf8');
+if(!html.includes('<style>')||!html.includes('<script>'))throw new Error('Distribution must inline CSS and JS');
+if(html.includes('{{CSS}}')||html.includes('{{JS}}')||html.includes('{{GENERATED_DATA}}')||html.includes('__APP_VERSION__'))throw new Error('Unexpanded build token in distribution');
+if(/<script[^>]+src=/i.test(html)||/<link[^>]+href=/i.test(html))throw new Error('Distribution contains external runtime assets');
+if(!html.includes('__APT_decodePipe') || !html.includes('Hydrogen'))throw new Error('Distribution does not contain embedded compact element data');
+if(/fetch\([\"'](?:\.\/|\.\.\/|.*\.csv)/i.test(html))throw new Error('Distribution contains a runtime CSV fetch');
+console.log(`Single-file build check passed: ${path.basename(out)} (${Buffer.byteLength(html)} bytes)`);

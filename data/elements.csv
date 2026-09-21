@@ -1,0 +1,119 @@
+z,sym,name,latin,mass,cat,melt,boil,config,density,en,ie,sources,e0,tox,year,oxidation,halflife,discoverySource,discoveryCountry
+1,H,Hydrogen,Hydrogenium,1.008,nonmetal,13.99,20.271,1s¹,8.99e-05,2.2,1312,"Universe, water",0,Low,1766,1,0,Henry Cavendish,United Kingdom
+2,He,Helium,Helium,4.0026,noble,0.95,4.22,1s²,0.0001785,,2372,Natural gas,0,Very low,1895,0,0,Pierre Janssen,Sweden and United Kingdom
+3,Li,Lithium,Lithium,6.94,alkali,453.65,1603,[He] 2s¹,0.534,0.98,520,"Australia, Chile, China",-3.04,Moderate,1817,1,0,Johan August Arfwedson,Sweden
+4,Be,Beryllium,Beryllium,9.0122,alkaline,1560,2742,[He] 2s²,1.85,1.57,899,"USA, China",-1.85,Very high / Toxic,1798,2,0,Louis Nicolas Vauquelin,France
+5,B,Boron,Borum,10.81,metalloid,2349,4200,[He] 2s² 2p¹,2.34,2.04,801,"Turkey, USA",0,Moderate,1808,3,0,Gay-Lussac & Thénard,France and United Kingdom
+6,C,Carbon,Carbonium,12.011,nonmetal,3823,4098,[He] 2s² 2p²,2.267,2.55,1086,Worldwide,0,Low,,4,0,,
+7,N,Nitrogen,Nitrogenium,14.007,nonmetal,63.15,77.36,[He] 2s² 2p³,0.001251,3.04,1402,Air,0,Low,1772,-3,0,Daniel Rutherford,United Kingdom
+8,O,Oxygen,Oxygenium,15.999,nonmetal,54.36,90.2,[He] 2s² 2p⁴,0.001429,3.44,1314,"Air, oxides",1.23,Low,1774,-2,0,Carl Wilhelm Scheele,Sweden and United Kingdom
+9,F,Fluorine,Fluorum,18.998,halogen,53.53,85.03,[He] 2s² 2p⁵,0.001696,3.98,1681,"China, Mexico",2.87,Very high / Toxic,1886,-1,0,Henri Moissan,France
+10,Ne,Neon,Neon,20.18,noble,24.56,27.07,[He] 2s² 2p⁶,0.0009,,2081,Air,0,Very low,1898,0,0,Ramsay & Travers,United Kingdom
+11,Na,Sodium,Natrium,22.99,alkali,370.87,1156,[Ne] 3s¹,0.971,0.93,496,Salt worldwide,-2.71,Moderate,1807,1,0,Humphry Davy,United Kingdom
+12,Mg,Magnesium,Magnesium,24.305,alkaline,923,1363,[Ne] 3s²,1.738,1.31,738,"China, seawater",-2.37,Low,1755,2,0,Humphry Davy,United Kingdom
+13,Al,Aluminium,Aluminium,26.982,post-transition,933.47,2792,[Ne] 3s² 3p¹,2.7,1.61,577,"Australia, China, Guinea",-1.66,Low,1825,3,0,Hans Christian Ørsted,Denmark
+14,Si,Silicon,Silicium,28.085,metalloid,1687,3538,[Ne] 3s² 3p²,2.329,1.9,786,Quartz worldwide,0,Low,1824,4,0,Jöns Jacob Berzelius,Sweden
+15,P,Phosphorus,Phosphorus,30.974,nonmetal,317.3,550,[Ne] 3s² 3p³,1.82,2.19,1012,"China, Morocco",0,High,1669,-3,0,Hennig Brand,Germany
+16,S,Sulfur,Sulphur,32.06,nonmetal,388.36,717.8,[Ne] 3s² 3p⁴,2.067,2.58,1000,"China, USA, Canada",0,Moderate,,-2,0,Antoine Lavoisier,
+17,Cl,Chlorine,Chlorum,35.45,halogen,171.6,239.11,[Ne] 3s² 3p⁵,0.003214,3.16,1251,"Seawater, salt",1.36,Very high / Toxic,1774,-1,0,Carl Wilhelm Scheele,Sweden
+18,Ar,Argon,Argon,39.948,noble,83.81,87.3,[Ne] 3s² 3p⁶,0.001784,,1520,Air,0,Very low,1894,0,0,Rayleigh & Ramsay,United Kingdom
+19,K,Potassium,Kalium,39.098,alkali,336.53,1032,[Ar] 4s¹,0.862,0.82,419,"Canada, Russia, Belarus",-2.93,Moderate,1807,1,0,Humphry Davy,United Kingdom
+20,Ca,Calcium,Calcium,40.078,alkaline,1115,1757,[Ar] 4s²,1.54,1,590,Limestone worldwide,-2.87,Low,1808,2,0,Humphry Davy,United Kingdom
+21,Sc,Scandium,Scandium,44.956,transition,1814,3109,[Ar] 3d¹ 4s²,2.985,1.36,633,"China, Russia",-2.08,Moderate,1879,3,0,Lars Fredrik Nilson,Sweden
+22,Ti,Titanium,Titanium,47.867,transition,1941,3560,[Ar] 3d² 4s²,4.506,1.54,658,"Australia, South Africa, China",-1.63,Low,1791,4,0,William Gregor,United Kingdom
+23,V,Vanadium,Vanadium,50.942,transition,2183,3680,[Ar] 3d³ 4s²,6.11,1.63,650,"China, Russia, South Africa",-1.18,Moderate,1801,5,0,Andrés Manuel del Río,Mexico and Sweden
+24,Cr,Chromium,Chromium,51.996,transition,2180,2944,[Ar] 3d⁵ 4s¹,7.15,1.66,653,"South Africa, Kazakhstan",-0.74,Moderate,1797,3,0,Louis Nicolas Vauquelin,France
+25,Mn,Manganese,Manganum,54.938,transition,1519,2334,[Ar] 3d⁵ 4s²,7.47,1.55,717,"South Africa, Australia, Gabon",-1.18,Moderate,1774,2,0,Johan Gottlieb Gahn,Sweden
+26,Fe,Iron,Ferrum,55.845,transition,1811,3134,[Ar] 3d⁶ 4s²,7.874,1.83,762,"Australia, Brazil, China",-0.44,Low,,3,0,,
+27,Co,Cobalt,Cobaltum,58.933,transition,1768,3200,[Ar] 3d⁷ 4s²,8.9,1.88,760,"DR Congo, Russia, Australia",-0.28,Moderate,1735,2,0,Georg Brandt,Sweden
+28,Ni,Nickel,Niccolum,58.693,transition,1728,3186,[Ar] 3d⁸ 4s²,8.912,1.91,737,"Indonesia, Philippines, Russia",-0.25,Moderate,1751,2,0,Axel Fredrik Cronstedt,Sweden
+29,Cu,Copper,Cuprum,63.546,transition,1357.77,2835,[Ar] 3d¹⁰ 4s¹,8.96,1.9,745,"Chile, Peru, China",0.34,Moderate,,2,0,,
+30,Zn,Zinc,Zincum,65.38,transition,692.68,1180,[Ar] 3d¹⁰ 4s²,7.134,1.65,906,"China, Australia, Peru",-0.76,Moderate,1746,2,0,Andreas Marggraf,Germany
+31,Ga,Gallium,Gallium,69.723,post-transition,302.91,2673,[Ar] 3d¹⁰ 4s² 4p¹,5.91,1.81,579,"China, Germany, Kazakhstan",-0.53,Moderate,1875,3,0,Paul-Émile Lecoq de Boisbaudran,France
+32,Ge,Germanium,Germanium,72.63,metalloid,1211.4,3106,[Ar] 3d¹⁰ 4s² 4p²,5.323,2.01,762,"China, Russia",0,Moderate,1886,4,0,Clemens Winkler,Germany
+33,As,Arsenic,Arsenicum,74.922,metalloid,1090,887,[Ar] 3d¹⁰ 4s² 4p³,5.727,2.18,947,"China, Morocco",0,Very high / Toxic,1250,-3,0,Albertus Magnus,
+34,Se,Selenium,Selenium,78.971,nonmetal,494,958,[Ar] 3d¹⁰ 4s² 4p⁴,4.81,2.55,941,"China, Japan, Belgium",0,High,1817,-2,0,Jöns Jacob Berzelius,Sweden
+35,Br,Bromine,Bromum,79.904,halogen,265.8,332,[Ar] 3d¹⁰ 4s² 4p⁵,3.122,2.96,1140,"USA, Israel, China",1.07,Very high / Toxic,1826,-1,0,Antoine Balard,France
+36,Kr,Krypton,Krypton,83.798,noble,115.79,119.93,[Ar] 3d¹⁰ 4s² 4p⁶,0.003733,3,1351,Air,0,Very low,1898,0,0,Ramsay & Travers,United Kingdom
+37,Rb,Rubidium,Rubidium,85.468,alkali,312.46,961,[Kr] 5s¹,1.532,0.82,403,"Canada, Zimbabwe",-2.98,Moderate,1861,1,0,Bunsen & Kirchhoff,Germany
+38,Sr,Strontium,Strontium,87.62,alkaline,1050,1655,[Kr] 5s²,2.64,0.95,549,"China, Spain, Mexico",-2.89,Moderate,1790,2,0,Adair Crawford,United Kingdom
+39,Y,Yttrium,Yttrium,88.906,transition,1799,3609,[Kr] 4d¹ 5s²,4.47,1.22,600,"China, Australia",-2.37,Moderate,1794,3,0,Johan Gadolin,Finland
+40,Zr,Zirconium,Zirconium,91.224,transition,2128,4682,[Kr] 4d² 5s²,6.52,1.33,640,"Australia, South Africa",-1.45,Low,1789,4,0,Martin Heinrich Klaproth,Germany
+41,Nb,Niobium,Niobium,92.906,transition,2750,5017,[Kr] 4d⁴ 5s¹,8.57,1.6,652,"Brazil, Canada",-1.1,Low,1801,5,0,Charles Hatchett,United Kingdom
+42,Mo,Molybdenum,Molybdenum,95.95,transition,2896,4912,[Kr] 4d⁵ 5s¹,10.28,2.16,684,"China, USA, Chile",-0.2,Moderate,1778,6,0,Carl Wilhelm Scheele,Sweden
+43,Tc,Technetium,Technetium,98,transition,2430,4538,[Kr] 4d⁵ 5s²,11.5,1.9,702,Nuclear reactors,0,—,1937,7,132500000000000,Segrè & Perrier,Italy
+44,Ru,Ruthenium,Ruthenium,101.07,transition,2607,4423,[Kr] 4d⁷ 5s¹,12.37,2.2,710,"South Africa, Russia",0.46,Moderate,1844,4,0,Karl Klaus,Russia
+45,Rh,Rhodium,Rhodium,102.91,transition,2237,3968,[Kr] 4d⁸ 5s¹,12.45,2.28,720,"South Africa, Russia",0.76,Moderate,1803,3,0,William Hyde Wollaston,United Kingdom
+46,Pd,Palladium,Palladium,106.42,transition,1828.05,3236,[Kr] 4d¹⁰,12.02,2.2,804,"Russia, South Africa",0.92,Moderate,1803,2,0,William Hyde Wollaston,United Kingdom
+47,Ag,Silver,Argentum,107.87,transition,1234.93,2435,[Kr] 4d¹⁰ 5s¹,10.49,1.93,731,"Mexico, China, Peru",0.8,Low,,1,0,,
+48,Cd,Cadmium,Cadmium,112.41,transition,594.22,1040,[Kr] 4d¹⁰ 5s²,8.65,1.69,867,"China, South Korea",-0.4,Very high / Toxic,1817,2,0,Friedrich Stromeyer,Germany
+49,In,Indium,Indium,114.82,post-transition,429.75,2345,[Kr] 4d¹⁰ 5s² 5p¹,7.31,1.78,558,"China, South Korea",-0.34,Moderate,1863,3,0,Reich & Richter,Germany
+50,Sn,Tin,Stannum,118.71,post-transition,505.08,2875,[Kr] 4d¹⁰ 5s² 5p²,7.287,1.96,709,"China, Indonesia, Myanmar",-0.14,Low,,4,0,,
+51,Sb,Antimony,Stibium,121.76,metalloid,903.78,1860,[Kr] 4d¹⁰ 5s² 5p³,6.697,2.05,834,"China, Russia",0,High,,-3,0,,
+52,Te,Tellurium,Tellurium,127.6,metalloid,722.66,1261,[Kr] 4d¹⁰ 5s² 5p⁴,6.24,2.1,869,"China, Japan",0,High,1782,-2,0,Martin Heinrich Klaproth,Romania
+53,I,Iodine,Iodum,126.9,halogen,386.85,457.4,[Kr] 4d¹⁰ 5s² 5p⁵,4.933,2.66,1008,"Chile, Japan",0.54,High,1811,-1,0,Bernard Courtois,France
+54,Xe,Xenon,Xenon,131.29,noble,161.4,165.1,[Kr] 4d¹⁰ 5s² 5p⁶,0.005887,2.6,1170,Air,0,Very low,1898,0,0,Janssen & Lockyer,United Kingdom
+55,Cs,Caesium,Caesium,132.91,alkali,301.59,944,[Xe] 6s¹,1.93,0.79,376,"Canada, Zimbabwe",-2.92,Moderate,1860,1,0,Bunsen & Kirchhoff,Germany
+56,Ba,Barium,Barium,137.33,alkaline,1000,2170,[Xe] 6s²,3.51,0.89,503,"China, India",-2.91,Moderate,1808,2,0,Humphry Davy,United Kingdom
+57,La,Lanthanum,Lanthanum,138.91,lanthanide,1193,3737,[Xe] 5d¹ 6s²,6.15,1.1,538,"China, Australia",-2.38,Moderate,1839,3,0,Carl Gustaf Mosander,Sweden
+58,Ce,Cerium,Cerium,140.12,lanthanide,1068,3716,[Xe] 4f¹ 5d¹ 6s²,6.77,1.12,534,"China, Australia",-2.34,Moderate,1803,3,0,"Klaproth, Berzelius & Hisinger",Germany and Sweden
+59,Pr,Praseodymium,Praseodymium,140.91,lanthanide,1208,3793,[Xe] 4f³ 6s²,6.77,1.13,527,China,-2.35,Moderate,1885,3,0,Carl Gustaf Mosander,Austria
+60,Nd,Neodymium,Neodymium,144.24,lanthanide,1297,3347,[Xe] 4f⁴ 6s²,7.01,1.14,533,"China, Australia",-2.32,Moderate,1885,3,0,Carl Gustaf Mosander,Austria
+61,Pm,Promethium,Promethium,145,lanthanide,1315,3273,[Xe] 4f⁵ 6s²,7.26,,540,Nuclear,0,—,1945,3,558600000,Marguerite Perey,United States
+62,Sm,Samarium,Samarium,150.36,lanthanide,1345,2067,[Xe] 4f⁶ 6s²,7.52,1.17,545,China,-2.3,Moderate,1879,3,0,Lecoq de Boisbaudran,France
+63,Eu,Europium,Europium,151.96,lanthanide,1099,1802,[Xe] 4f⁷ 6s²,5.24,1.2,547,China,-1.99,Moderate,1901,3,0,Eugène-Anatole Demarçay,France
+64,Gd,Gadolinium,Gadolinium,157.25,lanthanide,1585,3546,[Xe] 4f⁷ 5d¹ 6s²,7.9,1.2,593,China,-2.28,Moderate,1880,3,0,Jean Charles de Marignac,Switzerland
+65,Tb,Terbium,Terbium,158.93,lanthanide,1629,3503,[Xe] 4f⁹ 6s²,8.23,1.1,565,China,-2.31,Moderate,1843,3,0,Carl Gustaf Mosander,Sweden
+66,Dy,Dysprosium,Dysprosium,162.5,lanthanide,1680,2840,[Xe] 4f¹⁰ 6s²,8.55,1.22,573,China,-2.29,Moderate,1886,3,0,Lecoq de Boisbaudran,France
+67,Ho,Holmium,Holmium,164.93,lanthanide,1734,2993,[Xe] 4f¹¹ 6s²,8.8,1.23,581,China,-2.33,Moderate,1878,3,0,Per Teodor Cleve,Switzerland
+68,Er,Erbium,Erbium,167.26,lanthanide,1802,3141,[Xe] 4f¹² 6s²,9.07,1.24,589,China,-2.32,Moderate,1843,3,0,Carl Gustaf Mosander,Sweden
+69,Tm,Thulium,Thulium,168.93,lanthanide,1818,2223,[Xe] 4f¹³ 6s²,9.32,1.25,597,China,-2.32,Moderate,1879,3,0,Per Teodor Cleve,Sweden
+70,Yb,Ytterbium,Ytterbium,173.05,lanthanide,1097,1469,[Xe] 4f¹⁴ 6s²,6.9,1.1,603,China,-2.22,Moderate,1878,3,0,Jean Charles de Marignac,Switzerland
+71,Lu,Lutetium,Lutetium,174.97,lanthanide,1925,3675,[Xe] 4f¹⁴ 5d¹ 6s²,9.84,1.27,524,China,-2.28,Moderate,1907,3,0,Georges Urbain,France and Germany
+72,Hf,Hafnium,Hafnium,178.49,transition,2506,4876,[Xe] 4f¹⁴ 5d² 6s²,13.31,1.3,659,"Australia, South Africa",-1.55,Low,1923,4,0,Coster & de Hevesy,Denmark
+73,Ta,Tantalum,Tantalum,180.95,transition,3290,5731,[Xe] 4f¹⁴ 5d³ 6s²,16.65,1.5,761,"Rwanda, DR Congo, Brazil",-0.6,Low,1802,5,0,Anders Gustaf Ekeberg,Sweden
+74,W,Tungsten,Wolframium,183.84,transition,3695,6203,[Xe] 4f¹⁴ 5d⁴ 6s²,19.25,2.36,770,"China, Vietnam, Russia",0.1,Low,1783,6,0,Elhuyar brothers,Spain
+75,Re,Rhenium,Rhenium,186.21,transition,3459,5869,[Xe] 4f¹⁴ 5d⁵ 6s²,21.02,1.9,760,"Chile, USA, Poland",0.3,Moderate,1925,7,0,"Noddack, Tacke & Berg",Germany
+76,Os,Osmium,Osmium,190.23,transition,3306,5285,[Xe] 4f¹⁴ 5d⁶ 6s²,22.59,2.2,840,"South Africa, Russia",0.85,High,1803,4,0,Smithson Tennant,United Kingdom
+77,Ir,Iridium,Iridium,192.22,transition,2719,4701,[Xe] 4f¹⁴ 5d⁷ 6s²,22.56,2.2,880,"South Africa, Russia",1.16,Moderate,1803,3,0,Smithson Tennant,France and United Kingdom
+78,Pt,Platinum,Platinum,195.08,transition,2041.4,4098,[Xe] 4f¹⁴ 5d⁹ 6s¹,21.45,2.28,870,"South Africa, Russia",1.18,Low,1735,2,0,William Hyde Wollaston,Peru
+79,Au,Gold,Aurum,196.97,transition,1337.33,3129,[Xe] 4f¹⁴ 5d¹⁰ 6s¹,19.3,2.54,890,"China, Australia, Russia",1.5,Low,,3,0,,
+80,Hg,Mercury,Hydrargyrum,200.59,transition,234.32,629.88,[Xe] 4f¹⁴ 5d¹⁰ 6s²,13.534,2,1007,"China, Kyrgyzstan, Mexico",0.85,Very high / Toxic,,2,0,,
+81,Tl,Thallium,Thallium,204.38,post-transition,577,1746,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹,11.85,1.62,589,"China, Kazakhstan",-0.34,Very high / Toxic,1861,1,0,William Crookes,United Kingdom
+82,Pb,Lead,Plumbum,207.2,post-transition,600.61,2022,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²,11.34,2.33,716,"China, Australia, USA",-0.13,Very high / Toxic,,2,0,,
+83,Bi,Bismuth,Bismuthum,208.98,post-transition,544.7,1837,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³,9.78,2.02,703,"China, Vietnam, Mexico",0.31,Moderate,1753,3,0,,
+84,Po,Polonium,Polonium,209,post-transition,527,1235,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴,9.2,2,812,Nuclear,0,—,1898,4,3913000000,Marie & Pierre Curie,France
+85,At,Astatine,Astatium,210,halogen,575,610,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵,,2.2,920,Nuclear,0,—,1940,-1,29160,"Corson, MacKenzie & Segrè",United States
+86,Rn,Radon,Radon,222,noble,202,211.5,[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶,0.00973,,1037,Uranium decay,0,—,1900,0,330350,Friedrich Ernst Dorn,Germany
+87,Fr,Francium,Francium,223,alkali,300,950,[Rn] 7s¹,,0.7,380,Nuclear,0,—,1939,1,1320,Marguerite Perey,France
+88,Ra,Radium,Radium,226,alkaline,973,2010,[Rn] 7s²,5.5,0.9,509,Uranium ores,-2.92,—,1898,2,50490000000,Marie & Pierre Curie,France
+89,Ac,Actinium,Actinium,227,actinide,1323,3471,[Rn] 6d¹ 7s²,10.07,1.1,499,Uranium ores,-2.2,—,1899,3,687000000,Friedrich Oskar Giesel,France
+90,Th,Thorium,Thorium,232.04,actinide,2115,5061,[Rn] 6d² 7s²,11.72,1.3,587,"India, Brazil, Australia",-1.9,—,1828,4,443400000000000000,Jöns Jacob Berzelius,Sweden
+91,Pa,Protactinium,Protactinium,231.04,actinide,1841,4300,[Rn] 5f² 6d¹ 7s²,15.37,1.5,568,Uranium ores,0,—,1913,5,1034000000000,Fajans & Göhring,Germany and United Kingdom
+92,U,Uranium,Uranium,238.03,actinide,1405.3,4404,[Rn] 5f³ 6d¹ 7s²,19.1,1.38,598,"Kazakhstan, Canada, Australia",-1.66,—,1789,6,141000000000000000,Martin Heinrich Klaproth,Germany
+93,Np,Neptunium,Neptunium,237,actinide,912,4447,[Rn] 5f⁴ 6d¹ 7s²,20.25,1.36,604,Nuclear reactors,0,—,1940,5,67660000000000,McMillan & Abelson,United States
+94,Pu,Plutonium,Plutonium,244,actinide,912.5,3505,[Rn] 5f⁶ 7s²,19.84,1.28,584,Nuclear reactors,0,—,1940,4,2550000000000000,Glenn T. Seaborg team,United States
+95,Am,Americium,Americium,243,actinide,1449,2880,[Rn] 5f⁷ 7s²,13.67,1.3,578,Nuclear,0,—,1944,3,232600000000,Glenn T. Seaborg team,United States
+96,Cm,Curium,Curium,247,actinide,1613,3383,[Rn] 5f⁷ 6d¹ 7s²,13.51,1.3,581,Nuclear,0,—,1944,3,492300000000000,Glenn T. Seaborg team,United States
+97,Bk,Berkelium,Berkelium,247,actinide,1259,2900,[Rn] 5f⁹ 7s²,14.78,1.3,601,Nuclear,0,—,1949,3,43550000000,"Thompson, Ghiorso & Seaborg",United States
+98,Cf,Californium,Californium,251,actinide,1173,1743,[Rn] 5f¹⁰ 7s²,15.1,1.3,608,Nuclear,0,—,1950,3,28340000000,"Thompson, Street, Ghiorso & Seaborg",United States
+99,Es,Einsteinium,Einsteinium,252,actinide,1133,1269,[Rn] 5f¹¹ 7s²,8.84,1.3,619,Nuclear,0,—,1952,3,40760000,"Thompson, Ghiorso & Seaborg",United States
+100,Fm,Fermium,Fermium,257,actinide,1800,2100,[Rn] 5f¹² 7s²,,1.3,627,Nuclear,0,—,1952,3,8683000,"Ghiorso, Thompson & Seaborg",United States
+101,Md,Mendelevium,Mendelevium,258,actinide,1100,1500,[Rn] 5f¹³ 7s²,,1.3,635,Nuclear,0,—,1955,3,4450000,Lawrence Berkeley team,United States
+102,No,Nobelium,Nobelium,259,actinide,1100,1500,[Rn] 5f¹⁴ 7s²,,1.3,642,Nuclear,0,—,1958,2,3480,JINR team,Sweden and United States
+103,Lr,Lawrencium,Lawrencium,266,actinide,1900,2400,[Rn] 5f¹⁴ 7s² 7p¹,,1.3,470,Nuclear,0,—,1961,3,39600,Lawrence Berkeley team,United States
+104,Rf,Rutherfordium,Rutherfordium,267,transition,2400,5800,[Rn] 5f¹⁴ 6d² 7s²,23.2,,580,Particle accelerators,0,—,1964,4,4680,JINR / LLNL teams,Russia and United States
+105,Db,Dubnium,Dubnium,268,transition,2400,5800,[Rn] 5f¹⁴ 6d³ 7s²,29.3,,665,Accelerators,0,—,1968,5,100800,JINR / LLNL teams,Russia and United States
+106,Sg,Seaborgium,Seaborgium,269,transition,2400,4800,[Rn] 5f¹⁴ 6d⁴ 7s²,35,,757,Accelerators,0,—,1974,6,300,JINR / LLNL teams,United States
+107,Bh,Bohrium,Bohrium,270,transition,2400,4800,[Rn] 5f¹⁴ 6d⁵ 7s²,37.1,,740,Accelerators,0,—,1976,7,60,GSI team,Germany
+108,Hs,Hassium,Hassium,269,transition,2400,4800,[Rn] 5f¹⁴ 6d⁶ 7s²,40.7,,730,Accelerators,0,—,1984,8,16,GSI team,Germany
+109,Mt,Meitnerium,Meitnerium,278,unknown,2400,4800,[Rn] 5f¹⁴ 6d⁷ 7s²,37.4,,800,Accelerators,0,—,1982,3,8,GSI team,Germany
+110,Ds,Darmstadtium,Darmstadtium,281,unknown,2400,4000,[Rn] 5f¹⁴ 6d⁸ 7s²,34.8,,960,Accelerators,0,—,1994,4,11,GSI team,Germany
+111,Rg,Roentgenium,Roentgenium,282,unknown,2400,3600,[Rn] 5f¹⁴ 6d⁹ 7s²,28.7,,1020,Accelerators,0,—,1994,3,100,GSI team,Germany
+112,Cn,Copernicium,Copernicium,285,transition,283,340,[Rn] 5f¹⁴ 6d¹⁰ 7s²,14,,1155,Accelerators,0,—,1996,2,28,GSI team,Germany
+113,Nh,Nihonium,Nihonium,286,unknown,700,1400,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹,16,,707.2,Accelerators,0,—,2003,1,8,RIKEN team,Japan
+114,Fl,Flerovium,Flerovium,289,post-transition,340,420,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²,14,,832.2,Accelerators,0,—,1998,2,2,JINR / LLNL teams,Russia
+115,Mc,Moscovium,Moscovium,290,unknown,700,1400,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³,13.5,,538.3,Accelerators,0,—,2003,1,0.65,JINR / LLNL teams,Russia and United States
+116,Lv,Livermorium,Livermorium,293,unknown,700,1100,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴,12.9,,663.9,Accelerators,0,—,2000,2,0.06,JINR / LLNL teams,Russia
+117,Ts,Tennessine,Tennessine,294,unknown,700,800,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵,7.2,,736.9,Accelerators,0,—,2010,-1,0.051,JINR / LLNL / ORNL teams,United States
+118,Og,Oganesson,Oganesson,294,unknown,325,450,[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶,5,,860.1,Accelerators,0,—,2002,0,0.0007,JINR / LLNL teams,Russia and United States
