@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1120">
+<title>Awesome Periodic Table</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="csv" href="data/elements.csv">
+<link rel="csv" href="data/element-extra.csv">
+<link rel="csv" href="data/lookups.csv">
+</head>
+<body>
+<header><h1>⚛ Awesome Periodic Table</h1><span class="app-version" id="appVersionHeader" aria-label="Application version">v__APP_VERSION__</span></header>
+<div class="controls">
+<div class="search-wrap">
+<button class="hist-btn empty" id="histBtn" type="button" aria-label="Search history"><span class="hist-fill" id="histFill"></span><span class="hist-ico" id="histIco">📕</span><span class="hist-count" id="histCount">0/0</span></button>
+<div class="search-field">
+<input type="search" id="search" placeholder="Search: symbol, name, phase, year, density > 0.01… (try: years between 1900 and 1920)" autocomplete="off" spellcheck="false">
+<div class="isearch-bar" id="isearchBar"><span class="isearch-label">(reverse-i-search)</span><span class="isearch-match" id="isearchMatch"></span><span class="isearch-pos" id="isearchPos"></span></div>
+</div>
+<span class="filter-count" id="filterCount"></span>
+</div>
+<div class="temp-box">
+<span class="temp-setting">
+<span id="tempValue" title="Click to edit temperature">25 °C</span>
+<input type="text" id="tempEdit" style="display:none" placeholder="100 C / 212 F / 300 K" autocomplete="off">
+<span class="edit-actions"><button class="edit-btn" id="tempConfirm" style="display:none" title="Confirm (Enter)">✓</button><button class="edit-btn cancel" id="tempCancel" style="display:none" title="Cancel (Esc)">✗</button></span>
+</span>
+<button class="temp-btn" id="tempMinus" title="-10 °C" aria-label="Decrease temperature">−</button>
+<input type="range" id="temp" min="-273" max="6000" value="25" aria-label="Temperature" title="Drag to change the table's temperature — phase badges (solid/liquid/gas) update live. Shift+↑/↓ anywhere, or click the reading to type an exact value.">
+<button class="temp-btn" id="tempPlus" title="+10 °C" aria-label="Increase temperature">+</button>
+<button class="reset-btn" id="resetTemp" title="Reset to 25 °C">↻</button>
+</div>
+</div>
+<div class="top-divider"></div>
+<div class="main">
+<div class="details" id="details"><h2>Hover or tap an element</h2><div class="details-header-bar"></div><p>Temperature changes phase badges.<br>Left-click selects and locks Details.<br>Right-click selects and starts comparison mode.</p></div>
+<div class="table-wrap"><div class="table" id="table" tabindex="0" aria-label="Periodic table"></div><div class="no-results" id="noResults"></div></div>
+</div>
+<div class="divider-subtle"></div>
+<div class="help-line"><a id="helpLink">⌨ Help</a> <span style="margin:0 12px;color:var(--divider)">|</span> <span class="key-hint">/</span> search <span class="key-hint">↑↓</span> history <span class="key-hint">Ctrl+R</span> history search <span class="key-hint">Tab</span> complete <span class="key-hint">Esc</span> switch mode <span class="key-hint">Shift+↑</span><span class="key-hint">Shift+↓</span> temp <span class="key-hint">h</span> help</div>
+<div class="modal-overlay" id="helpModal"><div class="modal"><button class="modal-close" id="closeHelp">&times;</button><h2>&#9883; Awesome Periodic Table &ndash; Help</h2>
+<div class="help-search-wrap"><input type="search" id="helpSearch" placeholder="Search help topics&hellip; (e.g. history, autocomplete, commas)" autocomplete="off" spellcheck="false"></div>
+<div id="helpBody">
+
+<details class="help-sec" open><summary>&#128269; Getting started</summary><div>
+<ul><li>Type anything into the search bar &mdash; no <kbd>Enter</kbd> needed, results filter as you type.</li><li>Non-matches stay visible but blurred; matches get a golden glow.</li><li>A single result auto-shows its properties, unless you already have an element locked or in comparison mode.</li><li><kbd>/</kbd> jumps to the search bar from anywhere.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#128433; Mouse modes</summary><div>
+<ul><li>Hover an element to inspect it &mdash; this works the same whether the table is filtered or not.</li><li><strong>Left-click</strong> selects an element and locks the Details panel so hovering other elements won't overwrite it. Left-click the same element again to deselect.</li><li><strong>Right-click</strong> selects an element and starts comparison mode without locking Details &mdash; hover other elements to compare them against the selected one. Right-click the same element again to deselect.</li><li>With an element selected, clicking it with the opposite button keeps that element selected and just switches modes. Clicking a <em>different</em> element resets first, then selects the new one in whichever mode you clicked with.</li><li><kbd>Esc</kbd> clears selection, locking and comparison mode at any time.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#128214; Search history</summary><div>
+<ul><li>Because search is incremental, a query is recorded once you <strong>stop typing for about a second</strong> &mdash; or immediately when you press <kbd>Enter</kbd> or leave the field.</li><li>Queries that match <strong>zero elements</strong> are skipped automatically &mdash; typing "boi" on your way to "boils" never clutters your history. Click the history button to <strong>force-save</strong> the current text anyway.</li><li>Retyping the exact same query as your last entry (ignoring case and extra spaces) never creates a duplicate &mdash; safe to click the history button repeatedly without spamming entries.</li><li><kbd>&uarr;</kbd> / <kbd>&darr;</kbd> browse history. Pressing <kbd>&darr;</kbd> past the newest entry returns you to a blank line, bash-style &mdash; and an unsubmitted draft you were typing is restored if you come back.</li><li>The counter on the history button reads <strong>position / total</strong>: <code>0/0</code> when empty, <code>0/7</code> with seven stored entries, <code>2/7</code> while the second entry is loaded.</li><li><kbd>Ctrl</kbd>+<kbd>R</kbd> (or clicking &#128213;) opens <strong>reverse-i-search</strong>: type to find a past query, <kbd>&uarr;</kbd>/<kbd>&darr;</kbd> to walk through matches, <kbd>Enter</kbd> or <kbd>Tab</kbd> to accept, <kbd>Esc</kbd> to cancel and restore what you had.</li><li><kbd>Shift</kbd>+<kbd>Del</kbd> deletes the history entry currently loaded (or highlighted in i-search) &mdash; no confirmation.</li><li><strong>Press and hold</strong> the history button for 2.2 s to clear everything; the button fills bottom-to-top as it arms, and releasing early cancels.</li><li>History holds 50 entries; when full the oldest one drops off. It is saved automatically and restored on your next visit.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#10003; Autocomplete</summary><div>
+<ul><li>Typing two or more letters of a word suggests the rest inline: type <code>va</code> and the field shows <strong>va</strong><em>nadium</em> with the guessed tail selected.</li><li>Keep typing to refine it &mdash; your keystrokes replace the selected tail. For multi-word choices, typing the next letter keeps the phrase context, so <code>united</code> can branch to <code>united k</code> &rarr; <strong>United Kingdom</strong>. <kbd>Tab</kbd> or <kbd>Enter</kbd> accepts the completion, <kbd>&rarr;</kbd> also accepts.</li><li>Works anywhere in the line, not just at the end &mdash; editing "boils above 4000k <em>and not</em> radioactive" by inserting "solid below 3000f and " in the middle still suggests each word as you type it there.</li><li><kbd>Backspace</kbd> on a live suggestion doesn't just clear the ghost text &mdash; it treats the suggestion as if it were never there and removes one real character too, so <code>ca[lcium]</code> &rarr; <kbd>Backspace</kbd> &rarr; <code>c</code> directly. <kbd>&larr;</kbd> cancels the suggestion without deleting anything.</li><li>Press <kbd>Space</kbd> to dismiss the guess and start a new word; erasing that space brings the suggestion back for the previous word, wherever it is in the sentence.</li><li>Suggestions are context-aware: the current token is preferred, but multi-word phrases can remain active while you branch to another completion. Search history boosts matching words/phrases rather than pasting an entire previous query into the field.</li><li><kbd>Tab</kbd> is only intercepted when a suggestion is showing; otherwise it moves focus normally.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#127777; Temperature</summary><div>
+<ul><li>Drag the slider or use &minus;/+ to change temperature and phase badges live. &#8635; resets to 25&nbsp;&deg;C.</li><li>Click the temperature reading to type an exact C/F/K value; confirm with <kbd>Enter</kbd> or &#10003;, cancel with <kbd>Esc</kbd>.</li><li><kbd>Shift</kbd>+<kbd>&uarr;</kbd>/<kbd>&darr;</kbd> changes temperature from anywhere; <kbd>T</kbd> opens the editor.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#129513; Query operators: AND, OR, commas, NOT</summary><div>
+<ul><li><strong>AND</strong> requires every condition: <code>liquid and gas</code> is impossible, so it returns zero.</li><li><strong>Commas</strong> normally behave exactly like <code>and</code> (<code>transition, density above 10</code> narrows). The exception: when every comma-separated part names a specific, mutually-exclusive item, intersecting them would give nothing &mdash; so <code>gold, silver, platinum</code> lists all three instead.</li><li><strong>OR</strong> always unions alternatives: <code>noble gas or halogen</code>.</li><li><strong>NOT</strong> can prefix any individual term and mixes freely with the rest: <code>transition and not toxic</code>, <code>transition, not toxic, density above 5</code>, and <code>transition not toxic</code> all mean the same thing.</li><li>Connector words are optional in many places &mdash; <code>metalloids more dense than B</code> works without writing <code>and</code>.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#128202; Comparisons, ranges &amp; multi-value data</summary><div>
+<ul><li>Compare against a number or another element: <code>density above 10</code>, <code>melts above Fe</code>, <code>heavier than gold</code>, or <code>abundance above Fe</code>. Unqualified abundance means Earth's crust.</li><li>Ranges are inclusive and accept numbers or element references: <code>density between 5 and 10</code>, <code>density between silver and gold</code>, <code>universe abundance between H and He</code>, <code>second ionization energy between 500 and 1500</code>.</li><li>Abundance has dimensions: <code>crust</code>, <code>ocean</code>, <code>universe</code>, and <code>humans</code>. Use phrases such as <code>human abundance above Fe</code>, <code>most abundant in humans</code>, <code>most abundant in the human body</code>, <code>abundant in the universe</code>, <code>abundant on Earth</code>, or <code>more common in humans than the universe</code>. Ocean abundance is a concentration (mg/L), while the other three are percentage distributions, so cross-dimension comparisons only apply where the units are compatible.</li><li>Element references accept symbol, name, or Latin name: <code>Fe</code>, <code>iron</code>, <code>Ferrum</code>.</li><li>Ionization energies are a sequence: <code>first ionization energy</code>, <code>second ionization energy</code>, <code>IE2</code>. Unqualified <code>ionization energy</code> means the first stage for backward compatibility.</li><li>Stable isotopes are a collection: <code>has stable isotope 56</code>, <code>stable isotope above 200</code>, <code>heaviest stable isotope</code>.</li><li>Temperatures accept units: <code>solid below 1000C</code>, <code>melts above 500 K</code>, <code>boils below 200F</code>. Melting verbs include <code>melt</code>, <code>freeze</code>, <code>solidify</code>, and <code>liquefy</code>; boiling verbs include <code>boil</code>, <code>condense</code>, <code>vaporize</code>, and <code>evaporate</code>.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#127942; Superlatives</summary><div>
+<ul><li>Ask for scalar extremes directly: <code>densest</code>, <code>heaviest</code>, <code>most electronegative</code>, <code>highest melting point</code>, <code>lowest boiling point</code>, <code>most conductive</code>, <code>earliest discovered</code>.</li><li>Abundance rankings name their dimension: <code>most abundant</code> means the crust distribution, while <code>most abundant in humans</code>, <code>most abundant in universe</code>, and <code>least abundant in ocean</code> select those dimensions. <code>Least dense in universe</code> means the density extreme among elements with a recorded universe-abundance value; it does not pretend density itself has an environmental unit.</li><li>Ionization rankings can name a stage: <code>highest first ionization energy</code> or <code>highest second ionization energy</code>. Stable-isotope collection searches include <code>heaviest stable isotope</code> and <code>lightest stable isotope</code>.</li><li>Add a qualifier to rank within a group: <code>densest transition element</code>, <code>most dense radioactive element</code>, <code>lightest nonmetal</code>.</li><li>Singular returns the single extreme; writing <strong>elements</strong> (plural) returns the top ten.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#127991; Categories, phases and hazards</summary><div>
+<ul><li>Category names work singular, plural or hyphenated: <code>metalloid</code>, <code>metalloids</code>, <code>noble gas</code>, <code>noble gases</code>, <code>post-transition</code>, <code>post transition metals</code>.</li><li><code>metal</code>/<code>metals</code> matches every metallic category (alkali through actinide) and excludes metalloids.</li><li>Phases are evaluated at the current temperature: <code>solid</code>, <code>liquid</code>, <code>gas</code>, or explicitly <code>liquid at 25C</code>.</li><li><code>toxic</code> means Moderate toxicity or worse. Hazard words (<code>hazard</code>, <code>hazardous</code>, <code>dangerous</code>) mean toxic <em>or</em> radioactive.</li><li><code>radioactive</code> and <code>stable</code> split the table by half-life.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#127760; Discovery and occurrence</summary><div>
+<ul><li>Discovery filters cover who and where it was first found, not where it is mined: <code>discovered in Sweden</code>, <code>from Sweden</code>, <code>discovery country: Sweden</code>.</li><li><code>USA</code> and <code>United States</code> are interchangeable, as are <code>UK</code> and <code>United Kingdom</code>.</li><li>Years: <code>after 1900</code>, <code>before 1800</code>, <code>year between 1800 and 1900</code>. Leading words like &ldquo;discoveries&rdquo; are optional.</li><li>Occurrence/source text is searched too, including broad regions such as <code>asia</code>, <code>europe</code> or <code>south america</code>.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#9889; Property shortcuts</summary><div>
+<ul><li><code>en</code> electronegativity &middot; <code>tc</code> thermal conductivity &middot; <code>ec</code> electrical conductivity &middot; <code>e0</code> standard electrode potential.</li><li><code>mass</code> &middot; <code>density</code> &middot; <code>melt</code>/<code>melts</code> &middot; <code>boil</code>/<code>boils</code> &middot; <code>heat</code> specific heat.</li><li><strong>Abundance</strong> defaults to Earth's crust; add <code>ocean</code>, <code>universe</code>, or <code>humans</code> to select another dimension: <code>human abundance above Fe</code>, <code>universe abundance between H and He</code>.</li><li>Electrical and thermal conductivity are distinct: <code>ec</code> targets electrical, <code>tc</code> targets thermal, and plain <code>conductivity</code> searches either.</li><li>Labelled form works for exact values: <code>category: transition</code>, <code>toxicity: High</code>, <code>magnetism: Paramagnetic</code>, <code>oxidation: 2</code>, <code>electrical: Conductor</code>.</li><li>Ionization energy supports stages: <code>first ionization energy</code>, <code>second ionization energy</code>, <code>IE2</code>, etc. Unqualified <code>ionization energy</code> means the first stage.</li><li>Stable-isotope collections can be searched with <code>has stable isotope 56</code>, <code>stable isotope above 200</code>, or <code>heaviest stable isotope</code>.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#9883; Details panel &amp; extra data</summary><div>
+<ul><li><strong>Shift+click</strong> a clickable property or table value to add/remove it as a comma-separated filter without replacing your current query.</li><li>Plain clicking a scalar value still searches the same property within its normal ±10% range.</li><li>Multi-value tables are hoverable containers, but each meaningful row/value is independently clickable: abundance rows search that environment, ionization rows search that stage, and isotope rows search for elements containing that isotope.</li><li>The aggregate table label itself is not a filter because it has no single scalar meaning.</li><li>Magnetism is computed dynamically from atomic number and the current temperature.</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#9000; Keyboard reference</summary><div>
+<ul><li><kbd>/</kbd> focus search &middot; <kbd>Esc</kbd> clear query, then switch to table mode</li><li><kbd>&uarr;</kbd><kbd>&darr;</kbd> search history &middot; <kbd>Ctrl</kbd>+<kbd>R</kbd> history search &middot; <kbd>Shift</kbd>+<kbd>Del</kbd> delete entry</li><li><kbd>Tab</kbd> accept autocomplete (only when a suggestion is showing)</li><li><kbd>&larr;</kbd><kbd>&rarr;</kbd><kbd>&uarr;</kbd><kbd>&darr;</kbd> move around the table &middot; <kbd>Enter</kbd> select/deselect</li><li><kbd>Shift</kbd>+<kbd>&uarr;</kbd><kbd>&darr;</kbd> temperature &middot; <kbd>T</kbd> temperature editor</li><li><kbd>Ctrl</kbd>+<kbd>Shift</kbd> switch Basic / Extra tabs &middot; <kbd>h</kbd> help</li></ul>
+</div></details>
+
+<details class="help-sec"><summary>&#8505; About &amp; credits</summary><div>
+<p><strong>Version <span id="appVersionAbout">__APP_VERSION__</span></strong> &mdash; project versioning uses <strong>X.Y.Z</strong> (major.minor.patch).</p>
+<p>Awesome Periodic Table is a single self-contained HTML file &mdash; no build step, no server, no dependencies to install. Open it in any modern browser and it works, including offline.</p>
+<p>Source project uses a zero-runtime-dependency build: HTML, CSS, JavaScript and CSV data are maintained separately, then compiled into this standalone distribution.</p>
+<p>Originally created and maintained by <a href="https://github.com/bert2020-dev" target="_blank" rel="noopener">bert2020-dev</a>. Source and issue tracker: <a href="https://github.com/bert2020-dev/awesome-periodic-table" target="_blank" rel="noopener">github.com/bert2020-dev/awesome-periodic-table</a>.</p>
+<p>Everything runs client-side: source data is maintained as CSV during development and embedded into this file at build time. Arcager bundles and compresses the CSV resources for the release build; the browser reconstructs them in memory with no server, fetch, Node.js, Python, or runtime library dependency.</p><p><strong>Data sources:</strong> Universe abundance: <a href="https://periodictable.com/Properties/A/UniverseAbundance.html" target="_blank" rel="noopener">periodictable.com — Universe Abundance</a>; Human abundance: <a href="https://periodictable.com/Properties/A/HumanAbundance.html" target="_blank" rel="noopener">periodictable.com — Human Abundance</a>. Those pages identify the underlying curated data as provided by Mathematica's <em>ElementData</em> function from Wolfram Research.</p>
+</div></details>
+
+</div>
+<div class="help-empty" id="helpEmpty" style="display:none">No help topics match that search.</div>
+</div></div>
+<script src="js/data-bootstrap.js"></script>
+<script src="js/autocomplete-engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

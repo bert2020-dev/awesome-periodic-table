@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { gzipSync, brotliCompressSync } from 'node:zlib';
+import { fileURLToPath } from 'node:url';
+import { loadManifest, manifestToPipe, jsonManifest } from './data-pipeline.mjs';
+const HERE=path.dirname(fileURLToPath(import.meta.url)),ROOT=path.resolve(HERE,'..');
+const version=fs.readFileSync(path.join(ROOT,'VERSION'),'utf8').trim();
+const manifest=loadManifest(ROOT,version);
+const json=Buffer.from(JSON.stringify(jsonManifest(manifest)),'utf8');
+const pipe=Buffer.from(manifestToPipe(manifest),'utf8');
+const report={version,jsonBytes:json.length,pipeBytes:pipe.length,pipeVsJsonPercent:Number((pipe.length/json.length*100).toFixed(1)),gzipJsonBytes:gzipSync(json).length,gzipPipeBytes:gzipSync(pipe).length,brotliJsonBytes:brotliCompressSync(json).length,brotliPipeBytes:brotliCompressSync(pipe).length,elementCount:manifest.elements.length};
+console.log(JSON.stringify(report,null,2));

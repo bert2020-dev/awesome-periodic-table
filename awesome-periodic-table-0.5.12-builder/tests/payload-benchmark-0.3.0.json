@@ -1,0 +1,17 @@
+{
+  "version": "0.3.0",
+  "jsonBytes": 56991,
+  "pipeBytes": 28238,
+  "pipeVsJsonPercent": 49.5,
+  "gzipJsonBytes": 12866,
+  "gzipPipeBytes": 10955,
+  "brotliJsonBytes": 9817,
+  "brotliPipeBytes": 9089,
+  "elementCount": 118,
+  "interpretation": {
+    "pipe_is_canonical_transport": true,
+    "csv_remains_source_of_truth": true,
+    "arcager_runtime_not_measured_here": true,
+    "note": "Pipe is intentionally generated before Arcager packing; the Arcager adapter is responsible for the final packed representation and browser decompressor."
+  }
+}

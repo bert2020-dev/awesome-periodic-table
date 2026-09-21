@@ -1,0 +1,69 @@
+kind,key,value
+category,0,unknown
+category,1,alkali
+category,2,alkaline
+category,3,transition
+category,4,post-transition
+category,5,metalloid
+category,6,nonmetal
+category,7,halogen
+category,8,noble
+category,9,lanthanide
+category,10,actinide
+toxicity,0,Very low
+toxicity,1,Low
+toxicity,2,Moderate
+toxicity,3,High
+toxicity,4,Very high / Toxic
+source,0,Accelerators
+source,1,Air
+source,2,Australia
+source,3,Belarus
+source,4,Belgium
+source,5,Brazil
+source,6,Canada
+source,7,Chile
+source,8,China
+source,9,DR Congo
+source,10,Gabon
+source,11,Germany
+source,12,Guinea
+source,13,India
+source,14,Indonesia
+source,15,Israel
+source,16,Japan
+source,17,Kazakhstan
+source,18,Kyrgyzstan
+source,19,Limestone worldwide
+source,20,Mexico
+source,21,Morocco
+source,22,Myanmar
+source,23,Natural gas
+source,24,Nuclear
+source,25,Nuclear reactors
+source,26,Particle accelerators
+source,27,Peru
+source,28,Philippines
+source,29,Poland
+source,30,Quartz worldwide
+source,31,Russia
+source,32,Rwanda
+source,33,Salt worldwide
+source,34,Seawater
+source,35,South Africa
+source,36,South Korea
+source,37,Spain
+source,38,Turkey
+source,39,USA
+source,40,Universe
+source,41,Uranium decay
+source,42,Uranium ores
+source,43,Vietnam
+source,44,Worldwide
+source,45,Zimbabwe
+source,46,oxides
+source,47,salt
+source,48,seawater
+source,49,water
+source,periodictable_universe_abundance,https://periodictable.com/Properties/A/UniverseAbundance.html
+source,periodictable_human_abundance,https://periodictable.com/Properties/A/HumanAbundance.html

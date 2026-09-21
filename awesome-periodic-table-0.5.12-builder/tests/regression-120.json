@@ -1,0 +1,617 @@
+[
+  {
+    "num": 1,
+    "query": "Fe",
+    "expected": 1
+  },
+  {
+    "num": 2,
+    "query": "iron",
+    "expected": 1
+  },
+  {
+    "num": 3,
+    "query": "Ferrum",
+    "expected": 1
+  },
+  {
+    "num": 4,
+    "query": "26",
+    "expected": 1
+  },
+  {
+    "num": 5,
+    "query": "au",
+    "expected": 1
+  },
+  {
+    "num": 6,
+    "query": "lead",
+    "expected": 1
+  },
+  {
+    "num": 7,
+    "query": "W",
+    "expected": 1
+  },
+  {
+    "num": 8,
+    "query": "Hydrogenium",
+    "expected": 1
+  },
+  {
+    "num": 9,
+    "query": "aluminium",
+    "expected": 1
+  },
+  {
+    "num": 10,
+    "query": "liquid or gas",
+    "expected": 14
+  },
+  {
+    "num": 11,
+    "query": "liquid, solid, gas",
+    "expected": 118
+  },
+  {
+    "num": 12,
+    "query": "gold, silver, platinum",
+    "expected": 3
+  },
+  {
+    "num": 13,
+    "query": "Italy or Australia",
+    "expected": 18
+  },
+  {
+    "num": 14,
+    "query": "Italy or Australia, melts above Fe",
+    "expected": 5
+  },
+  {
+    "num": 15,
+    "query": "transition or noble gas, density above 5",
+    "expected": 32
+  },
+  {
+    "num": 16,
+    "query": "metal, density above 10",
+    "expected": 34
+  },
+  {
+    "num": 17,
+    "query": "liquid or solid, radioactive",
+    "expected": 36
+  },
+  {
+    "num": 18,
+    "query": "transition and not toxic",
+    "expected": 17
+  },
+  {
+    "num": 19,
+    "query": "transition, not toxic, density above 5",
+    "expected": 16
+  },
+  {
+    "num": 20,
+    "query": "transition not toxic",
+    "expected": 17
+  },
+  {
+    "num": 21,
+    "query": "metalloids more dense than B",
+    "expected": 4
+  },
+  {
+    "num": 22,
+    "query": "transition density above 10",
+    "expected": 21
+  },
+  {
+    "num": 23,
+    "query": "noble gas radioactive",
+    "expected": 1
+  },
+  {
+    "num": 24,
+    "query": "not radioactive and solid",
+    "expected": 69
+  },
+  {
+    "num": 25,
+    "query": "metal and not noble gas",
+    "expected": 86
+  },
+  {
+    "num": 26,
+    "query": "not toxic and not radioactive",
+    "expected": 24
+  },
+  {
+    "num": 27,
+    "query": "noble gas",
+    "expected": 6
+  },
+  {
+    "num": 28,
+    "query": "post-transition",
+    "expected": 9
+  },
+  {
+    "num": 29,
+    "query": "lanthanides",
+    "expected": 15
+  },
+  {
+    "num": 30,
+    "query": "radioactive",
+    "expected": 37
+  },
+  {
+    "num": 31,
+    "query": "toxic",
+    "expected": 57
+  },
+  {
+    "num": 32,
+    "query": "hazard",
+    "expected": 94
+  },
+  {
+    "num": 33,
+    "query": "electrical: Conductor",
+    "expected": 69
+  },
+  {
+    "num": 34,
+    "query": "thermal: Intermediate",
+    "expected": 28
+  },
+  {
+    "num": 35,
+    "query": "diamagnetic",
+    "expected": 35
+  },
+  {
+    "num": 36,
+    "query": "toxicity: High",
+    "expected": 6
+  },
+  {
+    "num": 37,
+    "query": "category: transition",
+    "expected": 35
+  },
+  {
+    "num": 38,
+    "query": "en above 3",
+    "expected": 4
+  },
+  {
+    "num": 39,
+    "query": "mass between 100 and 150",
+    "expected": 18
+  },
+  {
+    "num": 40,
+    "query": "density between 5 and 10",
+    "expected": 39
+  },
+  {
+    "num": 41,
+    "query": "en between 1 and 3",
+    "expected": 85
+  },
+  {
+    "num": 42,
+    "query": "specific heat above 0.4",
+    "expected": 29
+  },
+  {
+    "num": 43,
+    "query": "specific heat below 0.3",
+    "expected": 48
+  },
+  {
+    "num": 44,
+    "query": "thermal conductivity above 100",
+    "expected": 16
+  },
+  {
+    "num": 45,
+    "query": "thermal conductivity below 1",
+    "expected": 16
+  },
+  {
+    "num": 46,
+    "query": "electrical conductivity above 10000000",
+    "expected": 17
+  },
+  {
+    "num": 47,
+    "query": "electrical conductivity below 1",
+    "expected": 20
+  },
+  {
+    "num": 48,
+    "query": "ocean abundance above 1000",
+    "expected": 5
+  },
+  {
+    "num": 49,
+    "query": "abundance below 0.001",
+    "expected": 47
+  },
+  {
+    "num": 50,
+    "query": "melts above 1500C",
+    "expected": 37
+  },
+  {
+    "num": 51,
+    "query": "melts below 500C",
+    "expected": 41
+  },
+  {
+    "num": 52,
+    "query": "boils above 3000C",
+    "expected": 41
+  },
+  {
+    "num": 53,
+    "query": "boils below 1000C",
+    "expected": 34
+  },
+  {
+    "num": 54,
+    "query": "melts above 273.15K",
+    "expected": 105
+  },
+  {
+    "num": 55,
+    "query": "melts below 212F",
+    "expected": 23
+  },
+  {
+    "num": 56,
+    "query": "boils above 2000F",
+    "expected": 83
+  },
+  {
+    "num": 57,
+    "query": "boils below 200K",
+    "expected": 9
+  },
+  {
+    "num": 58,
+    "query": "mass greater than 100",
+    "expected": 75
+  },
+  {
+    "num": 59,
+    "query": "density less than 1",
+    "expected": 14
+  },
+  {
+    "num": 60,
+    "query": "en higher than 2",
+    "expected": 30
+  },
+  {
+    "num": 61,
+    "query": "density more than 20",
+    "expected": 13
+  },
+  {
+    "num": 62,
+    "query": "density between 5 and 10, transition",
+    "expected": 11
+  },
+  {
+    "num": 63,
+    "query": "mass above 100, not radioactive",
+    "expected": 39
+  },
+  {
+    "num": 64,
+    "query": "boils above 2500C, not toxic",
+    "expected": 32
+  },
+  {
+    "num": 65,
+    "query": "melts above Fe",
+    "expected": 33
+  },
+  {
+    "num": 66,
+    "query": "melts below Lead",
+    "expected": 34
+  },
+  {
+    "num": 67,
+    "query": "boils above Ti",
+    "expected": 33
+  },
+  {
+    "num": 68,
+    "query": "boils below Pd",
+    "expected": 75
+  },
+  {
+    "num": 69,
+    "query": "density above Pd",
+    "expected": 32
+  },
+  {
+    "num": 70,
+    "query": "mass above Fe",
+    "expected": 92
+  },
+  {
+    "num": 71,
+    "query": "heavier than gold",
+    "expected": 39
+  },
+  {
+    "num": 72,
+    "query": "lighter than Pd",
+    "expected": 45
+  },
+  {
+    "num": 73,
+    "query": "mass between Fe and W",
+    "expected": 49
+  },
+  {
+    "num": 74,
+    "query": "density between Ag and Au",
+    "expected": 24
+  },
+  {
+    "num": 75,
+    "query": "boils between Po and Osmium",
+    "expected": 82
+  },
+  {
+    "num": 76,
+    "query": "melts between Fe and W",
+    "expected": 33
+  },
+  {
+    "num": 77,
+    "query": "electronegativity below F",
+    "expected": 97
+  },
+  {
+    "num": 78,
+    "query": "specific heat above Hydrogen",
+    "expected": 0
+  },
+  {
+    "num": 79,
+    "query": "liquid below Lead",
+    "expected": 17
+  },
+  {
+    "num": 80,
+    "query": "liquid above Lead",
+    "expected": 17
+  },
+  {
+    "num": 81,
+    "query": "solid above Fe",
+    "expected": 33
+  },
+  {
+    "num": 82,
+    "query": "gas below Ti",
+    "expected": 48
+  },
+  {
+    "num": 83,
+    "query": "liquid between Fe and W",
+    "expected": 5
+  },
+  {
+    "num": 84,
+    "query": "vaporizes below Ti",
+    "expected": 84
+  },
+  {
+    "num": 85,
+    "query": "solidify between 1000c and 1200c",
+    "expected": 8
+  },
+  {
+    "num": 86,
+    "query": "freeze between 1000c and 1200c",
+    "expected": 8
+  },
+  {
+    "num": 87,
+    "query": "condense below 3000c",
+    "expected": 77
+  },
+  {
+    "num": 88,
+    "query": "evaporate above 2000c",
+    "expected": 64
+  },
+  {
+    "num": 89,
+    "query": "discovered in Sweden",
+    "expected": 20
+  },
+  {
+    "num": 90,
+    "query": "from Sweden",
+    "expected": 20
+  },
+  {
+    "num": 91,
+    "query": "discovery country: Sweden",
+    "expected": 20
+  },
+  {
+    "num": 92,
+    "query": "discovery source: Scheele",
+    "expected": 3
+  },
+  {
+    "num": 93,
+    "query": "occurrence country: Australia",
+    "expected": 17
+  },
+  {
+    "num": 94,
+    "query": "occurrence: Australia",
+    "expected": 17
+  },
+  {
+    "num": 95,
+    "query": "USA",
+    "expected": 26
+  },
+  {
+    "num": 96,
+    "query": "United States",
+    "expected": 26
+  },
+  {
+    "num": 97,
+    "query": "UK",
+    "expected": 23
+  },
+  {
+    "num": 98,
+    "query": "United Kingdom",
+    "expected": 23
+  },
+  {
+    "num": 99,
+    "query": "Europe",
+    "expected": 19
+  },
+  {
+    "num": 100,
+    "query": "South America",
+    "expected": 11
+  },
+  {
+    "num": 101,
+    "query": "North America",
+    "expected": 17
+  },
+  {
+    "num": 102,
+    "query": "after 1900",
+    "expected": 35
+  },
+  {
+    "num": 103,
+    "query": "before 1800",
+    "expected": 23
+  },
+  {
+    "num": 104,
+    "query": "year between 1800 and 1900",
+    "expected": 50
+  },
+  {
+    "num": 105,
+    "query": "years between 1900 and 1920",
+    "expected": 4
+  },
+  {
+    "num": 106,
+    "query": "densest",
+    "expected": 1
+  },
+  {
+    "num": 107,
+    "query": "lightest",
+    "expected": 1
+  },
+  {
+    "num": 108,
+    "query": "most electronegative",
+    "expected": 1
+  },
+  {
+    "num": 109,
+    "query": "highest melting point",
+    "expected": 1
+  },
+  {
+    "num": 110,
+    "query": "lowest boiling point",
+    "expected": 1
+  },
+  {
+    "num": 111,
+    "query": "most dense radioactive element",
+    "expected": 1
+  },
+  {
+    "num": 112,
+    "query": "densest transition element",
+    "expected": 1
+  },
+  {
+    "num": 113,
+    "query": "most dense elements",
+    "expected": 10
+  },
+  {
+    "num": 114,
+    "query": "earliest discovered",
+    "expected": 1
+  },
+  {
+    "num": 115,
+    "query": "most abundant elements",
+    "expected": 10
+  },
+  {
+    "num": 116,
+    "query": "Italy or Australia, melts above Fe and liquid below Lead",
+    "expected": 0
+  },
+  {
+    "num": 117,
+    "query": "vaporizes below Ti, solidify between 1000c and 1200c, lighter than Pd",
+    "expected": 1
+  },
+  {
+    "num": 118,
+    "query": "transition, radioactive, density above 8, mass below 300",
+    "expected": 7
+  },
+  {
+    "num": 119,
+    "query": "noble gas or halogen, not radioactive",
+    "expected": 9
+  },
+  {
+    "num": 120,
+    "query": "liquid or gas, melts above 0C, boils below 4000C",
+    "expected": 1
+  },
+  {
+    "num": 121,
+    "query": "lightest elements that boil above C, C",
+    "expected": 11
+  },
+  {
+    "num": 122,
+    "query": "not toxic, discovered after Tantalum",
+    "expected": 45
+  },
+  {
+    "num": 124,
+    "query": "discovered after Tantalum",
+    "expected": 82
+  }
+]

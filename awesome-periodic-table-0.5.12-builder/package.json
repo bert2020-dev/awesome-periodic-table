@@ -1,0 +1,30 @@
+{
+  "name": "awesome-periodic-table-builder",
+  "private": true,
+  "type": "module",
+  "version": "0.5.12",
+  "scripts": {
+    "build": "node tools/build.mjs --mode=arcager --compression=gzip",
+    "build:plain": "node tools/build.mjs --mode=plain",
+    "build:arcager": "node tools/build.mjs --mode=arcager --compression=gzip",
+    "build:arcager:brotli": "node tools/build.mjs --mode=arcager --compression=brotli",
+    "build:arcager:gzip": "node tools/build.mjs --mode=arcager --compression=gzip",
+    "build:mock": "node tools/build.mjs --mode=arcager --adapter=mock",
+    "test": "npm run check && npm run test:pipe && npm run test:autocomplete && npm run test:search && npm run test:multi && npm run test:superlatives && npm run test:runtime && npm run test:build && npm run test:arcager && npm run test:arcager-data && npm run test:contract",
+    "test:search": "node tools/test-search.mjs",
+    "test:build": "node tools/test-build.mjs",
+    "test:arcager": "node tools/test-arcager.mjs",
+    "test:contract": "node tools/test-arcager-contract.mjs",
+    "test:pipe": "node tools/test-pipe.mjs",
+    "inspect:payload": "node tools/inspect-payload.mjs",
+    "check": "node tools/check-source.mjs",
+    "setup:arcager": "node tools/setup-arcager.mjs",
+    "release:check": "node tools/release-check.mjs",
+    "package:release": "node tools/package-release.mjs",
+    "test:multi": "node tools/test-multivalue.mjs",
+    "test:autocomplete": "node tools/test-autocomplete.mjs",
+    "test:superlatives": "node tools/test-superlatives.mjs",
+    "test:runtime": "node tools/test-runtime-init.mjs",
+    "test:arcager-data": "node tools/test-arcager-data-bridge.mjs"
+  }
+}
