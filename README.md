@@ -224,15 +224,20 @@ To build the project, you'll need a suitable Node.js development environment.
 npm run build
 ```
 
-This produces the standard Arcager/Gzip release.
+This produces **both** standard distributions: `dist/plain/` and `dist/arcager/` (gzip). A version-freshness check for the vendored Arcager copy runs automatically first (`npm run check:updates`) and never blocks the build.
 
 Other available commands:
 
 ```bash
-npm run build:plain
-npm run build:arcager
-npm run build:arcager:brotli
+npm run build:plain          # dist/plain/ only
+npm run build:arcager        # dist/arcager/ only (gzip)
+npm run build:arcager:brotli # Brotli experiment
+npm run build:all            # everything above, including Brotli
+npm run release              # build:all, then verify and package a release
+npm run check:updates        # check the vendored Arcager version against upstream
 ```
+
+On Windows 10, `build.bat` (repo root) does the same as `npm run build` after checking that Node.js and Python are on `PATH` — see `docs/BUILDING.md` for details and prerequisites.
 
 ### Testing
 
@@ -276,7 +281,7 @@ To get started, explore the repository, review the existing issues, and share yo
 
 ## 📦 Releases and Versioning
 
-**Current version: 0.5.12**
+**Current version: 0.5.13**
 
 The project follows semantic-style `X.Y.Z` versioning:
 

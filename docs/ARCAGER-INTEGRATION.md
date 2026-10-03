@@ -53,6 +53,6 @@ The test intentionally does not require the unpacked Arcager HTML to be byte-for
 
 ## Readiness contract
 
-The application prefers Arcager's resource readiness surface (`arcager.resources.waitFor`) for the CSV resource set `elements`, `element-extra`, and `lookups`. It falls back to `arcager.ready` and finally to the committed CSV DOM blocks, so the app remains deterministic when used with an older Arcager runtime.
+The application awaits Arcager's `arcager.ready` Promise (a genuine pending Promise as of Arcager 3.2.1, resolved only once the payload is decompressed and every inlined CSV block — `elements`, `element-extra`, and `lookups` — has been parsed). If that rejects, or on a pre-3.2.1 runtime that resolves `ready` without actually populating `arcager.csv`, it falls back to parsing the committed CSV `<script>` blocks directly, so the app remains deterministic either way.
 
 The workspace supplied for this update contained the Arcager 3.2.0 source archive rather than the upstream 3.2.3 source tree. The builder therefore includes the 3.2.3-targeted readiness integration and pins future clean checkouts to `v3.2.3`; it does not silently claim that the supplied upstream archive itself was 3.2.3.

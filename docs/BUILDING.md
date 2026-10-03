@@ -2,6 +2,13 @@
 
 ## Build targets
 
+Running `npm run build` builds **both** targets below in one command (this
+used to only build the Arcager/gzip variant — if you're looking at an older
+checkout, upgrade first). `npm run build:all` additionally includes the
+Brotli experiment. Both are preceded automatically by a version check (see
+*Keeping the build tooling current*, below) via the `prebuild`/`prebuild:all`
+npm hooks — no separate step to remember.
+
 ### Plain/debug
 
 ```bash
@@ -22,7 +29,7 @@ Produces:
 dist/arcager/awesome-periodic-table.html
 ```
 
-The release path stages the original CSV resources and invokes the vendored Arcager 3.2.3-readiness `--merge` workflow. Arcager therefore bundles the CSVs as CSV resources and generates its own inline browser loader.
+The release path stages the original CSV resources and invokes the vendored Arcager `--merge` workflow (currently the genuine upstream 3.2.3 release — see *A note on the vendored Arcager copy*, below). Arcager therefore bundles the CSVs as CSV resources and generates its own inline browser loader.
 
 ### Brotli experiment
 
@@ -31,6 +38,39 @@ npm run build:arcager:brotli
 ```
 
 This is an optional compatibility experiment. The standard distribution remains gzip.
+
+### Building on Windows 10
+
+The build pipeline is plain Node.js and already cross-platform (`tools/arcager-adapter.mjs` detects `python`, `python3`, and the Windows `py` launcher in that order). Two ways to build on Windows:
+
+- **Double-click `build.bat`** (repo root) — checks that Node and Python are on `PATH`, then runs `npm run build`. Works from a plain Command Prompt, no PowerShell execution-policy changes needed.
+- **Or just run the same npm commands** documented above from PowerShell or Command Prompt directly — nothing platform-specific about them.
+
+Prerequisites: [Node.js](https://nodejs.org/) (LTS) and [Python 3](https://www.python.org/downloads/windows/) (tick "Add python.exe to PATH" in the installer), both on `PATH`. `npm run setup:arcager` additionally needs [Git for Windows](https://git-scm.com/download/win) if you're re-vendoring Arcager from source rather than editing `vendor/Arcager/arcager.py` in place.
+
+### Keeping the build tooling current
+
+```bash
+npm run check:updates
+```
+
+Compares the vendored `vendor/Arcager/arcager.py` against the latest `VERSION` string on Arcager's `main` branch (Arcager has no tagged releases) and prints a one-line notice if a newer version is available. This runs automatically before `build`/`build:all`; it never fails the build — a network error or rate limit just degrades to a "couldn't check" notice. To track another vendored tool later, add an entry to the `CHECKS` array in `tools/check-latest.mjs`.
+
+### A note on the vendored Arcager copy
+
+`vendor/Arcager/arcager.py` should be the genuine file from
+[bert2020-dev/Arcager](https://github.com/bert2020-dev/Arcager) — not a
+hand-patched stand-in. Arcager 3.2.0 had a real bug where `window.arcager.csv`
+was always empty (it was built before the merged page's own content, CSV
+blocks included, had been written into the document); this was properly
+fixed upstream in 3.2.1 (`ready` became a real Promise that waits for CSV
+parsing), 3.2.2 (`window.arcager` always defined, clear rejection errors),
+and 3.2.3 (`arcager.state`/`arcager.error`/`arcager.loaded`). `src/js/data-bootstrap.js`
+targets that real `ready`-Promise contract as its primary path, with a DOM
+fallback (parsing `<script type="text/csv">` blocks directly) kept only as a
+safety net for older or failed runtimes — see the comments in that file and
+`tools/test-arcager-data-bridge.mjs`, which exercises all three paths
+(current runtime, legacy 3.2.0-style empty map, and a rejected `ready`).
 
 ## Object-oriented runtime
 

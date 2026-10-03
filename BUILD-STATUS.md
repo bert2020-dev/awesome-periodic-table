@@ -1,11 +1,12 @@
-# Build Status — 0.5.11
+# Build Status — 0.5.13
 
 ## Release status
-- Version: 0.5.11
-- Standard distribution: Arcager 3.2.3-readiness + gzip
+- Version: 0.5.13
+- Standard distribution: Arcager 3.2.3 (genuine upstream) + gzip
 - Arcager CSV resources: 3 bundled
-- Arcager bridge regression: PASS
-- 120/120 core NLP tests: PASS
+- Arcager bridge regression: PASS (primary `ready`-Promise path, legacy
+  3.2.0-style empty-map fallback, and rejected-`ready` fallback all covered)
+- 123/123 core NLP tests: PASS
 - 33/33 multi-value tests: PASS
 - 13/13 superlative tests: PASS
 - 7/7 autocomplete tests: PASS
@@ -13,12 +14,27 @@
 - Plain single-file build: PASS
 - Arcager standalone/unpack validation: PASS
 - Release check: PASS
+- `npm run build` produces both `dist/plain/` and `dist/arcager/`: PASS
 
-## Multivalue behavior restored
+## What changed in 0.5.13
+- **CSS**: fixed the bottom hotkey-hint bar (`.help-line`) overflowing
+  off-screen instead of wrapping, on narrow viewports.
+- **Arcager**: the vendored copy is now the genuine upstream 3.2.3 release
+  (previously a hand-patched 3.2.0 base with an invented, non-upstream
+  `resources.waitFor` API). `data-bootstrap.js` now targets the real
+  `ready`-Promise contract Arcager 3.2.1+ actually provides.
+- **Build**: `npm run build` builds both dist targets by default; added
+  `npm run build:all`, `npm run release`, and `npm run check:updates`
+  (also runs automatically before builds, via `prebuild`/`prebuild:all`).
+- **Windows**: added `build.bat` as a convenience entry point.
+
+See `CHANGELOG.md` for the full list and rationale.
+
+## Multivalue behavior (carried over from 0.5.11, unchanged)
 Ionization Energies, Abundance Distribution, and Stable Isotopes keep the Details panel compact by showing one inline value plus `, ...` whenever additional values exist. The complete values remain in the hover table, with the inline value and every table value independently click-searchable.
 
-## Ionization data enrichment
-The extended ionization CSV now registers successive ionization energies through the 8th stage where the source dataset provides them, while preserving the project's existing values. Scalar first-ionization values were also filled for elements whose core CSV entries were previously blank.
+## Ionization data enrichment (carried over from 0.5.11, unchanged)
+The extended ionization CSV registers successive ionization energies through the 8th stage where the source dataset provides them. Scalar first-ionization values were filled for elements whose core CSV entries were previously blank.
 
 ## Search fixes covered by regression tests
-The multivalue suite now explicitly covers percentage-aware abundance comparison (`Crust abundance above 2%`), element-reference ionization comparison (`Ionization energy below Ti`), crust/ocean superlatives, and fifth/eighth ionization-stage comparisons.
+The multivalue suite covers percentage-aware abundance comparison (`Crust abundance above 2%`), element-reference ionization comparison (`Ionization energy below Ti`), crust/ocean superlatives, and fifth/eighth ionization-stage comparisons. 0.5.12 added natural-language comma composition for superlatives and discovery-relative element comparisons (`discovered after Tantalum`).

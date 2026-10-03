@@ -40,6 +40,6 @@ export async function pack({context}){
   const r=runPython(arcager,args);
   const outputBytes=fs.statSync(outputHtml).size;
   const inputBytes=walkBytes(inputDir);
-  return {runtime:'',bootstrap:'',stats:{arcagerVersion:version,requiredArcagerApi:'3.2.3-readiness',compression,inputBytes,outputBytes,ratio:outputBytes/Math.max(1,inputBytes),standalone:true,runtimeDependencies:0,csvBundled:true,merge:true,command:args,stdout:r.stdout?.trim()||''}};
+  return {runtime:'',bootstrap:'',stats:{arcagerVersion:version,requiredArcagerApi:'ready-promise>=3.2.1',compression,inputBytes,outputBytes,ratio:outputBytes/Math.max(1,inputBytes),standalone:true,runtimeDependencies:0,csvBundled:true,merge:true,command:args,stdout:r.stdout?.trim()||''}};
 }
 function walkBytes(dir){let total=0;for(const ent of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,ent.name);if(ent.isDirectory())total+=walkBytes(p);else total+=fs.statSync(p).size;}return total;}

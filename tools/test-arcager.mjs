@@ -27,8 +27,12 @@ const unpackedText=fs.readFileSync(unpacked,'utf8');
 if(!unpackedText.includes('data-key="elements"')||!unpackedText.includes('data-key="element-extra"')||!unpackedText.includes('data-key="lookups"'))throw new Error('Arcager merge did not inline all three CSV resources.');
 const packedText=fs.readFileSync(packed,'utf8');
 if(!packedText.includes('DecompressionStream'))throw new Error('Arcager browser decompressor missing.');
-if(!packedText.includes('function waitFor(name,opts)'))throw new Error('Arcager 3.2.3 resource readiness API missing.');
-if(!packedText.includes('resources:resources'))throw new Error('Arcager resource status surface missing.');
+// Genuine Arcager 3.2.x readiness contract: window.arcager is always defined,
+// `ready` is a real Promise resolved after the payload is decompressed and every
+// CSV block parsed (3.2.1), and `state`/`error`/`loaded` mirror it (3.2.2/3.2.3).
+if(!/window\.arcager\.state\s*=/.test(packedText))throw new Error('Arcager 3.2.3 state flag (arcager.state) missing from runtime.');
+if(!/window\.arcager\.loaded\s*=/.test(packedText))throw new Error('Arcager 3.2.2+ loaded flag missing from runtime.');
+if(!/ready\s*:/.test(packedText))throw new Error('Arcager ready Promise missing from runtime.');
 if(/<script[^>]+\bsrc=/i.test(unpackedText)||/<link[^>]+\bhref=/i.test(unpackedText)||/<style[^>]+\bsrc=/i.test(unpackedText))throw new Error('Unpacked Arcager artifact still contains external runtime assets.');
 const bytes=fs.statSync(packed).size;
 const sourceBytes=fs.statSync(plain).size;

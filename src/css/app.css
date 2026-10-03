@@ -695,7 +695,11 @@ input[type=range] {
   font-size:.85rem;
   color:var(--muted);
   margin-top:12px;
-  padding-bottom:12px
+  padding-bottom:12px;
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:break-word;
+  word-break:break-word
 }
 .help-line a {
   color:var(--accent);
@@ -1066,6 +1070,13 @@ code {
   .temp-box input[type=range] { min-width:90px }
   #tempValue {
     font-size:.7rem
+  }
+  .help-line {
+    font-size:.72rem;
+    line-height:1.9
+  }
+  .key-hint {
+    margin:1px
   }
 }
 .nuclide {

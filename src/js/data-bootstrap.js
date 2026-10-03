@@ -48,23 +48,29 @@
     });
     return out;
   };
+  /* Arcager >= 3.2.1 exposes `ready`, a real Promise that resolves only after the
+     payload has been decompressed AND every inlined CSV block has been parsed.
+     3.2.2 guarantees window.arcager exists before any capability check (ready
+     rejects with a clear Error instead), and 3.2.3 adds arcager.state
+     ('loading'|'ready'|'error') / arcager.error, mirrored by arcager.loaded.
+     Awaiting `ready` is therefore all that is needed on a current runtime; a
+     rejection is recorded and we fall through to the DOM fallback below. */
   async function awaitArcagerCsv(){
     const a=window.arcager;
     if(!a)return{};
-    if(a.resources?.waitFor){
-      try{await a.resources.waitFor('csv',{keys:['elements','element-extra','lookups'],timeout:6000});}catch{}
-    }else if(a.ready){
-      try{await a.ready;}catch{}
+    if(a.ready&&typeof a.ready.then==='function'){
+      try{await a.ready;}
+      catch(err){window.__APT_ARCAGER_ERROR__=err;}
     }
     return a.csv||{};
   }
   window.__APT_DATA_READY__=(async()=>{
     let csv=await awaitArcagerCsv();
-    /* Arcager creates its csv object before it commits the decompressed HTML,
-       so the bundled <script type=\"text/csv\"> blocks are not visible to
-       Arcager itself until the document is being rebuilt. Parse those blocks
-       directly when the runtime map is empty, then publish the result back to
-       window.arcager.csv for callers that expect Arcager's public API. */
+    /* Safety net only. Arcager 3.2.0 built its csv object before the decompressed
+       HTML was committed, so arcager.csv was always empty; 3.2.1+ fixed that. If a
+       pre-3.2.1 runtime (or a rejected `ready`) leaves the map incomplete, parse the
+       committed <script type=\"text/csv\"> blocks directly and publish the result
+       back to window.arcager.csv for callers that expect Arcager's public API. */
     if(!csv.elements||!csv['element-extra']||!csv.lookups){
       const embedded=inlineCSV();
       if(Object.keys(embedded).length){
