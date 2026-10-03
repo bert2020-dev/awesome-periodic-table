@@ -1,5 +1,7 @@
 # ⚛️ Awesome Periodic Table
 
+<img width="1916" height="933" alt="Si-P-at-800C" src="https://github.com/user-attachments/assets/b7f57327-d2ed-457f-8355-b019d245403e" />
+
 ### Chemistry is full of connections. Finding them should be simple.
 
 **Awesome Periodic Table is a free, open-source, interactive periodic table built for learning, exploration, and discovery.**
@@ -70,6 +72,8 @@ For example, you can explore queries such as:
 * `boils above 2552.2`
 * `after 1800 and before 2000`
 * `solid, radioactive, melts below 500c`
+
+<img width="1918" height="931" alt="Comparing to Boron" src="https://github.com/user-attachments/assets/5ea6bdfd-53f7-4f0f-b819-01ec49972734" />
 
 Combine properties, narrow down results, and investigate relationships between elements using a search experience designed to feel natural.
 
@@ -306,4 +310,3 @@ If you find it useful, share it with a student, a teacher, a friend, or anyone w
 **Download it. Open it. Explore.**
 
 Curiosity is all you need.
-s
