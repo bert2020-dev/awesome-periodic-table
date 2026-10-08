@@ -1080,55 +1080,48 @@ code {
   }
 }
 .nuclide {
-  display:inline-grid;
-  align-items:center;
+  display:inline-block;
+  position:relative;
   vertical-align:middle;
   line-height:1;
   font-weight:700;
-  column-gap:3px;
   white-space:nowrap;
 }
 .nuclide-header {
-  grid-template-columns:auto auto;
-  grid-template-rows:.62em .62em;
   font-size:1.02rem;
-}
-.nuclide-header .nuclide-mass,.nuclide-header .nuclide-z {
-  grid-column:1;
-  font-size:.56em;
-  line-height:1;
-}
-.nuclide-header .nuclide-mass {
-  grid-row:1;
-  align-self:end;
-}
-.nuclide-header .nuclide-z {
-  grid-row:2;
-  align-self:start;
+  min-width:1.75em;
+  padding-left:.72em;
 }
 .nuclide-header .nuclide-symbol {
-  grid-column:2;
-  grid-row:1 / span 2;
+  display:inline-block;
   font-size:1.42em;
-  align-self:center;
   line-height:1;
+  font-weight:800;
 }
+.nuclide-header .nuclide-mass,
+.nuclide-header .nuclide-z {
+  position:absolute;
+  left:0;
+  font-size:.56em;
+  line-height:1;
+  font-weight:800;
+  width:.9em;
+  text-align:right;
+}
+.nuclide-header .nuclide-mass { top:-.18em; }
+.nuclide-header .nuclide-z { bottom:-.18em; }
 .nuclide-isotope {
-  grid-template-columns:auto auto;
-  grid-template-rows:1fr;
-  column-gap:2px;
+  display:inline-flex;
+  align-items:flex-start;
+  gap:2px;
 }
 .nuclide-isotope .nuclide-mass {
-  grid-column:1;
   font-size:.58em;
-  align-self:start;
   line-height:1;
 }
 .nuclide-isotope .nuclide-symbol {
-  grid-column:2;
-  grid-row:1;
   font-size:1em;
-  align-self:center;
+  line-height:1;
 }
 .truncated-prop {
   cursor:help;
@@ -1285,3 +1278,6 @@ code {
     max-width: none;
   }
 }
+
+/* Temperature unit cycle: the slider remains internally Celsius for stable phase/search calculations. */
+.temp-unit-btn{border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;padding:4px 5px;border-radius:5px;cursor:pointer;min-width:32px}.temp-unit-btn:hover,.temp-unit-btn:focus-visible{background:rgba(56,189,248,.12);outline:1px solid var(--accent)}
