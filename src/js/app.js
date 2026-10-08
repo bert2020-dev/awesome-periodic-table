@@ -1534,6 +1534,12 @@ function endEditTemp(confirm){
   if(returnTo&&document.contains(returnTo)){returnTo.focus({preventScroll:true});if(returnTo===table&&focusedElement)focusedElement.style.outline="2px solid var(--accent)";}
 }
 tempValue.addEventListener("click",startEditTemp);
+tempUnit?.addEventListener("click",()=>{
+  const order=["C","F","K"],i=order.indexOf(tempUnitMode);
+  tempUnitMode=order[(i+1)%order.length];
+  updateTempDisplay();
+  if(selected)showDetails(selected);
+});
 tempConfirm.addEventListener("click",()=>endEditTemp(true));
 tempCancel.addEventListener("click",()=>endEditTemp(false));
 tempEdit.addEventListener("keydown",e=>{e.stopPropagation();if(e.key==="Enter"){e.preventDefault();endEditTemp(true)}else if(e.key==="Escape"){e.preventDefault();endEditTemp(false)}});
