@@ -84,13 +84,15 @@ const TOLERANCE=0.10;
    sequence selection and cache policy for the search engine and Details panel. */
 class PropertyCatalog {
   static WORD_ORDINALS={first:1,second:2,third:3,fourth:4,fifth:5,sixth:6,seventh:7,eighth:8,ninth:9,tenth:10};
-  static DIMENSIONS={crust:{label:'Crust',unit:'%',kind:'percentage'},ocean:{label:'Ocean',unit:'mg/L',kind:'concentration'},universe:{label:'Universe',unit:'%',kind:'percentage'},humans:{label:'Humans',unit:'%',kind:'percentage'}};
+  static DIMENSIONS={crust:{label:'Crust',unit:'%',kind:'percentage'},ocean:{label:'Ocean',unit:'%',kind:'percentage'},meteorite:{label:'Meteorites',unit:'%',kind:'percentage'},solar:{label:'Sun',unit:'%',kind:'percentage'},universe:{label:'Universe',unit:'%',kind:'percentage'},humans:{label:'Humans',unit:'%',kind:'percentage'}};
   dimensionMeta(dimension){return PropertyCatalog.DIMENSIONS[dimension]||null;}
   static normalize(label){return String(label||"").toLowerCase().trim().replace(/\s+/g," ").replace(/^(?:more|less|higher|lower|greater|smaller|denser|heavier|lighter)\s+/i,"");}
   resolve(label){
     const p=PropertyCatalog.normalize(label).replace(/[’']s$/,'');
     if(/^(?:abundance|abundant|crustal abundance|crust abundance)$/.test(p)||/^(?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?earth(?:'s)?$/.test(p))return{key:'abundance:crust',kind:'dimension',dimension:'crust',label:'Crust'};
     if(/^(?:ocean abundance|abundance in (?:the )?ocean|(?:abundant|common) in (?:the )?ocean|ocean|in (?:the )?ocean)$/.test(p))return{key:'abundance:ocean',kind:'dimension',dimension:'ocean',label:'Ocean'};
+    if(/^(?:meteorite abundance|abundance in (?:the )?meteorites?|(?:abundant|common) in (?:the )?meteorites?|meteorites?|in (?:the )?meteorites?)$/.test(p))return{key:'abundance:meteorite',kind:'dimension',dimension:'meteorite',label:'Meteorites'};
+    if(/^(?:solar abundance|sun abundance|abundance in (?:the )?sun|(?:abundant|common) in (?:the )?sun|sun|solar)$/.test(p))return{key:'abundance:solar',kind:'dimension',dimension:'solar',label:'Sun'};
     if(/^(?:universe abundance|abundance in (?:the )?universe|(?:abundant|common) in (?:the )?universe|universe|in (?:the )?universe)$/.test(p))return{key:'abundance:universe',kind:'dimension',dimension:'universe',label:'Universe'};
     if(/^(?:human abundance|humans? abundance|abundance in (?:the )?(?:humans?|human body)|(?:abundant|common) in (?:the )?(?:humans?|human body)|human|humans|in (?:the )?(?:humans?|human body))$/.test(p))return{key:'abundance:humans',kind:'dimension',dimension:'humans',label:'Humans'};
     let m=p.match(/^(?:ie|ionization(?: energy)?)\s*(\d+)$/);
@@ -323,7 +325,7 @@ function compareValues(relation,leftValues,endpoint){
   const refValues=endpoint.values;
   return leftValues.some(a=>refValues.some(b=>greater?a>b:a<b));
 }
-function toxicityLabel(v){ return v==="Very high / Toxic"?"Very High":(v||"—"); }
+function toxicityLabel(v){ const x=String(v||'').trim(); return /^(?:very\s+high|very\s+hig)$/i.test(x)?'Very High':(x||'—'); }
 
 function evaluateAtomicSelector(el,raw){
   const q=String(raw||'').trim();
@@ -364,7 +366,7 @@ function evaluateCondition(el,cond,tempC){
     const key=m[1].toLowerCase(),val=m[2].trim().toLowerCase();
     if(key==='magnetism')return magType(el.z,tempC).toLowerCase()===val;
     if(key==='category'){const c=matchCategory(el,val);return c===null?(el.cat||'').toLowerCase()===val:c;}
-    if(key==='toxicity')return toxicityLabel(el.tox).toLowerCase()===val||(el.tox||'').toLowerCase()===val;
+    if(key==='toxicity')return toxicityLabel(el.tox).toLowerCase()===val||(val==='toxic'&&/^(?:moderate|high|very high)$/i.test(toxicityLabel(el.tox)));
     if(key==='radiation')return val==='radioactive'?(el.halflife||0)>0:(val==='stable'||val==='—')?(el.halflife||0)===0:false;
     if(key==='oxidation')return el.oxidation===parseInt(val,10);
   }
@@ -690,9 +692,10 @@ function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":
 const versionHeaderEl=document.getElementById("appVersionHeader"),versionAboutEl=document.getElementById("appVersionAbout");
 if(versionHeaderEl)versionHeaderEl.textContent=`v${APP_VERSION}`;
 if(versionAboutEl)versionAboutEl.textContent=APP_VERSION;
-let currentTempC=25,selected=null,comparisonMode=false,detailsLocked=false,elementMode="neutral",lastClickedPos={row:0,col:0},focusedElement=null,editingTemp=false,detailsTab="basic",tempEditReturnFocus=null,tabChordToggled=false;
+let currentTempC=25,tempUnitMode='C',selected=null,comparisonMode=false,detailsLocked=false,elementMode="neutral",lastClickedPos={row:0,col:0},focusedElement=null,editingTemp=false,detailsTab="basic",tempEditReturnFocus=null,tabChordToggled=false;
 function tempColor(tC){const frac=Math.max(0,Math.min(1,(tC+273)/6273));return`hsl(${240-frac*240},85%,50%)`}
-function updateTempDisplay(){tempValue.textContent=`${currentTempC} °C  |  ${CtoF(currentTempC)} °F  |  ${CtoK(currentTempC)} K`}
+function tempUnitValue(c,unit){if(unit==='F')return CtoF(c);if(unit==='K')return CtoK(c);return c;}
+function updateTempDisplay(){const v=tempUnitValue(currentTempC,tempUnitMode);tempValue.textContent=`${v} °${tempUnitMode}`;tempValue.title=`${currentTempC} °C / ${CtoF(currentTempC)} °F / ${CtoK(currentTempC)} K`;(tempUnit||{}).textContent=tempUnitMode;(tempUnit||{}).title=`Temperature unit: °${tempUnitMode}. Click to switch °C, °F, °K.`;}
 function renderSelectionState(){
   elementDivs.forEach((d,z)=>d.classList.toggle("active",!!selected&&selected.z===z));
   table.classList.toggle("details-locked",detailsLocked);
@@ -961,8 +964,8 @@ function showDetails(el){
   const meltC=KtoC(el.melt),boilC=KtoC(el.boil),neutrons=Math.round(el.mass-el.z),ph=phase(el,currentTempC),cmp=(comparisonMode&&selected&&selected.z!==el.z)?selected:null;
   const magVal=magType(el.z,currentTempC);
   const line=(label,value,a,b,clickable=false,propData=null)=>{const ar=(cmp&&a!=null&&b!=null)?arrow(a,b):"";let valueHtml=value;if(clickable&&propData){const attrs=Object.entries(propData).map(([k,v])=>`data-${k}="${escapeHtml(v)}"`).join(" ");valueHtml=`<span class="clickable-prop" ${attrs}>${value}</span>`;}return`<div class="detail-row"><strong>${label}:</strong> ${valueHtml}${ar}</div>`;};
-  const tempDisplay=`${currentTempC} °C  |  ${CtoF(currentTempC)} °F  |  ${CtoK(currentTempC)} K`;
-  const title=`${nuclideHtml(el)} — ${el.name} <span class="additional-info">(${el.latin||'—'})</span>`;
+  const tempDisplay=`${tempUnitValue(currentTempC,tempUnitMode)} °${tempUnitMode}`;
+  const title=`<span class="detail-title-element">${nuclideHtml(el)}</span> <span class="detail-title-name">${el.name}</span> <span class="additional-info">(${el.latin||'—'})</span>`;
   let basic=`<div class="detail-section ${detailsTab==='basic'?'active':''}" data-section="basic">`;
   basic+=line("Latin name",el.latin||'—');
   basic+=line("Atomic number (Z)",el.z);
@@ -974,14 +977,19 @@ function showDetails(el){
   const meltVal=meltC!=null?meltC.toFixed(1):null,boilVal=boilC!=null?boilC.toFixed(1):null;
   basic+=line("Melting point",meltVal?`${meltVal} °C / ${CtoF(meltC)} °F / ${CtoK(meltC)} K`:"—",meltC,cmp?KtoC(cmp.melt):null,meltVal!=null,{prop:"melt",value:meltVal});
   basic+=line("Boiling point",boilVal?`${boilVal} °C / ${CtoF(boilC)} °F / ${CtoK(boilC)} K`:"—",boilC,cmp?KtoC(cmp.boil):null,boilVal!=null,{prop:"boil",value:boilVal});
-  basic+=line("Phase at "+currentTempC+" °C",ph||"unknown",null,null,ph!=="",{prop:"phase",value:ph});basic+='</div>';
+  const phaseLabel=tempUnitValue(currentTempC,tempUnitMode);
+basic+=line("Melting Point",meltVal?`${tempUnitValue(meltC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",meltC,cmp?KtoC(cmp.melt):null,meltVal!=null,{prop:"melt",value:meltVal});
+basic+=line("Boiling Point",boilVal?`${tempUnitValue(boilC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",boilC,cmp?KtoC(cmp.boil):null,boilVal!=null,{prop:"boil",value:boilVal});
+basic+=line("Phase at "+phaseLabel+" °"+tempUnitMode,ph||"unknown",null,null,ph!=="",{prop:"phase",value:ph});
+basic+=line("Common Oxidation State",el.oxidation>0?"+"+el.oxidation:String(el.oxidation),null,null,true,{prop:"oxidation",value:el.oxidation});
+basic+=line("Electronic Config.",el.config||"—");basic+='</div>';
   let extra=`<div class="detail-section ${detailsTab==='extra'?'active':''}" data-section="extra">`;
   extra+=line("Electronegativity",el.en!=null?el.en:"—",el.en,cmp?.en,el.en!=null,{prop:"en",value:el.en});
   const ions=getIonizations(el.z),firstIE=ions[0]??el.ie;
   extra+=line("Ionization energies",firstIE!=null?ionizationTable(el):"—",firstIE,cmp?getIonizations(cmp.z)[0]:null,false,null);
   const e0str=el.e0!==0?el.e0.toFixed(2):null;extra+=line("Standard electrode potential (E°)",e0str?e0str+" V":"—",el.e0!==0?el.e0:null,cmp&&cmp.e0!==0?cmp.e0:null,e0str!=null,{prop:"e0",value:e0str});
   extra+=line("Radiation Level",el.halflife>0?"Radioactive":"—",null,null,true,{prop:"radiation",value:el.halflife>0?"Radioactive":"—"});extra+=line("Half-life",formatHalfLife(el.halflife));
-  extra+=line("Toxicity Level",toxicityLabel(el.tox),null,null,true,{prop:"toxicity",value:el.tox});extra+=line("Magnetic response",magVal,null,null,true,{prop:"magnetism",value:magVal});
+  extra+=line("Toxicity Level",toxicityLabel(el.tox),null,null,true,{prop:"toxicity",value:toxicityLabel(el.tox)});extra+=line("Magnetic response",magVal,null,null,true,{prop:"magnetism",value:magVal});
   const yearPart=el.year!=null?clickableValue("year",el.year,el.year):"Ancient / unknown";
   const sourcePart=el.discoverySource?`, ${clickableValue("discoverySource",el.discoverySource,escapeHtml(el.discoverySource))}`:"";
   const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\s+and\s+/i).map(c=>flagHtml(c)).join(" ")}`:"";
