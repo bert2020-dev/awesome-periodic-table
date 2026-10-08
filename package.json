@@ -2,7 +2,7 @@
   "name": "awesome-periodic-table-builder",
   "private": true,
   "type": "module",
-  "version": "0.5.13",
+  "version": "0.6.0",
   "scripts": {
     "prebuild": "node tools/check-latest.mjs",
     "build": "npm run build:plain && npm run build:arcager",
