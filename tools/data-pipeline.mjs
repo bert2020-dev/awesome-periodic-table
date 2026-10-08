@@ -25,20 +25,31 @@ const list=v=>v===''?[]:v.split(';').filter(Boolean).map(Number);
 
 export function loadManifest(root, version){
   const DATA=path.join(root,'data');
-  const elements=csv(fs.readFileSync(path.join(DATA,'elements.csv'),'utf8')).map(r=>({
-    z:Number(r.z), sym:r.sym, name:r.name, latin:r.latin || null, mass:num(r.mass), cat:r.cat,
-    melt:num(r.melt), boil:num(r.boil), config:r.config, density:num(r.density), en:num(r.en), ie:num(r.ie),
-    sources:r.sources, e0:num(r.e0), tox:r.tox || '—', year:num(r.year), oxidation:num(r.oxidation),
-    halflife:num(r.halflife), discoverySource:r.discoverySource || null, discoveryCountry:r.discoveryCountry || null
-  }));
+  const elementsRaw=csv(fs.readFileSync(path.join(DATA,'elements.csv'),'utf8'));
   const extras=csv(fs.readFileSync(path.join(DATA,'element-extra.csv'),'utf8'));
   const lookups=csv(fs.readFileSync(path.join(DATA,'lookups.csv'),'utf8'));
   const byZ=new Map(extras.map(r=>[Number(r.z),r]));
+  const elements=elementsRaw.map(r=>{
+    const x=byZ.get(Number(r.z))||{};
+    return {
+      z:Number(r.z), sym:r.sym, name:r.name, latin:r.latin || null, mass:num(r.mass), cat:r.cat,
+      melt:num(r.melt), boil:num(r.boil), config:r.config, density:num(r.density), en:num(r.en), ie:list(x.ionizationEnergies)[0]??null,
+      sources:x.sources||'', e0:num(r.e0), tox:x.tox||'—', year:num(x.year), oxidation:num(r.oxidation),
+      halflife:num(x.halflife), discoverySource:x.discoverySource||null, discoveryCountry:x.discoveryCountry||null
+    };
+  });
   const EXTRA_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.electricalConductivity ?? ''))];
   const EXTRA_HEAT=[null,...elements.map(e=>num(byZ.get(e.z)?.specificHeat ?? ''))];
   const THERMAL_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.thermalConductivity ?? ''))];
   const ELECTRICAL_TYPE=[null,...elements.map(e=>byZ.get(e.z)?.electricalType || 'N/A')];
-  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({crust:num(byZ.get(e.z)?.crustAbundance ?? ''),ocean:csvOceanPercent(byZ.get(e.z)?.oceanAbundance ?? ''),universe:num(byZ.get(e.z)?.universeAbundance ?? ''),humans:num(byZ.get(e.z)?.humanAbundance ?? ''),solar:num(byZ.get(e.z)?.solarAbundance ?? ''),meteorite:num(byZ.get(e.z)?.meteoriteAbundance ?? '')}))];
+  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({
+    crust:num(byZ.get(e.z)?.crustAbundance ?? ''),
+    ocean:csvOceanPercent(byZ.get(e.z)?.oceanAbundance ?? ''),
+    universe:num(byZ.get(e.z)?.universeAbundance ?? ''),
+    humans:num(byZ.get(e.z)?.humanAbundance ?? ''),
+    solar:num(byZ.get(e.z)?.solarAbundance ?? ''),
+    meteorite:num(byZ.get(e.z)?.meteoriteAbundance ?? '')
+  }))];
   const IONIZATION_ENERGIES=[null,...elements.map(e=>list(byZ.get(e.z)?.ionizationEnergies ?? ''))];
   const EXTRA_ISOTOPES=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopes ?? ''))];
   const EXTRA_ISOTOPE_ABUNDANCE=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopeAbundance ?? ''))];
@@ -47,9 +58,8 @@ export function loadManifest(root, version){
   const E_SOURCES=[...new Set(elements.flatMap(e=>String(e.sources||'').split(',').map(x=>x.trim()).filter(Boolean)))];
   const DISCOVERY_COUNTRY=[null,...elements.map(e=>e.discoveryCountry)];
   const DISCOVERY_SOURCE=[null,...elements.map(e=>e.discoverySource)];
-  return {schema:1,version,elements,CAT,TOX,E_SOURCES,DISCOVERY_COUNTRY,DISCOVERY_SOURCE,EXTRA_CONDUCTIVITY,EXTRA_HEAT,THERMAL_CONDUCTIVITY,ELECTRICAL_TYPE,EXTRA_ISOTOPES,EXTRA_ISOTOPE_ABUNDANCE,IONIZATION_ENERGIES,EXTRA_ABUNDANCE,extras,lookups};
+  return {schema:2,version,elements,CAT,TOX,E_SOURCES,DISCOVERY_COUNTRY,DISCOVERY_SOURCE,EXTRA_CONDUCTIVITY,EXTRA_HEAT,THERMAL_CONDUCTIVITY,ELECTRICAL_TYPE,EXTRA_ISOTOPES,EXTRA_ISOTOPE_ABUNDANCE,IONIZATION_ENERGIES,EXTRA_ABUNDANCE,extras,lookups};
 }
-
 function esc(v){
   if(v===null || v===undefined) return '';
   return String(v).replace(/\\/g,'\\\\').replace(/\|/g,'\\|').replace(/\r/g,'\\r').replace(/\n/g,'\\n');
@@ -58,12 +68,12 @@ function esc(v){
 export function manifestToPipe(manifest){
   const out=[
     `@|APT_PIPE_V1|${esc(manifest.version)}|${manifest.schema}`,
-    '#|E|z|sym|name|latin|mass|cat|melt|boil|config|density|en|ie|sources|e0|tox|year|oxidation|halflife|discoverySource|discoveryCountry',
-    '#|X|z|electricalConductivity|specificHeat|thermalConductivity|electricalType|crustAbundance|oceanAbundance|universeAbundance|humanAbundance|ionizationEnergies|isotopes|isotopeAbundance',
+    '#|E|z|sym|name|latin|mass|cat|melt|boil|config|density|en|ie|e0|oxidation',
+    '#|X|z|electricalConductivity|specificHeat|thermalConductivity|electricalType|tox|halflife|sources|discoverySource|discoveryCountry|year|crustAbundance|oceanAbundance|universeAbundance|humanAbundance|solarAbundance|meteoriteAbundance|ionizationEnergies|isotopes|isotopeAbundance',
     '#|L|kind|key|value'
   ];
   for(const e of manifest.elements){
-    out.push(['E',e.z,e.sym,e.name,e.latin,e.mass,e.cat,e.melt,e.boil,e.config,e.density,e.en,e.ie,e.sources,e.e0,e.tox,e.year,e.oxidation,e.halflife,e.discoverySource,e.discoveryCountry].map(esc).join('|'));
+    out.push(['E',e.z,e.sym,e.name,e.latin,e.mass,e.cat,e.melt,e.boil,e.config,e.density,e.en,e.ie,e.e0,e.oxidation].map(esc).join('|'));
   }
   for(const r of manifest.extras){
     out.push(['X',r.z,r.electricalConductivity,r.specificHeat,r.thermalConductivity,r.electricalType,r.tox,r.halflife,r.sources,r.discoverySource,r.discoveryCountry,r.year,r.crustAbundance,csvOceanPercent(r.oceanAbundance),r.universeAbundance,r.humanAbundance,r.solarAbundance,r.meteoriteAbundance,r.ionizationEnergies,r.isotopes,r.isotopeAbundance].map(esc).join('|'));
