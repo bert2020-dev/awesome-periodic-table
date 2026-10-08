@@ -1,0 +1,28 @@
+name: Build and test
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: npm install
+      - name: Verify data and UI contracts
+        run: npm run test:data && npm run test:ui
+      - name: Run search and runtime regressions
+        run: npm run test:search && npm run test:pipe && npm run test:autocomplete && npm run test:multi && npm run test:superlatives && npm run test:runtime
+      - name: Build plain and Arcager distributions
+        run: npm run build:all
+      - name: Verify build outputs
+        run: npm run test:build && npm run test:arcager && npm run test:arcager-data && npm run test:contract
