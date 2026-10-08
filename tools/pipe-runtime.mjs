@@ -12,7 +12,7 @@ export const PIPE_RUNTIME = String.raw`function __APT_decodePipe(s){
   const EXTRA_HEAT=[null,...elements.map(e=>num(byZ.get(e.z)?.specificHeat??''))];
   const THERMAL_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.thermalConductivity??''))];
   const ELECTRICAL_TYPE=[null,...elements.map(e=>byZ.get(e.z)?.electricalType||'N/A')];
-  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({crust:num(byZ.get(e.z)?.crustAbundance??''),ocean:(num(byZ.get(e.z)?.oceanAbundance??'')??null)/10000,universe:num(byZ.get(e.z)?.universeAbundance??''),humans:num(byZ.get(e.z)?.humanAbundance??''),solar:num(byZ.get(e.z)?.solarAbundance??''),meteorite:num(byZ.get(e.z)?.meteoriteAbundance??'')}))];
+  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({crust:num(byZ.get(e.z)?.crustAbundance??''),ocean:num(byZ.get(e.z)?.oceanAbundance??''),universe:num(byZ.get(e.z)?.universeAbundance??''),humans:num(byZ.get(e.z)?.humanAbundance??''),solar:num(byZ.get(e.z)?.solarAbundance??''),meteorite:num(byZ.get(e.z)?.meteoriteAbundance??'')}))];
   const IONIZATION_ENERGIES=[null,...elements.map(e=>list(byZ.get(e.z)?.ionizationEnergies??''))];
   const EXTRA_ISOTOPES=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopes??''))];
   const EXTRA_ISOTOPE_ABUNDANCE=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopeAbundance??''))];
