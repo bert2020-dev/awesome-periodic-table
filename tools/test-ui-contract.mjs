@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-const ROOT=path.resolve(new URL('.',import.meta.url).pathname,'..');
+import { fileURLToPath } from 'node:url';
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=fs.readFileSync(path.join(ROOT,'src','js','app.js'),'utf8');
 const css=fs.readFileSync(path.join(ROOT,'src','css','app.css'),'utf8');
 const html=fs.readFileSync(path.join(ROOT,'src','index.html'),'utf8');
