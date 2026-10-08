@@ -101,7 +101,7 @@ The application is designed to support both casual exploration and more focused 
 
 Chemistry doesn't stop at room temperature.
 
-Use the temperature controls to explore how an element's physical state changes under different conditions.
+Use the temperature controls to explore how an element's physical state changes under different conditions. The reading starts in Celsius; click the unit button beside the slider to cycle Celsius, Fahrenheit, and Kelvin. Hovering the temperature reading shows all three values without changing the selected display unit.
 
 Move through temperatures and observe how the table responds, making it easier to connect numerical data with the behavior of real elements.
 
@@ -285,7 +285,7 @@ To get started, explore the repository, review the existing issues, and share yo
 
 ## 📦 Releases and Versioning
 
-**Current version: 0.5.13**
+**Current version: 0.6.0**
 
 The project follows semantic-style `X.Y.Z` versioning:
 
