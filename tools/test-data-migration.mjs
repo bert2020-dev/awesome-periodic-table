@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-const ROOT=path.resolve(new URL('.',import.meta.url).pathname,'..');
+import { fileURLToPath } from 'node:url';
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 function csv(text){const rows=[];let row=[],f='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(q){if(c==='"'&&n==='"'){f+='"';i++;}else if(c==='"')q=false;else f+=c;}else if(c==='"')q=true;else if(c===','){row.push(f);f='';}else if(c==='\n'){row.push(f);rows.push(row);row=[];f='';}else if(c!=='\r')f+=c;}if(f||row.length){row.push(f);rows.push(row);}const h=rows[0];return rows.slice(1).filter(r=>r.length).map(r=>Object.fromEntries(h.map((k,i)=>[k,r[i]??''])));}
 const core=csv(fs.readFileSync(path.join(ROOT,'data','elements.csv'),'utf8'));
 const extra=csv(fs.readFileSync(path.join(ROOT,'data','element-extra.csv'),'utf8'));
