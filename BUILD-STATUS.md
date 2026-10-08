@@ -1,11 +1,10 @@
-# Build Status — 0.5.13
+# Build Status — 0.6.0
 
 ## Release status
-- Version: 0.5.13
-- Standard distribution: Arcager 3.2.3 (genuine upstream) + gzip
+- Version: 0.6.0
+- Standard distribution: Arcager 4.0.0 (genuine upstream) + gzip
 - Arcager CSV resources: 3 bundled
-- Arcager bridge regression: PASS (primary `ready`-Promise path, legacy
-  3.2.0-style empty-map fallback, and rejected-`ready` fallback all covered)
+- Arcager bridge regression: contract updated for the Arcager 4.0.0 `ready` API; legacy fallback coverage retained
 - 123/123 core NLP tests: PASS
 - 33/33 multi-value tests: PASS
 - 13/13 superlative tests: PASS
@@ -14,9 +13,9 @@
 - Plain single-file build: PASS
 - Arcager standalone/unpack validation: PASS
 - Release check: PASS
-- `npm run build` produces both `dist/plain/` and `dist/arcager/`: PASS
+- `npm run build` produces both `dist/plain/` and `dist/arcager/`: source contract and CI workflow added; final clean-environment execution is pending because this repository currently has no prior CI runner/status
 
-## What changed in 0.5.13
+## What changed in 0.6.0
 - **CSS**: fixed the bottom hotkey-hint bar (`.help-line`) overflowing
   off-screen instead of wrapping, on narrow viewports.
 - **Arcager**: the vendored copy is now the genuine upstream 3.2.3 release
