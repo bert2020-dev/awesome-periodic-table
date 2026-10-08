@@ -20,6 +20,7 @@ function csv(text) {
 }
 
 const num=v=>v===''?null:Number(v);
+const csvOceanPercent=v=>{const n=num(v);return n==null?null:n/10000;};
 const list=v=>v===''?[]:v.split(';').filter(Boolean).map(Number);
 
 export function loadManifest(root, version){
@@ -37,7 +38,7 @@ export function loadManifest(root, version){
   const EXTRA_HEAT=[null,...elements.map(e=>num(byZ.get(e.z)?.specificHeat ?? ''))];
   const THERMAL_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.thermalConductivity ?? ''))];
   const ELECTRICAL_TYPE=[null,...elements.map(e=>byZ.get(e.z)?.electricalType || 'N/A')];
-  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({crust:num(byZ.get(e.z)?.crustAbundance ?? ''),ocean:num(byZ.get(e.z)?.oceanAbundance ?? ''),universe:num(byZ.get(e.z)?.universeAbundance ?? ''),humans:num(byZ.get(e.z)?.humanAbundance ?? '')}))];
+  const EXTRA_ABUNDANCE=[null,...elements.map(e=>({crust:num(byZ.get(e.z)?.crustAbundance ?? ''),ocean:csvOceanPercent(byZ.get(e.z)?.oceanAbundance ?? ''),universe:num(byZ.get(e.z)?.universeAbundance ?? ''),humans:num(byZ.get(e.z)?.humanAbundance ?? ''),solar:num(byZ.get(e.z)?.solarAbundance ?? ''),meteorite:num(byZ.get(e.z)?.meteoriteAbundance ?? '')}))];
   const IONIZATION_ENERGIES=[null,...elements.map(e=>list(byZ.get(e.z)?.ionizationEnergies ?? ''))];
   const EXTRA_ISOTOPES=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopes ?? ''))];
   const EXTRA_ISOTOPE_ABUNDANCE=[null,...elements.map(e=>list(byZ.get(e.z)?.isotopeAbundance ?? ''))];
@@ -65,7 +66,7 @@ export function manifestToPipe(manifest){
     out.push(['E',e.z,e.sym,e.name,e.latin,e.mass,e.cat,e.melt,e.boil,e.config,e.density,e.en,e.ie,e.sources,e.e0,e.tox,e.year,e.oxidation,e.halflife,e.discoverySource,e.discoveryCountry].map(esc).join('|'));
   }
   for(const r of manifest.extras){
-    out.push(['X',r.z,r.electricalConductivity,r.specificHeat,r.thermalConductivity,r.electricalType,r.crustAbundance,r.oceanAbundance,r.universeAbundance,r.humanAbundance,r.ionizationEnergies,r.isotopes,r.isotopeAbundance].map(esc).join('|'));
+    out.push(['X',r.z,r.electricalConductivity,r.specificHeat,r.thermalConductivity,r.electricalType,r.tox,r.halflife,r.sources,r.discoverySource,r.discoveryCountry,r.year,r.crustAbundance,csvOceanPercent(r.oceanAbundance),r.universeAbundance,r.humanAbundance,r.solarAbundance,r.meteoriteAbundance,r.ionizationEnergies,r.isotopes,r.isotopeAbundance].map(esc).join('|'));
   }
   for(const r of manifest.lookups){ out.push(['L',r.kind,r.key,r.value].map(esc).join('|')); }
   return out.join('\n');
