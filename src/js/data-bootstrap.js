@@ -4,7 +4,7 @@
    into the same manifest contract consumed by app.js. */
 (function(){
   const num=v=>v===''||v==null?null:Number(v);
-  const oceanPercent=v=>{const n=num(v);return n==null?null:n/10000;};
+  const oceanPercent=v=>num(v);
   const list=v=>v===''||v==null?[]:String(v).split(';').filter(Boolean).map(Number);
   const rowsToObjects=rows=>{
     if(!rows||!rows.length)return[];
