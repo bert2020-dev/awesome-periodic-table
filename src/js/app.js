@@ -474,7 +474,7 @@ function evaluateCondition(el,cond,tempC){
   if(p==='stable')return el.halflife===0;
   const ph=phase(el,tempC);
   if(p==='solid'||p==='liquid'||p==='gas')return ph===p;
-  if(p==='toxic'){const idx=TOX.indexOf(el.tox);return idx>=2;} // Moderate, High, Very high
+  if(p==='toxic'){const t=toxicityLabel(el.tox).toLowerCase();return t==='high'||t==='very high';}
   if(/^(?:hazard|hazardous|harmful|danger|dangerous)$/.test(p)){
     const idx=TOX.indexOf(el.tox);
     return idx>=2||(el.halflife||0)>0;
@@ -843,7 +843,7 @@ function flagHtml(country,prop="discoveryCountry"){
 function sourceHtml(source){
   return COUNTRY_CODE[source] ? flagHtml(source,"occurrenceCountry") : escapeHtml(source);
 }
-function toxicityLabel(v){ return v==="Very high / Toxic"?"Very High":(v||"—"); }
+function toxicityLabel(v){ const x=String(v||'').trim(); return /^(?:very\s+high|very\s+hig)$/i.test(x)?'Very High':(x||'—'); }
 function compactList(items,limit=3,mapper=v=>escapeHtml(v)){
   const arr=items.filter(Boolean); if(!arr.length)return"—";
   const body=arr.slice(0,limit).map(mapper).join(", ");
@@ -909,17 +909,9 @@ function wireQuickTables(){
   });
 }
 function ordinalLabel(n){const map={1:'1st',2:'2nd',3:'3rd'};return map[n]||`${n}th`;}
-function formatAbundanceDimension(dimension,value){
-  if(value==null)return'—';
-  if(dimension==='ocean'){
-    if(value===0)return'0 mg/L';
-    if(Math.abs(value)>=1)return`${parseFloat(value.toPrecision(5))} mg/L`;
-    return`${parseFloat(value.toPrecision(4))} mg/L`;
-  }
-  return formatAbundance(value);
-}
+function formatAbundanceDimension(dimension,value){return formatAbundance(value);}
 function abundanceDistributionTable(el){
-  const defs=[['crust','Crust'],['ocean','Ocean'],['universe','Universe'],['humans','Human body']];
+  const defs=[['crust','Crust'],['ocean','Ocean'],['meteorite','Meteorites'],['solar','Sun'],['universe','Universe'],['humans','Human body']];
   const available=defs.map(([dim,label])=>({dim,label,value:DATA_MODEL.abundance(el.z,dim)})).filter(x=>x.value!=null);
   if(!available.length)return'—';
   const first=available[0];
