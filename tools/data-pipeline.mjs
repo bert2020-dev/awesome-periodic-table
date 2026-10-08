@@ -20,7 +20,7 @@ function csv(text) {
 }
 
 const num=v=>v===''?null:Number(v);
-const csvOceanPercent=v=>{const n=num(v);return n==null?null:n/10000;};
+const csvOceanPercent=v=>num(v);
 const list=v=>v===''?[]:v.split(';').filter(Boolean).map(Number);
 
 export function loadManifest(root, version){
