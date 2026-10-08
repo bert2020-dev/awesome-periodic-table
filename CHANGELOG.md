@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0
+
+- Expanded the core and auxiliary CSV schema from the supplied data model, including toxicity/discovery metadata and solar/meteorite abundance.
+- Normalized abundance presentation to percentages; ocean concentration is converted to percent at the data-model boundary.
+- Added Celsius/Fahrenheit/Kelvin display cycling beside the temperature slider while keeping internal calculations in Celsius; the temperature tooltip always shows all three units.
+- Reordered Details Basic properties and changed atomic mass to g/mol.
+- Reworked the nuclide header so mass number and atomic number share one exact horizontal anchor around the larger element symbol.
+- Upgraded the vendored Arcager packager to 4.0.0 and migrated the adapter to its v4 CLI.
+- Added data/UI migration regression contracts and expanded Arcager bridge coverage.
+
+
 ## 0.5.13
 - Fixed a CSS overflow bug in the bottom hotkey-hint bar (`.help-line`): as a
   direct flex-item child of `body` with no `min-width:0`/wrap safety, and
