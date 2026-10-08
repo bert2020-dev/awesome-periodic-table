@@ -56,10 +56,11 @@ async function runScenario(name,{arcager,domBlocks}){
   const h=manifest.elements[0];
   if(h.z!==1||h.sym!=='H'||h.name!=='Hydrogen')throw new Error(`[${name}] first element invalid: ${JSON.stringify(h)}`);
   if(!manifest.EXTRA_ABUNDANCE[8]?.humans)throw new Error(`[${name}] human abundance missing after bridge parse.`);
+  if(!('solar' in manifest.EXTRA_ABUNDANCE[1])||!('meteorite' in manifest.EXTRA_ABUNDANCE[1]))throw new Error(`[${name}] solar/meteorite abundance dimensions missing.`);
   return ctx;
 }
 
-// A. Genuine Arcager >= 3.2.3: `ready` resolves after the CSV is parsed and arcager.csv is
+// A. Genuine Arcager 4.0.0: `ready` resolves after the CSV is parsed and arcager.csv is
 //    fully populated. The DOM is deliberately empty, so this only passes if the app
 //    actually consumes Arcager's own public API (the primary path).
 const populated={};
@@ -67,7 +68,7 @@ for(const b of blocks){
   const rows=parseCsvForTest(b.text);
   populated[b.key]={rows,data:rows.slice(1).map(r=>Object.fromEntries(rows[0].map((h,i)=>[h,r[i]??''])))};
 }
-await runScenario('arcager >=3.2.1 primary path',{arcager:{ready:Promise.resolve({csv:populated}),state:'ready',loaded:true,error:null,csv:populated},domBlocks:false});
+await runScenario('arcager 4.0.0 primary path',{arcager:{ready:Promise.resolve({csv:populated}),state:'ready',loaded:true,error:null,csv:populated},domBlocks:false});
 
 // B. Legacy Arcager 3.2.0 behaviour: `ready` resolves but arcager.csv is empty. The app must
 //    fall back to parsing the committed <script type="text/csv"> blocks and publish them back.
