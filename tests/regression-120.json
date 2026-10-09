@@ -236,7 +236,7 @@
   },
   {
     "num": 48,
-    "query": "ocean abundance above 1000",
+    "query": "ocean abundance above 0.1",
     "expected": 5
   },
   {
