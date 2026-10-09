@@ -34,12 +34,11 @@ export async function pack({context}){
   if(!fs.existsSync(arcager))throw new Error(`Arcager runtime not found at ${arcager}. Run npm run setup:arcager.`);
   fs.mkdirSync(path.dirname(outputHtml),{recursive:true});
   const compression=compressionMode(context.compression);
-  const args=['--force','--merge',inputDir,'--output',outputHtml];
-  if(compression==='brotli')args.push('--brotli');
+  const args=['--force','-M',inputDir,'--output',outputHtml,'-c',compression];
   const version=detectArcagerVersion(arcager);
   const r=runPython(arcager,args);
   const outputBytes=fs.statSync(outputHtml).size;
   const inputBytes=walkBytes(inputDir);
-  return {runtime:'',bootstrap:'',stats:{arcagerVersion:version,requiredArcagerApi:'ready-promise>=3.2.1',compression,inputBytes,outputBytes,ratio:outputBytes/Math.max(1,inputBytes),standalone:true,runtimeDependencies:0,csvBundled:true,merge:true,command:args,stdout:r.stdout?.trim()||''}};
+  return {runtime:'',bootstrap:'',stats:{arcagerVersion:version,requiredArcagerApi:'Arcager 4.0.0 window.arcager.ready',compression,inputBytes,outputBytes,ratio:outputBytes/Math.max(1,inputBytes),standalone:true,runtimeDependencies:0,csvBundled:true,merge:true,command:args,stdout:r.stdout?.trim()||''}};
 }
 function walkBytes(dir){let total=0;for(const ent of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,ent.name);if(ent.isDirectory())total+=walkBytes(p);else total+=fs.statSync(p).size;}return total;}

@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const app=fs.readFileSync(path.join(ROOT,'src','js','app.js'),'utf8');
+const css=fs.readFileSync(path.join(ROOT,'src','css','app.css'),'utf8');
+const html=fs.readFileSync(path.join(ROOT,'src','index.html'),'utf8');
+for(const needle of ['tempUnitMode=\'C\'','tempUnit?.addEventListener','tempUnitValue(currentTempC,tempUnitMode)','Mass (g/mol)','Electronic Config.','abundance:meteorite','abundance:solar'])if(!app.includes(needle))throw new Error(`Missing UI contract: ${needle}`);
+if(!css.includes('.nuclide-header .nuclide-mass { top:-.18em; }')||!css.includes('.nuclide-header .nuclide-z { bottom:-.18em; }'))throw new Error('Nuclide overlay CSS contract missing.');
+if(!html.includes('id="tempUnit"')||!html.includes('25 °C / 77 °F / 298.15 K'))throw new Error('Temperature unit control/tooltip contract missing.');
+console.log('UI contract passed: selectable temperature units, three-unit tooltip, ordered details labels, abundance dimensions, and overlaid nuclide header.');

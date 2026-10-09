@@ -101,7 +101,7 @@ The application is designed to support both casual exploration and more focused 
 
 Chemistry doesn't stop at room temperature.
 
-Use the temperature controls to explore how an element's physical state changes under different conditions.
+Use the temperature controls to explore how an element's physical state changes under different conditions. The reading starts in Celsius; click the unit button beside the slider to cycle Celsius, Fahrenheit, and Kelvin. Hovering the temperature reading shows all three values without changing the selected display unit.
 
 Move through temperatures and observe how the table responds, making it easier to connect numerical data with the behavior of real elements.
 
@@ -222,7 +222,13 @@ Multi-dimensional data is handled consistently, including abundance dimensions, 
 
 ### Build Commands
 
-To build the project, you'll need a suitable Node.js development environment.
+To build the project on Linux or macOS, install Node.js LTS (including npm), Python 3, and Bash, then run the helper from the repository root:
+
+```bash
+bash build.sh
+```
+
+The helper checks prerequisites and installs npm dependencies if needed. On Windows, use `build.bat`. You can also run the npm commands directly:
 
 ```bash
 npm run build
@@ -241,7 +247,7 @@ npm run release              # build:all, then verify and package a release
 npm run check:updates        # check the vendored Arcager version against upstream
 ```
 
-On Windows 10, `build.bat` (repo root) does the same as `npm run build` after checking that Node.js and Python are on `PATH` — see `docs/BUILDING.md` for details and prerequisites.
+On Windows 10, `build.bat` does the same after checking that Node.js and Python are on `PATH`. Linux/macOS users can run `bash build.sh`. See `docs/BUILDING.md` for details and prerequisites.
 
 ### Testing
 
@@ -285,7 +291,7 @@ To get started, explore the repository, review the existing issues, and share yo
 
 ## 📦 Releases and Versioning
 
-**Current version: 0.5.13**
+**Current version: 0.6.0**
 
 The project follows semantic-style `X.Y.Z` versioning:
 

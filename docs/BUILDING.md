@@ -29,7 +29,7 @@ Produces:
 dist/arcager/awesome-periodic-table.html
 ```
 
-The release path stages the original CSV resources and invokes the vendored Arcager `--merge` workflow (currently the genuine upstream 3.2.3 release — see *A note on the vendored Arcager copy*, below). Arcager therefore bundles the CSVs as CSV resources and generates its own inline browser loader.
+The release path stages the original CSV resources and invokes the vendored Arcager `--merge` workflow (the vendored upstream Arcager v4.0.0 CLI — see *A note on the vendored Arcager copy*, below). Arcager therefore bundles the CSVs as CSV resources and generates its own inline browser loader.
 
 ### Brotli experiment
 
@@ -38,6 +38,16 @@ npm run build:arcager:brotli
 ```
 
 This is an optional compatibility experiment. The standard distribution remains gzip.
+
+### Building on Linux and macOS
+
+Install Node.js LTS (including npm), Python 3, and Bash. From the repository root, run:
+
+```bash
+bash build.sh
+```
+
+The helper checks for the required tools, installs npm dependencies if `node_modules/` is absent, and then runs the requested npm target. It supports `bash build.sh plain`, `bash build.sh build:arcager`, `bash build.sh all`, and `bash build.sh release`. You can also run the documented `npm run ...` commands directly.
 
 ### Building on Windows 10
 

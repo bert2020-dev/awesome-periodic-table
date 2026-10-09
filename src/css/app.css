@@ -1080,55 +1080,48 @@ code {
   }
 }
 .nuclide {
-  display:inline-grid;
-  align-items:center;
+  display:inline-block;
+  position:relative;
   vertical-align:middle;
   line-height:1;
   font-weight:700;
-  column-gap:3px;
   white-space:nowrap;
 }
 .nuclide-header {
-  grid-template-columns:auto auto;
-  grid-template-rows:.62em .62em;
   font-size:1.02rem;
-}
-.nuclide-header .nuclide-mass,.nuclide-header .nuclide-z {
-  grid-column:1;
-  font-size:.56em;
-  line-height:1;
-}
-.nuclide-header .nuclide-mass {
-  grid-row:1;
-  align-self:end;
-}
-.nuclide-header .nuclide-z {
-  grid-row:2;
-  align-self:start;
+  min-width:1.75em;
+  padding-left:.72em;
 }
 .nuclide-header .nuclide-symbol {
-  grid-column:2;
-  grid-row:1 / span 2;
+  display:inline-block;
   font-size:1.42em;
-  align-self:center;
   line-height:1;
+  font-weight:800;
 }
+.nuclide-header .nuclide-mass,
+.nuclide-header .nuclide-z {
+  position:absolute;
+  left:0;
+  font-size:.56em;
+  line-height:1;
+  font-weight:800;
+  width:.9em;
+  text-align:right;
+}
+.nuclide-header .nuclide-mass { top:-.18em; }
+.nuclide-header .nuclide-z { bottom:-.18em; }
 .nuclide-isotope {
-  grid-template-columns:auto auto;
-  grid-template-rows:1fr;
-  column-gap:2px;
+  display:inline-flex;
+  align-items:flex-start;
+  gap:2px;
 }
 .nuclide-isotope .nuclide-mass {
-  grid-column:1;
   font-size:.58em;
-  align-self:start;
   line-height:1;
 }
 .nuclide-isotope .nuclide-symbol {
-  grid-column:2;
-  grid-row:1;
   font-size:1em;
-  align-self:center;
+  line-height:1;
 }
 .truncated-prop {
   cursor:help;
@@ -1284,4 +1277,122 @@ code {
     min-width: 150px;
     max-width: none;
   }
+}
+
+/* Temperature unit cycle: the slider remains internally Celsius for stable phase/search calculations. */
+.temp-unit-btn{border:0;background:transparent;color:var(--accent);font:inherit;font-weight:700;padding:4px 5px;border-radius:5px;cursor:pointer;min-width:32px}.temp-unit-btn:hover,.temp-unit-btn:focus-visible{background:rgba(56,189,248,.12);outline:1px solid var(--accent)}
+
+/* 0.6.0 toolbar refinement: give search more room and keep temperature editing compact. */
+.search-wrap { flex: 1 1 560px; min-width: 320px; }
+.search-wrap input[type="search"], #search { width:100%; min-width:0; }
+.temp-box { grid-template-columns:auto 132px 28px minmax(300px,1fr) 28px 32px; gap:7px; }
+.temp-box .temp-setting { width:132px; min-width:132px; max-width:132px; flex:0 0 132px; }
+.temp-box #tempValue, .temp-box #tempEdit { width:132px; min-width:132px; max-width:132px; }
+.temp-box #tempEdit { padding-right:62px; }
+.temp-box #tempValue { gap:4px; }
+.temp-unit-btn { min-width:25px; padding:3px 4px; }
+@media (max-width: 1100px) {
+  .temp-box { grid-template-columns:auto 132px 28px minmax(180px,1fr) 28px 32px; }
+  .search-wrap { flex-basis:420px; }
+}
+@media (max-width: 760px) {
+  .search-wrap { min-width:220px; flex-basis:100%; }
+  .temp-box { grid-template-columns:auto minmax(100px,132px) 28px minmax(100px,1fr) 28px 32px; gap:5px; }
+  .temp-box .temp-setting, .temp-box #tempValue, .temp-box #tempEdit { width:100%; min-width:0; max-width:none; }
+}
+
+/* Final stable toolbar layout: two columns, no overlapping temperature controls. */
+.controls {
+  display:grid;
+  grid-template-columns:minmax(0, 1.45fr) minmax(0, 1fr);
+  gap:16px;
+  width:100%;
+  max-width:1500px;
+  margin:0 auto 12px;
+  align-items:center;
+}
+.search-wrap { grid-column:1; min-width:0; width:100%; }
+.search-wrap .search-field { flex:1 1 auto; min-width:0; width:100%; }
+.search-wrap input[type=search] { width:100%; min-width:0; flex:1 1 auto; }
+.temp-box {
+  grid-column:2;
+  display:grid;
+  grid-template-columns:154px 28px minmax(90px,1fr) 28px 32px;
+  gap:6px;
+  width:100%;
+  min-width:0;
+  max-width:none;
+  height:36px;
+  align-items:center;
+}
+.temp-box .temp-setting {
+  position:relative;
+  display:block;
+  width:154px;
+  min-width:154px;
+  max-width:154px;
+  height:34px;
+  flex:none;
+}
+.temp-box #tempValue {
+  position:absolute;
+  left:0;
+  right:37px;
+  top:0;
+  bottom:0;
+  width:auto;
+  min-width:0;
+  max-width:none;
+  inset-block:0;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  padding:3px 5px;
+  z-index:1;
+}
+.temp-box #tempUnit {
+  position:absolute;
+  right:0;
+  top:4px;
+  width:34px;
+  min-width:34px;
+  height:26px;
+  padding:2px 3px;
+  z-index:4;
+  pointer-events:auto;
+}
+.temp-box #tempEdit {
+  position:absolute;
+  left:0;
+  right:37px;
+  top:1px;
+  bottom:1px;
+  width:auto;
+  min-width:0;
+  max-width:none;
+  height:32px;
+  padding:4px 5px;
+  z-index:2;
+}
+.temp-box .edit-actions {
+  position:absolute;
+  right:37px;
+  top:4px;
+  display:flex;
+  gap:3px;
+  z-index:3;
+}
+.temp-box input[type=range] { width:100%; min-width:0; flex:1 1 auto; }
+.temp-box .reset-btn { margin:0; }
+@media (max-width: 900px) {
+  .controls { grid-template-columns:minmax(0,1fr); gap:8px; }
+  .search-wrap,.temp-box { grid-column:1; }
+  .temp-box { grid-template-columns:154px 28px minmax(80px,1fr) 28px 32px; }
+}
+@media (max-width: 520px) {
+  .temp-box { grid-template-columns:130px 28px minmax(70px,1fr) 26px 30px; gap:4px; }
+  .temp-box .temp-setting { width:130px; min-width:130px; max-width:130px; }
+  .temp-box #tempValue,.temp-box #tempEdit { right:35px; }
+  .temp-box #tempUnit { width:32px; min-width:32px; }
+  .temp-box .edit-actions { right:35px; }
 }

@@ -25,10 +25,37 @@ const packageRoot=path.join(parent,base);
 fs.rmSync(packageRoot,{recursive:true,force:true});
 fs.renameSync(stagingRoot,packageRoot);
 fs.rmSync(zipPath,{force:true});
-execFileSync('zip',['-r','-q',zipPath,base],{cwd:parent,stdio:'inherit'});
-fs.rmSync(packageRoot,{recursive:true,force:true});
-execFileSync('unzip',['-t',zipPath],{stdio:'ignore'});
-const listing=execFileSync('unzip',['-Z1',zipPath],{encoding:'utf8'}).split(/\r?\n/).filter(Boolean);
+
+let listing;
+if(process.platform==='win32'){
+  // Use Windows PowerShell/.NET so Windows users do not need Unix zip/unzip utilities.
+  const script=`
+    $ErrorActionPreference = 'Stop'
+    Compress-Archive -LiteralPath $env:APT_PACKAGE_ROOT -DestinationPath $env:APT_ZIP_PATH -Force
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [System.IO.Compression.ZipFile]::OpenRead($env:APT_ZIP_PATH)
+    try {
+      foreach ($entry in $archive.Entries) {
+        $stream = $entry.Open()
+        try { $stream.CopyTo([System.IO.Stream]::Null) } finally { $stream.Dispose() }
+      }
+      @($archive.Entries | ForEach-Object { $_.FullName }) | ConvertTo-Json -Compress
+    } finally { $archive.Dispose() }
+  `;
+  const output=execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',script],{
+    cwd:parent,
+    encoding:'utf8',
+    env:{...process.env,APT_PACKAGE_ROOT:base,APT_ZIP_PATH:zipPath}
+  }).trim();
+  const parsed=JSON.parse(output);
+  listing=Array.isArray(parsed)?parsed:[parsed];
+}else{
+  execFileSync('zip',['-r','-q',zipPath,base],{cwd:parent,stdio:'inherit'});
+  execFileSync('unzip',['-t',zipPath],{stdio:'ignore'});
+  listing=execFileSync('unzip',['-Z1',zipPath],{encoding:'utf8'}).split(/\r?\n/).filter(Boolean);
+}
+// ZIP entry separators may be backslashes on Windows; compare canonical paths.
+listing=listing.map(n=>n.replace(/\\/g,'/'));
 const prefix=base+'/';
 for(const suffix of ['dist/plain/awesome-periodic-table.html','dist/arcager/awesome-periodic-table.html']){
   if(!listing.includes(prefix+suffix)) throw new Error(`Missing packaged dist artifact: ${suffix}`);
