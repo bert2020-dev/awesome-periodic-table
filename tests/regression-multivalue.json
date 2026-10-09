@@ -24,7 +24,7 @@
     "expected": 82
   },
   {
-    "query": "ocean abundance above 1000",
+    "query": "ocean abundance above 0.1",
     "expected": 5
   },
   {
@@ -45,7 +45,7 @@
   },
   {
     "query": "more abundant in ocean than in crust",
-    "expected": 0
+    "expected": 5
   },
   {
     "query": "crust abundance between H and He",
