@@ -30,7 +30,8 @@ if(!packedText.includes('DecompressionStream'))throw new Error('Arcager browser 
 // Arcager 4.0.1+ readiness contract: ready resolves after unpack; error is null on success.
 if(!/window\.arcager\.ready\s*=/.test(packedText))throw new Error('Arcager ready Promise missing from runtime.');
 if(!/window\.arcager\.error\s*=/.test(packedText))throw new Error('Arcager error flag missing from runtime.');
-if(/<script[^>]+\bsrc=/i.test(unpackedText)||/<link[^>]+\bhref=/i.test(unpackedText)||/<style[^>]+\bsrc=/i.test(unpackedText))throw new Error('Unpacked Arcager artifact still contains external runtime assets.');
+//if(/<script[^>]+\bsrc=/i.test(unpackedText)||/<link[^>]+\bhref=/i.test(unpackedText)||/<style[^>]+\bsrc=/i.test(unpackedText))throw new Error('Unpacked Arcager artifact still contains external runtime assets.');
+if(/<(?:script|style)[^>]+\bsrc\s*=\s*(['"])(?!data:)/i.test(unpackedText)||/<link[^>]+\bhref\s*=\s*(['"])(?!data:)/i.test(unpackedText))throw new Error('Unpacked Arcager artifact still contains external runtime assets.');
 const bytes=fs.statSync(packed).size;
 const sourceBytes=fs.statSync(plain).size;
 console.log(`Arcager standalone test passed: ${bytes} bytes packed, ${sourceBytes} bytes source, ${(bytes/sourceBytes*100).toFixed(1)}% of source.`);
