@@ -25,6 +25,7 @@ fi
 
 mode="${1:-build}"
 case "$mode" in
+  plain) mode="build:plain" ;;
   all) mode="build:all" ;;
   build|build:plain|build:arcager|build:arcager:brotli|build:arcager:gzip|build:all|release|check|test)
     ;;
