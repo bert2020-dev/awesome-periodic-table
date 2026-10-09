@@ -474,7 +474,7 @@ function evaluateCondition(el,cond,tempC){
   if(p==='stable')return el.halflife===0;
   const ph=phase(el,tempC);
   if(p==='solid'||p==='liquid'||p==='gas')return ph===p;
-  if(p==='toxic'){const t=toxicityLabel(el.tox).toLowerCase();return t==='high'||t==='very high';}
+  if(p==='toxic'){const t=toxicityLabel(el.tox).toLowerCase();return t==='moderate'||t==='high'||t==='very high';}
   if(/^(?:hazard|hazardous|harmful|danger|dangerous)$/.test(p)){
     const idx=TOX.indexOf(el.tox);
     return idx>=2||(el.halflife||0)>0;
