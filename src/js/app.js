@@ -963,7 +963,7 @@ function isotopeTable(el){
   if(!masses.length)return'—';
   const first=masses[0];
   const firstHtml=clickableValue('stableIsotope',first,isotopeNuclideHtml(el.sym,first),'distribution-value');
-  const summary=masses.length>1?`${firstHtml}, ...`:firstHtml;
+  const summary=`${firstHtml} (${masses.length} stable)`;
   const rows=masses.map((mass,i)=>{
     const massHtml=clickableValue('stableIsotope',mass,isotopeNuclideHtml(el.sym,mass),'distribution-value');
     const abundance=Number.isFinite(abs[i])?parseFloat((abs[i]*100).toPrecision(5))+'%':'—';
@@ -1030,7 +1030,8 @@ function showDetails(el){
   extra+=line('Abundance Distribution',abundanceDistributionTable(el,cmp));
   const srcArr=(el.sources||'').split(/,\s*/).filter(Boolean);
   extra+=line('Known Occurrences',compactList(srcArr,3,sourceHtml));
-  extra+=line('Stable Isotopes',isotopeTable(el));
+  const stableIsotopeCount=DATA_MODEL.stableIsotopes(el.z).length,compareIsotopeCount=cmp?DATA_MODEL.stableIsotopes(cmp.z).length:null;
+  extra+=line('Stable Isotopes',isotopeTable(el),stableIsotopeCount,compareIsotopeCount);
   extra+='</div>';
   let html=`<h2>${title}</h2><div class="details-header-bar"></div><p style="margin-bottom:4px;color:var(--accent);font-weight:500;">🌡️ ${tempDisplay}</p>`;
   if(cmp)html+=`<p><em style="color:var(--accent)">Comparing with ${cmp.sym} (${cmp.name})</em></p>`;
