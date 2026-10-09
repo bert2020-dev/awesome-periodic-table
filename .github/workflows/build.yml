@@ -7,7 +7,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build and test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -23,11 +31,29 @@ jobs:
           python -m pip install brotli
       - name: Install dependencies
         run: npm install
-      - name: Verify data and UI contracts
-        run: npm run test:data && npm run test:ui
-      - name: Run search and runtime regressions
-        run: npm run test:search && npm run test:pipe && npm run test:autocomplete && npm run test:multi && npm run test:superlatives && npm run test:runtime
+      - name: Verify data contract
+        run: npm run test:data
+      - name: Verify UI contract
+        run: npm run test:ui
+      - name: Run search regressions
+        run: npm run test:search
+      - name: Run pipeline regressions
+        run: npm run test:pipe
+      - name: Run autocomplete regressions
+        run: npm run test:autocomplete
+      - name: Run multivalue regressions
+        run: npm run test:multi
+      - name: Run superlative regressions
+        run: npm run test:superlatives
+      - name: Run runtime regressions
+        run: npm run test:runtime
       - name: Build plain and Arcager distributions
         run: npm run build:all
-      - name: Verify build outputs
-        run: npm run test:build && npm run test:arcager && npm run test:arcager-data && npm run test:contract
+      - name: Verify build output
+        run: npm run test:build
+      - name: Verify Arcager build
+        run: npm run test:arcager
+      - name: Verify Arcager data bridge
+        run: npm run test:arcager-data
+      - name: Verify Arcager contract
+        run: npm run test:contract
