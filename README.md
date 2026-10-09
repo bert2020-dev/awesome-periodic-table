@@ -222,7 +222,13 @@ Multi-dimensional data is handled consistently, including abundance dimensions, 
 
 ### Build Commands
 
-To build the project, you'll need a suitable Node.js development environment.
+To build the project on Linux or macOS, install Node.js LTS (including npm), Python 3, and Bash, then run the helper from the repository root:
+
+```bash
+bash build.sh
+```
+
+The helper checks prerequisites and installs npm dependencies if needed. On Windows, use `build.bat`. You can also run the npm commands directly:
 
 ```bash
 npm run build
@@ -241,7 +247,7 @@ npm run release              # build:all, then verify and package a release
 npm run check:updates        # check the vendored Arcager version against upstream
 ```
 
-On Windows 10, `build.bat` (repo root) does the same as `npm run build` after checking that Node.js and Python are on `PATH` — see `docs/BUILDING.md` for details and prerequisites.
+On Windows 10, `build.bat` does the same after checking that Node.js and Python are on `PATH`. Linux/macOS users can run `bash build.sh`. See `docs/BUILDING.md` for details and prerequisites.
 
 ### Testing
 
