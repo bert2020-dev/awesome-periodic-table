@@ -52,7 +52,7 @@ if(process.platform==='win32'){
 }else{
   execFileSync('zip',['-r','-q',zipPath,base],{cwd:parent,stdio:'inherit'});
   execFileSync('unzip',['-t',zipPath],{stdio:'ignore'});
-  listing=execFileSync('unzip',['-Z1',zipPath],{encoding:'utf8'}).split(/\\r?\\n/).filter(Boolean);
+  listing=execFileSync('unzip',['-Z1',zipPath],{encoding:'utf8'}).split(/\r?\n/).filter(Boolean);
 }
 const prefix=base+'/';
 for(const suffix of ['dist/plain/awesome-periodic-table.html','dist/arcager/awesome-periodic-table.html']){
