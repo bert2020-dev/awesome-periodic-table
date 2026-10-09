@@ -20,6 +20,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r vendor/Arcager/requirements-optional.txt
+          python -m pip install brotli
       - name: Install dependencies
         run: npm install
       - name: Verify data and UI contracts
