@@ -9,6 +9,10 @@ jobs:
   build:
     name: Build and test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    # Force the adapter to use the interpreter installed by setup-python.
+    # On Windows, `py -3` can silently pick a different (newer) Python version.
+    env:
+      PYTHON: ${{ runner.os == 'Windows' && 'python' || 'python3' }}
     strategy:
       fail-fast: false
       matrix:
