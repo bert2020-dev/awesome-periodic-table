@@ -971,46 +971,71 @@ function isotopeTable(el){
   });
   return quickTable(summary,['Isotope','Natural abundance'],rows,'Hover for stable isotope data');
 }
+function toxicityRank(value){
+  const rank=['very low','low','moderate','high','very high'].indexOf(toxicityLabel(value).toLowerCase());
+  return rank<0?null:rank;
+}
 function showDetails(el){
   const meltC=KtoC(el.melt),boilC=KtoC(el.boil),neutrons=Math.round(el.mass-el.z),ph=phase(el,currentTempC),cmp=(comparisonMode&&selected&&selected.z!==el.z)?selected:null;
   const magVal=magType(el.z,currentTempC);
-  const line=(label,value,a,b,clickable=false,propData=null)=>{const ar=(cmp&&a!=null&&b!=null)?arrow(a,b):"";let valueHtml=value;if(clickable&&propData){const attrs=Object.entries(propData).map(([k,v])=>`data-${k}="${escapeHtml(v)}"`).join(" ");valueHtml=`<span class="clickable-prop" ${attrs}>${value}</span>`;}return`<div class="detail-row"><strong>${label}:</strong> ${valueHtml}${ar}</div>`;};
+  const line=(label,value,a,b,clickable=false,propData=null)=>{
+    const ar=(cmp&&a!=null&&b!=null)?arrow(a,b):'';
+    let valueHtml=value;
+    if(clickable&&propData){const attrs=Object.entries(propData).map(([k,v])=>`data-${k}="${escapeHtml(v)}"`).join(' ');valueHtml=`<span class="clickable-prop" ${attrs}>${value}</span>`;}
+    return `<div class="detail-row"><strong>${label}:</strong> ${valueHtml}${ar}</div>`;
+  };
   const tempDisplay=`${tempUnitValue(currentTempC,tempUnitMode)} °${tempUnitMode}`;
   const title=`<span class="detail-title-element">${nuclideHtml(el)}</span> <span class="detail-title-name">${el.name}</span> <span class="additional-info">(${el.latin||'—'})</span>`;
   let basic=`<div class="detail-section ${detailsTab==='basic'?'active':''}" data-section="basic">`;
-  basic+=line("Latin name",el.latin||'—');
-  basic+=line("Atomic Number (Z)",el.z);
-  basic+=line("Neutrons (N)",neutrons);
-  basic+=line("Category",el.cat,null,null,true,{prop:"category",value:el.cat});
-  basic+=line("Mass (g/mol)",el.mass.toFixed(3)+" g/mol",el.mass,cmp?.mass,true,{prop:"mass",value:el.mass});
-  basic+=line("Density (g/cm³)",el.density!=null?el.density+" g/cm³":"—",el.density,cmp?.density,el.density!=null,{prop:"density",value:el.density});
-  const meltVal=meltC!=null?meltC.toFixed(1):null,boilVal=boilC!=null?boilC.toFixed(1):null;
-  basic+=line("Melting Point",meltVal?`${tempUnitValue(meltC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",meltC,cmp?KtoC(cmp.melt):null,meltVal!=null,{prop:"melt",value:meltVal});
-  basic+=line("Boiling Point",boilVal?`${tempUnitValue(boilC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",boilC,cmp?KtoC(cmp.boil):null,boilVal!=null,{prop:"boil",value:boilVal});
-  basic+=line("Phase at "+tempUnitValue(currentTempC,tempUnitMode)+" °"+tempUnitMode,ph||"unknown",null,null,ph!=="",{prop:"phase",value:ph});
-  basic+=line("Common Oxidation State",el.oxidation>0?"+"+el.oxidation:String(el.oxidation),null,null,true,{prop:"oxidation",value:el.oxidation});
-  basic+=line("Electronic Config.",el.config||"—");
+  basic+=line('Latin Name',el.latin||'—');
+  basic+=line('Atomic Number (Z)',el.z);
+  basic+=line('Neutrons (N)',neutrons);
+  basic+=line('Category',el.cat,null,null,true,{prop:'category',value:el.cat});
+  basic+=line('Atomic Mass',el.mass.toFixed(3)+' g/mol',el.mass,cmp?.mass,true,{prop:'mass',value:el.mass});
+  basic+=line('Density',el.density!=null?el.density+' g/cm³':'—',el.density,cmp?.density,el.density!=null,{prop:'density',value:el.density});
+  basic+=line('Melting Point',meltC!=null?`${tempUnitValue(meltC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:'—',meltC,cmp?KtoC(cmp.melt):null,meltC!=null,{prop:'melt',value:meltC});
+  basic+=line('Boiling Point',boilC!=null?`${tempUnitValue(boilC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:'—',boilC,cmp?KtoC(cmp.boil):null,boilC!=null,{prop:'boil',value:boilC});
+  basic+=line(`Phase at ${tempDisplay}`,ph||'—',null,null,!!ph,{prop:'phase',value:ph});
+  basic+=line('Common Oxidation State',el.oxidation>0?'+'+el.oxidation:String(el.oxidation),null,null,true,{prop:'oxidation',value:el.oxidation});
+  basic+=line('Electronic Configuration',el.config||'—');
   basic+='</div>';
+
   let extra=`<div class="detail-section ${detailsTab==='extra'?'active':''}" data-section="extra">`;
-  extra+=line("Electronegativity",el.en!=null?el.en:"—",el.en,cmp?.en,el.en!=null,{prop:"en",value:el.en});
-  const ions=getIonizations(el.z),firstIE=ions[0]??el.ie;
-  extra+=line("Ionization energies",firstIE!=null?ionizationTable(el):"—",firstIE,cmp?getIonizations(cmp.z)[0]:null,false,null);
-  const e0str=el.e0!==0?el.e0.toFixed(2):null;extra+=line("Standard electrode potential (E°)",e0str?e0str+" V":"—",el.e0!==0?el.e0:null,cmp&&cmp.e0!==0?cmp.e0:null,e0str!=null,{prop:"e0",value:e0str});
-  extra+=line("Radiation Level",el.halflife>0?"Radioactive":"—",null,null,true,{prop:"radiation",value:el.halflife>0?"Radioactive":"—"});extra+=line("Half-life",formatHalfLife(el.halflife));
-  extra+=line("Toxicity Level",toxicityLabel(el.tox),null,null,true,{prop:"toxicity",value:toxicityLabel(el.tox)});extra+=line("Magnetic response",magVal,null,null,true,{prop:"magnetism",value:magVal});
-  const yearPart=el.year!=null?clickableValue("year",el.year,el.year):"Ancient / unknown";
-  const sourcePart=el.discoverySource?`, ${clickableValue("discoverySource",el.discoverySource,escapeHtml(el.discoverySource))}`:"";
-  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\s+and\s+/i).map(c=>flagHtml(c)).join(" ")}`:"";
-  extra+=line("Discovery",yearPart+sourcePart+countryPart);
-  extra+=line("Abundance Distribution",abundanceDistributionTable(el));
-  const srcArr=(el.sources||"").split(/,\s*/).filter(Boolean);extra+=line("Known Occurencies",compactList(srcArr,3,sourceHtml));
-  const conductivity=EXTRA_CONDUCTIVITY[el.z],heat=EXTRA_HEAT[el.z],thermal=THERMAL_CONDUCTIVITY[el.z];
-  extra+=line("Electrical conductivity",`${clickableValue("electricalConductivity",conductivity??"",conductivity!=null?(conductivity===0?"~0 S/m":conductivity.toExponential(3)+" S/m"):"—")} ${clickableValue("electricalType",ELECTRICAL_TYPE[el.z]||"N/A",ELECTRICAL_TYPE[el.z]||"N/A","additional-info")}`);
-  const tType=thermalType(thermal);
-  extra+=line("Thermal conductivity",`${clickableValue("thermal",thermal??"",thermal!=null?thermal+" W/(m·K)":"—")} ${clickableValue("thermalType",tType,tType,"additional-info")}`);
-  extra+=line("Specific heat",heat!=null?clickableValue("specificHeat",heat,heat+" J/g·K"):"—");
-  extra+=line("Stable isotopes",isotopeTable(el));extra+='</div>';
-  let html=`<h2>${title}</h2><div class="details-header-bar"></div><p style="margin-bottom:4px;color:var(--accent);font-weight:500;">🌡️ ${tempDisplay}</p>`;if(cmp)html+=`<p><em style="color:var(--accent)">Comparing with ${cmp.sym} (${cmp.name})</em></p>`;html+=`<div class="details-tabs"><button class="details-tab ${detailsTab==='basic'?'active':''}" data-tab="basic">Basic</button><button class="details-tab ${detailsTab==='extra'?'active':''}" data-tab="extra">Extra</button></div>${basic}${extra}`;details.innerHTML=html;
+  extra+=line('Electronegativity',el.en!=null?el.en:'—',el.en,cmp?.en,el.en!=null,{prop:'en',value:el.en});
+  const ions=getIonizations(el.z);
+  extra+=line('Ionization Energies',ions.length?ionizationTable(el,cmp):'—');
+  const e0str=el.e0!==0?el.e0.toFixed(2):null;
+  extra+=line('Standard Electrode Potential',e0str!=null?e0str+' V':'—',el.e0!==0?el.e0:null,cmp&&cmp.e0!==0?cmp.e0:null,e0str!=null,{prop:'e0',value:e0str});
+  extra+=line(`Magnetic Response at ${tempDisplay}`,magVal||'—',null,null,!!magVal,{prop:'magnetism',value:magVal});
+
+  const conductivity=EXTRA_CONDUCTIVITY[el.z],compareConductivity=cmp?EXTRA_CONDUCTIVITY[cmp.z]:null;
+  const heat=EXTRA_HEAT[el.z],compareHeat=cmp?EXTRA_HEAT[cmp.z]:null;
+  const thermal=THERMAL_CONDUCTIVITY[el.z],compareThermal=cmp?THERMAL_CONDUCTIVITY[cmp.z]:null;
+  const electricalType=String(ELECTRICAL_TYPE[el.z]||'—').replace(/^N\/A$/i,'—');
+  const electricalTypeHtml=electricalType==='—'?'':` ${clickableValue('electricalType',electricalType,electricalType,'additional-info')}`;
+  const conductivityHtml=Number.isFinite(conductivity)?clickableValue('electricalConductivity',conductivity,conductivity===0?'~0 S/m':conductivity.toExponential(3)+' S/m'):'—';
+  extra+=line('Electrical Conductivity',conductivityHtml+electricalTypeHtml,conductivity,compareConductivity,Number.isFinite(conductivity));
+  const tType=thermalType(thermal),thermalTypeHtml=tType==='—'?'':` ${clickableValue('thermalType',tType,tType,'additional-info')}`;
+  const thermalHtml=Number.isFinite(thermal)?clickableValue('thermal',thermal,thermal+' W/(m·K)'):'—';
+  extra+=line('Thermal Conductivity',thermalHtml+thermalTypeHtml,thermal,compareThermal,Number.isFinite(thermal));
+  extra+=line('Specific Heat',Number.isFinite(heat)?clickableValue('specificHeat',heat,heat+' J/(g·K)'):'—',heat,compareHeat,Number.isFinite(heat));
+
+  extra+=line('Radiation Level',el.halflife>0?'Radioactive':'—',null,null,true,{prop:'radiation',value:el.halflife>0?'Radioactive':'—'});
+  extra+=line('Half-Life',formatHalfLife(el.halflife));
+  extra+=line('Toxicity Level',toxicityLabel(el.tox),toxicityRank(el.tox),cmp?toxicityRank(cmp.tox):null,true,{prop:'toxicity',value:toxicityLabel(el.tox)});
+  const yearPart=el.year!=null?clickableValue('year',el.year,el.year):'—';
+  const sourcePart=el.discoverySource?`, ${clickableValue('discoverySource',el.discoverySource,escapeHtml(el.discoverySource))}`:'';
+  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\\s+and\\s+/i).map(c=>flagHtml(c)).join(' ')}`:'';
+  extra+=line('Discovery',yearPart+sourcePart+countryPart,el.year,cmp?.year,el.year!=null,{prop:'year',value:el.year});
+  extra+=line('Abundance Distribution',abundanceDistributionTable(el,cmp));
+  const srcArr=(el.sources||'').split(/,\\s*/).filter(Boolean);
+  extra+=line('Known Occurrences',compactList(srcArr,3,sourceHtml));
+  extra+=line('Stable Isotopes',isotopeTable(el));
+  extra+='</div>';
+  let html=`<h2>${title}</h2><div class="details-header-bar"></div><p style="margin-bottom:4px;color:var(--accent);font-weight:500;">🌡️ ${tempDisplay}</p>`;
+  if(cmp)html+=`<p><em style="color:var(--accent)">Comparing with ${cmp.sym} (${cmp.name})</em></p>`;
+  html+=`<div class="details-tabs"><button class="details-tab ${detailsTab==='basic'?'active':''}" data-tab="basic">Basic</button><button class="details-tab ${detailsTab==='extra'?'active':''}" data-tab="extra">Extra</button></div>${basic}${extra}`;
+  details.innerHTML=html;
   wireQuickTables();
   setupPropertyClicks();
 }
