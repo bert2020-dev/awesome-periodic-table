@@ -13,4 +13,4 @@ const tox=new Set(extra.map(r=>r.tox).filter(Boolean));
 if(tox.has('Very hig')||!tox.has('Very high'))throw new Error('Toxicity normalization failed.');
 const ocean=Number(extra.find(r=>r.z==='1').oceanAbundance);
 if(!Number.isFinite(ocean)||ocean!==10.8)throw new Error('Ocean abundance normalization failed.');
-console.log('Data migration contract passed: 118 matching elements, UTF-8 CSV schema, normalized toxicity, and source ocean concentration preserved for build-time % conversion.');
+console.log('Data migration contract passed: 118 matching elements, UTF-8 CSV schema, normalized toxicity, and ocean abundance represented on the percentage scale.');
