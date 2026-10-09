@@ -54,6 +54,8 @@ if(process.platform==='win32'){
   execFileSync('unzip',['-t',zipPath],{stdio:'ignore'});
   listing=execFileSync('unzip',['-Z1',zipPath],{encoding:'utf8'}).split(/\r?\n/).filter(Boolean);
 }
+// ZIP entry separators may be backslashes on Windows; compare canonical paths.
+listing=listing.map(n=>n.replace(/\\/g,'/'));
 const prefix=base+'/';
 for(const suffix of ['dist/plain/awesome-periodic-table.html','dist/arcager/awesome-periodic-table.html']){
   if(!listing.includes(prefix+suffix)) throw new Error(`Missing packaged dist artifact: ${suffix}`);
