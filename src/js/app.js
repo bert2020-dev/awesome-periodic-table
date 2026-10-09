@@ -1025,10 +1025,10 @@ function showDetails(el){
   extra+=line('Toxicity Level',toxicityLabel(el.tox),toxicityRank(el.tox),cmp?toxicityRank(cmp.tox):null,true,{prop:'toxicity',value:toxicityLabel(el.tox)});
   const yearPart=el.year!=null?clickableValue('year',el.year,el.year):'—';
   const sourcePart=el.discoverySource?`, ${clickableValue('discoverySource',el.discoverySource,escapeHtml(el.discoverySource))}`:'';
-  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\\s+and\\s+/i).map(c=>flagHtml(c)).join(' ')}`:'';
+  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\s+and\s+/i).map(c=>flagHtml(c)).join(' ')}`:'';
   extra+=line('Discovery',yearPart+sourcePart+countryPart,el.year,cmp?.year,el.year!=null,{prop:'year',value:el.year});
   extra+=line('Abundance Distribution',abundanceDistributionTable(el,cmp));
-  const srcArr=(el.sources||'').split(/,\\s*/).filter(Boolean);
+  const srcArr=(el.sources||'').split(/,\s*/).filter(Boolean);
   extra+=line('Known Occurrences',compactList(srcArr,3,sourceHtml));
   extra+=line('Stable Isotopes',isotopeTable(el));
   extra+='</div>';
@@ -1120,6 +1120,13 @@ function bumpHistIcon(){
   histBtn.classList.add("bump");
 }
 function normalizeHistKey(s){return String(s||"").toLowerCase().replace(/\s+/g," ").trim();}
+function hasUnfinishedAutocompleteToken(query){
+  const words=String(query||'').toLowerCase().match(/[a-z]+(?:['’-][a-z]+)*/g)||[];
+  const token=words[words.length-1];
+  if(!token||token.length<2||findEl(token)||AUTOCOMPLETE_ENGINE.weights.has(token))return false;
+  for(const word of AUTOCOMPLETE_ENGINE.weights.keys())if(!word.includes(' ')&&word.length>token.length&&word.startsWith(token))return true;
+  return false;
+}
 function rememberSearch(value,opts){
   const force=!!(opts&&opts.force);
   const q=String(value||"").trim();
@@ -1127,7 +1134,7 @@ function rememberSearch(value,opts){
   /* Half-typed queries ("boi" on the way to "boils") almost always match
      nothing and aren't worth cluttering history with — skip them unless the
      user explicitly forces it via the history button. */
-  if(!force&&applyFilter(q,currentTempC).length===0)return false;
+  if(!force&&(hasUnfinishedAutocompleteToken(q)||applyFilter(q,currentTempC).length===0))return false;
   /* Spam-click / retype guard: compared case-insensitively with whitespace
      collapsed, so "Gold", "gold" and "  gold " are all the same entry. */
   if(searchHistory.length&&normalizeHistKey(searchHistory[searchHistory.length-1])===normalizeHistKey(q)){
@@ -1449,50 +1456,25 @@ searchInput.addEventListener("keydown",e=>{
   if(!hasLiveSuggestion())return;
   const bare=!e.shiftKey&&!e.ctrlKey&&!e.metaKey&&!e.altKey;
   if(!bare)return;
-  if(e.key===" " || e.code==="Space"){
-    e.preventDefault();e.stopPropagation();
-    const end=acSelEnd,current=searchInput.value;
-    const next=/\s/.test(current[end]||"")?current:current.slice(0,end)+" "+current.slice(end);
-    clearAutocomplete();
-    searchInput.value=next;
-    searchInput.setSelectionRange(end+1,end+1);
-    prevSearchValue=next;
-    gapSession=null;
-    render(next);
-    if(!historyNavigating)searchHistoryIndex=-1;
-    scheduleRememberSearch(next);
-    updateHistUI();
-  }else if(e.key==="Backspace"||e.key==="Delete"){
-    e.preventDefault();e.stopPropagation();
-    collapseGhostWithBackspace();
-  }else if(e.key==="ArrowLeft"){
-    e.preventDefault();e.stopPropagation();
+  if(e.key==='Tab'||e.key==='Enter'){
+    e.preventDefault();e.stopPropagation();acceptAutocomplete();
+  }else if(e.key===' '||e.code==='Space'){
+    // Space is normal typing; keep only the user's text and let the browser insert it.
     cancelGhostKeepingPrefix();
-  }else if(e.key==="ArrowRight"){
-    e.preventDefault();e.stopPropagation();
-    acceptAutocomplete();
-  }else if(e.key.length===1 && !/\s/.test(e.key)){
-    /* Branch inside a multi-word completion instead of producing a malformed
-       token. Example: "united" → "united states"; typing "k" turns that into
-       "united k" and immediately re-ranks against "united kingdom". */
+  }else if(e.key==='Backspace'||e.key==='Delete'){
+    e.preventDefault();e.stopPropagation();collapseGhostWithBackspace();
+  }else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
+    cancelGhostKeepingPrefix();
+  }else if(e.key.length===1&&!/\s/.test(e.key)){
+    /* Branch inside a multi-word completion instead of producing a malformed token. */
     e.preventDefault();e.stopPropagation();
     const selectedTail=searchInput.value.slice(acSelStart,acSelEnd);
     const leadingSpace=(selectedTail.match(/^\s+/)||[''])[0];
-    const before=acUserText.slice(0,acSelStart);
-    const after=acUserText.slice(acSelStart);
-    const next=before+leadingSpace+e.key+after;
-    const caret=before.length+leadingSpace.length+1;
-    clearAutocomplete();
-    searchInput.value=next;
-    searchInput.setSelectionRange(caret,caret);
-    prevSearchValue=next;
-    const newStart=lastTokenStart(next.slice(0,caret));
-    gapSession={anchor:newStart};
-    tryAutocomplete(false);
-    render(effectiveQuery());
-    if(!historyNavigating)searchHistoryIndex=-1;
-    scheduleRememberSearch(effectiveQuery());
-    updateHistUI();
+    const before=acUserText.slice(0,acSelStart),after=acUserText.slice(acSelStart);
+    const next=before+leadingSpace+e.key+after,caret=before.length+leadingSpace.length+1;
+    clearAutocomplete();searchInput.value=next;searchInput.setSelectionRange(caret,caret);prevSearchValue=next;
+    gapSession={anchor:lastTokenStart(next.slice(0,caret))};tryAutocomplete(false);render(effectiveQuery());
+    if(!historyNavigating)searchHistoryIndex=-1;scheduleRememberSearch(effectiveQuery());updateHistUI();
   }
 });
 tempSlider.addEventListener("input",()=>{
@@ -1532,8 +1514,11 @@ searchInput.addEventListener("input",e=>{
   const erasedSpace=removedChar!=null&&/\s/.test(removedChar);
 
   clearAutocomplete();
+  const charBefore=searchInput.value[caretNow-1]||'';
+  const charAfter=searchInput.value[caretNow]||'';
+  const deletionAtWordEnd=isDeleting&&caretNow>0&&!/[\s,]/.test(charBefore)&&(!charAfter||/[\s,]/.test(charAfter));
   if(isTyping&&data!==" "&&!/\s/.test(data||""))tryAutocomplete(false);
-  else if(erasedSpace)tryAutocomplete(true);
+  else if(erasedSpace||deletionAtWordEnd)tryAutocomplete(true);
 
   const q=effectiveQuery();
   render(q);
