@@ -918,32 +918,43 @@ function wireQuickTables(){
 }
 function ordinalLabel(n){const map={1:'1st',2:'2nd',3:'3rd'};return map[n]||`${n}th`;}
 function formatAbundanceDimension(dimension,value){return formatAbundance(value);}
-function abundanceDistributionTable(el){
+function abundanceDistributionTable(el,compareEl=null){
   const defs=[['crust','Crust'],['ocean','Ocean'],['meteorite','Meteorites'],['solar','Sun'],['universe','Universe'],['humans','Human body']];
-  const available=defs.map(([dim,label])=>({dim,label,value:DATA_MODEL.abundance(el.z,dim)})).filter(x=>x.value!=null);
+  const available=defs.map(([dim,label],index)=>({dim,label,value:DATA_MODEL.abundance(el.z,dim),index}))
+    .filter(x=>x.value!=null)
+    .sort((a,b)=>{
+      const ak=Number.isFinite(a.value)&&a.value>=0,bk=Number.isFinite(b.value)&&b.value>=0;
+      if(ak!==bk)return ak?-1:1;
+      if(ak&&bk&&a.value!==b.value)return b.value-a.value;
+      return a.index-b.index;
+    });
   if(!available.length)return'—';
-  const first=available[0];
-  const firstValue=formatAbundanceDimension(first.dim,first.value);
+  const first=available[0],firstValue=formatAbundanceDimension(first.dim,first.value);
+  const firstArrow=compareEl&&Number.isFinite(first.value)?arrow(first.value,DATA_MODEL.abundance(compareEl.z,first.dim)):'';
   const summaryValue=Number.isFinite(first.value)&&first.value>=0
-    ? clickableValue(`abundance:${first.dim}`,first.value,`${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`,'distribution-value')
+    ? clickableValue(`abundance:${first.dim}`,first.value,`${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`,'distribution-value')+firstArrow
     : `${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`;
   const summary=available.length>1?`${summaryValue}, ...`:summaryValue;
   const rows=available.map(x=>{
     const clickable=Number.isFinite(x.value)&&x.value>=0;
     const valueHtml=clickable?clickableValue(`abundance:${x.dim}`,x.value,formatAbundanceDimension(x.dim,x.value),'distribution-value'):escapeHtml(formatAbundanceDimension(x.dim,x.value));
-    return `<tr><td>${escapeHtml(x.label)}</td><td>${valueHtml}</td></tr>`;
+    const compareValue=compareEl?DATA_MODEL.abundance(compareEl.z,x.dim):null;
+    const comparisonArrow=compareEl&&Number.isFinite(x.value)?arrow(x.value,compareValue):'';
+    return `<tr><td>${escapeHtml(x.label)}</td><td>${valueHtml}${comparisonArrow}</td></tr>`;
   });
   return quickTable(summary,['Environment','Abundance'],rows,'Hover for abundance distribution');
 }
-function ionizationTable(el){
+function ionizationTable(el,compareEl=null){
   const vals=getIonizations(el.z);if(!vals.length)return'—';
   const first=vals[0];
   const firstHtml=clickableValue('ionization:1',first,`${parseFloat(first.toPrecision(6))} kJ/mol`,'distribution-value');
   const summary=vals.length>1?`${firstHtml}, ...`:firstHtml;
+  const compareVals=compareEl?getIonizations(compareEl.z):[];
   const rows=vals.map((v,i)=>{
     const stage=i+1;
     const value=clickableValue(`ionization:${stage}`,v,`${parseFloat(v.toPrecision(6))} kJ/mol`,'distribution-value');
-    return `<tr><td>${ordinalLabel(stage)}</td><td>${value}</td></tr>`;
+    const comparisonArrow=compareEl?arrow(v,compareVals[i]):'';
+    return `<tr><td>${ordinalLabel(stage)}</td><td>${value}${comparisonArrow}</td></tr>`;
   });
   return quickTable(summary,['Ionization','Energy'],rows,'Hover for ionization energies');
 }
