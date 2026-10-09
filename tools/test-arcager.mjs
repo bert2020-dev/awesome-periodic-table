@@ -27,8 +27,8 @@ const unpackedText=fs.readFileSync(unpacked,'utf8');
 if(!unpackedText.includes('data-key="elements"')||!unpackedText.includes('data-key="element-extra"')||!unpackedText.includes('data-key="lookups"'))throw new Error('Arcager merge did not inline all three CSV resources.');
 const packedText=fs.readFileSync(packed,'utf8');
 if(!packedText.includes('DecompressionStream'))throw new Error('Arcager browser decompressor missing.');
-// Genuine Arcager 3.2.x readiness contract: window.arcager is always defined,
-// Arcager 4 readiness contract: ready resolves after unpack; error is null on success.
+// Genuine Arcager 4.x readiness contract: window.arcager is always defined,
+// Arcager 4.0.1+ readiness contract: ready resolves after unpack; error is null on success.
 if(!/window\.arcager\.ready\s*=/.test(packedText))throw new Error('Arcager ready Promise missing from runtime.');
 if(!/window\.arcager\.error\s*=/.test(packedText))throw new Error('Arcager error flag missing from runtime.');
 if(/<script[^>]+\bsrc=/i.test(unpackedText)||/<link[^>]+\bhref=/i.test(unpackedText)||/<style[^>]+\bsrc=/i.test(unpackedText))throw new Error('Unpacked Arcager artifact still contains external runtime assets.');
