@@ -89,10 +89,10 @@ class PropertyCatalog {
   static normalize(label){return String(label||"").toLowerCase().trim().replace(/\s+/g," ").replace(/^(?:more|less|higher|lower|greater|smaller|denser|heavier|lighter)\s+/i,"");}
   resolve(label){
     const p=PropertyCatalog.normalize(label).replace(/[’']s$/,'');
-    if(/^(?:abundance|abundant|crustal abundance|crust abundance)$/.test(p)||/^(?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?earth(?:'s)?$/.test(p))return{key:'abundance:crust',kind:'dimension',dimension:'crust',label:'Crust'};
+    if(/^(?:abundance|abundant|crustal abundance|crust abundance)$/.test(p)||/^(?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?earth(?:'s)?$/.test(p)||/^(?:earth|on earth|in earth|earth abundance|abundance (?:in|on) earth|(?:abundant|common) (?:in|on) earth)$/.test(p))return{key:'abundance:crust',kind:'dimension',dimension:'crust',label:'Crust'};
     if(/^(?:ocean abundance|abundance in (?:the )?ocean|(?:abundant|common) in (?:the )?ocean|ocean|in (?:the )?ocean)$/.test(p))return{key:'abundance:ocean',kind:'dimension',dimension:'ocean',label:'Ocean'};
-    if(/^(?:meteorite abundance|abundance in (?:the )?meteorites?|(?:abundant|common) in (?:the )?meteorites?|meteorites?|in (?:the )?meteorites?)$/.test(p))return{key:'abundance:meteorite',kind:'dimension',dimension:'meteorite',label:'Meteorites'};
-    if(/^(?:solar abundance|sun abundance|abundance in (?:the )?sun|(?:abundant|common) in (?:the )?sun|sun|solar)$/.test(p))return{key:'abundance:solar',kind:'dimension',dimension:'solar',label:'Sun'};
+    if(/^(?:meteorite abundance|abundance (?:in|on) (?:the )?meteorites?|(?:abundant|common) (?:in|on) (?:the )?meteorites?|meteorites?|in (?:the )?meteorites?|on (?:the )?meteorites?)$/.test(p))return{key:'abundance:meteorite',kind:'dimension',dimension:'meteorite',label:'Meteorites'};
+    if(/^(?:solar abundance|sun abundance|abundance (?:in|on) (?:the )?sun|(?:abundant|common) (?:in|on) (?:the )?sun|sun|solar|abundance in solar system)$/.test(p))return{key:'abundance:solar',kind:'dimension',dimension:'solar',label:'Sun'};
     if(/^(?:universe abundance|abundance in (?:the )?universe|(?:abundant|common) in (?:the )?universe|universe|in (?:the )?universe)$/.test(p))return{key:'abundance:universe',kind:'dimension',dimension:'universe',label:'Universe'};
     if(/^(?:human abundance|humans? abundance|abundance in (?:the )?(?:humans?|human body)|(?:abundant|common) in (?:the )?(?:humans?|human body)|human|humans|in (?:the )?(?:humans?|human body))$/.test(p))return{key:'abundance:humans',kind:'dimension',dimension:'humans',label:'Humans'};
     let m=p.match(/^(?:ie|ionization(?: energy)?)\s*(\d+)$/);
@@ -102,6 +102,7 @@ class PropertyCatalog {
     m=p.match(/^(1st|2nd|3rd|4th|5th|6th|7th|8th|9th|10th)\s+ionization(?: energy)?$/);
     if(m)return{key:`ionization:${parseInt(m[1],10)}`,kind:'sequence',stage:parseInt(m[1],10),label:`${m[1]} ionization energy`};
     if(/^(?:ionization energy|ionization)$/.test(p))return{key:'ionization:1',kind:'sequence',stage:1,label:'First ionization energy'};
+    if(/^(?:toxicity|toxicity level)$/.test(p))return{key:'toxicity',kind:'ordinal',label:'Toxicity'};
     if(/^(?:stable isotopes?|isotopes?)$/.test(p))return{key:'stableIsotopes',kind:'collection',label:'Stable isotopes'};
     if(/^(?:melts?|melting|freezes?|freezing|solidif(?:y|ies|ying)|liquef(?:y|ies|ying)|liquefaction)$/.test(p))return{key:'melt',kind:'scalar',label:'Melting point'};
     if(/^(?:boils?|boiling|condenses?|condense|condensing|vaporizes?|vaporize|evaporates?|evaporate)$/.test(p))return{key:'boil',kind:'scalar',label:'Boiling point'};
@@ -141,6 +142,7 @@ class ElementDataRepository {
     const cacheKey=`${el.z}:${key}`; if(this.propertyCache.has(cacheKey))return this.propertyCache.get(cacheKey).slice();
     let values=[];
     if(key.startsWith('abundance:'))values=[this.abundance(el.z,key.split(':')[1])].filter(v=>v!=null&&Number.isFinite(v)&&v>=0);
+    else if(key==='toxicity'){const rank=['very low','low','moderate','high','very high'].indexOf(toxicityLabel(el.tox).toLowerCase());values=rank>=0?[rank]:[];}
     else if(key.startsWith('ionization:')){const stage=Math.max(1,parseInt(key.split(':')[1],10));const v=this.ionizations(el.z)[stage-1];values=Number.isFinite(v)?[v]:[];}
     else if(key==='stableIsotopes')values=this.stableIsotopes(el.z).filter(Number.isFinite);
     else if(key==='melt')values=[KtoC(el.melt)].filter(Number.isFinite);
@@ -391,10 +393,10 @@ function evaluateCondition(el,cond,tempC){
   if(m){const relation=m[1],n=parseFloat(m[2]),vals=DATA_MODEL.stableIsotopes(el.z);if(!vals.length)return false;const greater=/^(?:above|over|greater than)$/.test(relation);return vals.some(v=>greater?v>n:v<n);}
   m=p.match(/^all\s+stable\s+isotopes?\s+(above|below|over|under|greater than|less than)\s+(\d+(?:\.\d+)?)$/);
   if(m){const relation=m[1],n=parseFloat(m[2]),vals=DATA_MODEL.stableIsotopes(el.z);if(!vals.length)return false;const greater=/^(?:above|over|greater than)$/.test(relation);return vals.every(v=>greater?v>n:v<n);}
-  /* Cross-dimension abundance comparison, e.g. "more abundant in humans than in crust". */
-  m=p.match(/^(?:more|higher|greater|less|lower)\s+(?:abundant|common)\s+in\s+(?:the\s+)?(humans?|human body|universe|ocean|crust|earth(?:'s)? crust)\s+than\s+(?:in\s+)?(?:the\s+)?(humans?|human body|universe|ocean|crust|earth(?:'s)? crust)$/);
+  /* Cross-dimension abundance comparisons. Earth maps to crustal abundance; the Sun maps to solar abundance. */
+  m=p.match(/^(?:more|higher|greater|less|lower)\s+(?:abundant|common)\s+(?:in|on)\s+(?:the\s+)?(humans?|human body|universe|ocean|meteorites?|crust|earth(?:'s)?(?:\s+crust)?|sun|solar(?: system)?)\s+than\s+(?:(?:in|on)\s+)?(?:the\s+)?(humans?|human body|universe|ocean|meteorites?|crust|earth(?:'s)?(?:\s+crust)?|sun|solar(?: system)?)$/);
   if(m){
-    const dim=a=>/human/.test(a)?'humans':/universe/.test(a)?'universe':/ocean/.test(a)?'ocean':'crust';
+    const dim=a=>/human/.test(a)?'humans':/universe/.test(a)?'universe':/ocean/.test(a)?'ocean':/meteorite/.test(a)?'meteorite':/sun|solar/.test(a)?'solar':'crust';
     const leftDim=dim(m[1]),rightDim=dim(m[2]),left=DATA_MODEL.abundance(el.z,leftDim),right=DATA_MODEL.abundance(el.z,rightDim);
     const leftMeta=PROPERTY_CATALOG.dimensionMeta(leftDim),rightMeta=PROPERTY_CATALOG.dimensionMeta(rightDim);
     if(!leftMeta||!rightMeta||leftMeta.kind!==rightMeta.kind||left==null||right==null)return false;
@@ -417,15 +419,21 @@ function evaluateCondition(el,cond,tempC){
   }
   m=p.match(/^(.+?)\s+(above|below|over|under|greater than|less than|higher than|lower than|more than|than)\s+(.+)$/);
   if(m){
-    const prop=canonicalSearchProperty(m[1]);
+    const propertyLabel=m[1].trim(),relation=m[2],rawRhs=m[3].trim();
+    let rhs=rawRhs,prop=canonicalSearchProperty(propertyLabel);
+    const locationSuffix=rhs.match(/^(.*?)\s+(?:in|on)\s+(?:the\s+)?(earth(?:'s)?(?:\s+crust)?|crust|ocean|meteorites?|sun|solar(?: system)?|universe|humans?|human body)$/);
+    if(locationSuffix&&/(?:abundance|abundant|common)/i.test(propertyLabel)){
+      const place=locationSuffix[2];
+      const dimension=/human/.test(place)?'humans':/universe/.test(place)?'universe':/ocean/.test(place)?'ocean':/meteorite/.test(place)?'meteorite':/sun|solar/.test(place)?'solar':'crust';
+      prop='abundance:'+dimension;rhs=locationSuffix[1].trim();
+    }
     if(prop){
-      const relation=m[2],rhs=m[3].trim();
       const endpoint=compareEndpoint(rhs,prop);
       if(endpoint){
         const vals=getPropValues(el,prop);
         const endpointValues=endpoint.kind==='property'?getPropValues(el,endpoint.spec):endpoint.values;
         if(!vals.length||!endpointValues.length)return false;
-        const greater=(relation==="than")?/^(?:more|higher|greater)\s+/.test(m[1].trim()):/^(?:above|over|greater than|higher than|more than)$/.test(relation);
+        const greater=(relation==='than')?/^(?:more|higher|greater)\s+/.test(propertyLabel):/^(?:above|over|greater than|higher than|more than)$/.test(relation);
         return vals.some(a=>endpointValues.some(b=>greater?a>b:a<b));
       }
     }
