@@ -57,3 +57,5 @@ jobs:
         run: npm run test:arcager-data
       - name: Verify Arcager contract
         run: npm run test:contract
+      - name: Package and integrity-check release ZIP
+        run: npm run package:release
