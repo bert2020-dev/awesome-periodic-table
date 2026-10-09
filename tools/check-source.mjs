@@ -17,8 +17,8 @@ for(const file of ['elements.csv','element-extra.csv','lookups.csv']) if(!fs.exi
 
 function header(file){return fs.readFileSync(path.join(ROOT,'data',file),'utf8').split(/\r?\n/,1)[0];}
 const expectedHeaders={
-  'elements.csv':'z,sym,name,latin,mass,cat,melt,boil,config,density,en,ie,sources,e0,tox,year,oxidation,halflife,discoverySource,discoveryCountry',
-  'element-extra.csv':'z,electricalConductivity,thermalConductivity,specificHeat,electricalType,crustAbundance,oceanAbundance,ionizationEnergies,isotopes,isotopeAbundance,universeAbundance,humanAbundance',
+  'elements.csv':'z,sym,name,latin,cat,mass,density,melt,boil,oxidation,config,e0,en',
+  'element-extra.csv':'z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,electricalType,tox,halflife,sources,discoverySource,discoveryCountry,year,isotopes,isotopeAbundance,crustAbundance,oceanAbundance,humanAbundance,universeAbundance,solarAbundance,meteoriteAbundance',
   'lookups.csv':'kind,key,value'
 };
 for(const [file,expected] of Object.entries(expectedHeaders)) if(header(file)!==expected) throw new Error(`CSV schema changed in data/${file}. Update the data pipeline, pipe format and docs before proceeding.`);
