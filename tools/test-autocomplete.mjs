@@ -9,7 +9,8 @@ assert.match(autocompleteInput,/if\(isTyping&&data!==.*?tryAutocomplete\(false\)
 assert.doesNotMatch(autocompleteInput,/tryAutocomplete\(true\)|erasedSpace|deletionAtWordEnd/,'deletions must not initiate autocomplete');
 assert.match(appSource,/function acceptAutocomplete\(fullSuggestion=false\)/,'autocomplete acceptance should support word and phrase modes');
 assert.match(appSource,/acceptAutocomplete\(e\.key==='Enter'\)/,'Enter should accept the full suggestion while Tab accepts one word');
-assert.match(appSource,/const acceptedTail=fullSuggestion\?ghost:/,'Tab acceptance should stop at the current word');
+assert.ok(appSource.includes('const acceptedTail=fullSuggestion?ghost:'),'Enter should accept the full phrase');
+assert.ok(appSource.includes("acceptAutocomplete(e.key==='Enter')"),'Tab should accept one word and Enter the full suggestion');
 
 const sandbox={};
 vm.createContext(sandbox);
