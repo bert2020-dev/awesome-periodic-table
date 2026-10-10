@@ -40,7 +40,7 @@ sameSet('More abundant on earth than the sun',expectedByAbundance(a=>
   dimFrom(a,'crust')!=null&&dimFrom(a,'solar')!=null&&dimFrom(a,'crust')>dimFrom(a,'solar')
 ),'Earth-vs-Sun abundance comparison');
 
-function dimFrom(row,key){return row?.[key]??null;}
+function dimFrom(row,key){const value=row?.[key];return Number.isFinite(value)&&value>=0?value:null;}
 
 // An abundance comparison without a stated location uses the default crust dimension.
 const copper=manifest.elements.find(e=>e.sym==='Cu');
