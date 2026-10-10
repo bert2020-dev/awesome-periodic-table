@@ -1417,12 +1417,11 @@ function tryAutocomplete(viaErasedSpace){
   searchInput.setSelectionRange(acSelStart,acSelEnd);
   acActive=true;
 }
-function acceptAutocomplete(){
+function acceptAutocomplete(fullSuggestion=false){
   if(!acActive)return false;
-  /* Accept only the current word from a multi-word ghost completion, so
-     accepting a phrase does not swallow the rest of the suggested sentence. */
+  /* Tab accepts one word; Enter accepts the entire suggested phrase. */
   const ghost=searchInput.value.slice(acSelStart,acSelEnd);
-  const acceptedTail=ghost.includes(" ")?((ghost.match(/^\S+/)||[""])[0]):ghost;
+  const acceptedTail=fullSuggestion?ghost:(ghost.includes(" ")?((ghost.match(/^\S+/)||[""])[0]):ghost);
   const next=acUserText.slice(0,acSelStart)+acceptedTail+acUserText.slice(acSelStart);
   const caret=acSelStart+acceptedTail.length;
   clearAutocomplete();
@@ -1465,7 +1464,7 @@ searchInput.addEventListener("keydown",e=>{
   const bare=!e.shiftKey&&!e.ctrlKey&&!e.metaKey&&!e.altKey;
   if(!bare)return;
   if(e.key==='Tab'||e.key==='Enter'){
-    e.preventDefault();e.stopPropagation();acceptAutocomplete();
+    e.preventDefault();e.stopPropagation();acceptAutocomplete(e.key==='Enter');
   }else if(e.key===' '||e.code==='Space'){
     // Space is normal typing; keep only the user's text and let the browser insert it.
     cancelGhostKeepingPrefix();
