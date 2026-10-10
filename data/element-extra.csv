@@ -94,11 +94,11 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 93,604.5;1128;1997;3242,830000,6,,—,,67700000000000.0,Nuclear reactors,McMillan & Abelson,United States,1940.0,,,-1,,0,,1e-7,0
 94,584.7;1128;2084;3338,670000,6,,—,,2550000000000000.0,Nuclear reactors,Glenn T. Seaborg team,United States,1940.0,,,-1,,0,,0,0
 95,578;1158;2132;3493,,10,,—,,233000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
-96,581;1196;2026;3550,,6,,—,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
+96,581;1196;2026;3550,,,,—,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
 97,601;1186;2152;3434,,10,,—,,43600000000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1949.0,,,-1,,0,,0,0
-98,608;1206;2267;3599,,10,,—,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
+98,608;1206;2267;3599,,,,—,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
 99,619;1216;2334;3734,,,,—,,40800000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1952.0,,,-1,,0,,0,0
-100,627;1225;2363;3792,,10,,—,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
+100,627;1225;2363;3792,,,,—,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
 101,635;1235;2470;3840,,,,—,,4450000.0,Nuclear,Lawrence Berkeley team,United States,1955.0,,,-1,,0,,0,0
 102,642;1254;2643;3956,,,,—,,3480.0,Nuclear,JINR team,Sweden and United States,1958.0,,,-1,,0,,0,0
 103,470;1428;2228;4910,,,,—,,39600.0,Nuclear,Lawrence Berkeley team,United States,1961.0,,,-1,,0,,0,0
