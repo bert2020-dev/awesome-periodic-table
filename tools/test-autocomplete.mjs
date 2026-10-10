@@ -27,10 +27,13 @@ assert.equal(best('united k'),'united kingdom','multi-word completion must branc
 assert.equal(best('united s'),'united states','United States should remain discoverable');
 assert.equal(best('more common in h'),'more common in humans','new abundance comparison phrase should autocomplete');
 assert.equal(best('more common in u'),'more common in universe','new universe comparison phrase should autocomplete');
+assert.equal(best('more abundant on e'),'more abundant on earth than the sun','Earth/Sun abundance comparison should autocomplete');
+assert.equal(best('abundance on m'),'abundance on meteorites','meteorite abundance dimension should autocomplete');
+assert.equal(best('toxicity ab'),'toxicity above','ordinal toxicity comparisons should autocomplete');
 
 const history=['united kingdom and germany and sweden'];
 const historyResult=best('united kingdom and ge',history);
 assert.equal(historyResult,'germany','history should boost the current token, not paste a whole historical query');
 assert.equal(historyResult?.includes('and sweden'),false,'historical remainder must never be offered as the completion');
 
-console.log('7/7 autocomplete tests passed');
+console.log('10/10 autocomplete tests passed');
