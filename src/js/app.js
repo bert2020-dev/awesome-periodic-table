@@ -963,7 +963,7 @@ function isotopeTable(el){
   if(!masses.length)return'—';
   const first=masses[0];
   const firstHtml=clickableValue('stableIsotope',first,isotopeNuclideHtml(el.sym,first),'distribution-value');
-  const summary=`${firstHtml} (${masses.length} stable)`;
+  const summary=masses.length>1?`${firstHtml}, ... (${masses.length} stable)`:firstHtml;
   const rows=masses.map((mass,i)=>{
     const massHtml=clickableValue('stableIsotope',mass,isotopeNuclideHtml(el.sym,mass),'distribution-value');
     const abundance=Number.isFinite(abs[i])?parseFloat((abs[i]*100).toPrecision(5))+'%':'—';
