@@ -3,6 +3,12 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const source=fs.readFileSync(new URL('../src/js/autocomplete-engine.js', import.meta.url),'utf8').replace(/\nif\(typeof module!==[\s\S]*$/,'');
+const appSource=fs.readFileSync(new URL('../src/js/app.js', import.meta.url),'utf8');
+const autocompleteInput=appSource.slice(appSource.indexOf('searchInput.addEventListener("input",e=>{'),appSource.indexOf('searchInput.addEventListener("blur"'));
+assert.match(autocompleteInput,/if\(isTyping&&data!==.*?tryAutocomplete\(false\)/s,'autocomplete should trigger from inserted characters');
+assert.doesNotMatch(autocompleteInput,/tryAutocomplete\(true\)|erasedSpace|deletionAtWordEnd/,'deletions must not initiate autocomplete');
+assert.match(appSource,/const acceptedTail=ghost\.includes\(" "\)\?\(\(ghost\.match\(\/\^\\\\S\+\/\)/,'accepting a phrase should stop at the current word');
+
 const sandbox={};
 vm.createContext(sandbox);
 vm.runInContext(source+'\nthis.AutocompleteEngine=AutocompleteEngine;',sandbox);
@@ -36,4 +42,4 @@ const historyResult=best('united kingdom and ge',history);
 assert.equal(historyResult,'germany','history should boost the current token, not paste a whole historical query');
 assert.equal(historyResult?.includes('and sweden'),false,'historical remainder must never be offered as the completion');
 
-console.log('10/10 autocomplete tests passed');
+console.log('13/13 autocomplete tests passed');
