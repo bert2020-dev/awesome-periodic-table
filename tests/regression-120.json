@@ -162,7 +162,7 @@
   {
     "num": 33,
     "query": "electrical: Conductor",
-    "expected": 69
+    "expected": 61
   },
   {
     "num": 34,

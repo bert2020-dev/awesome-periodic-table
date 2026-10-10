@@ -89,10 +89,10 @@ class PropertyCatalog {
   static normalize(label){return String(label||"").toLowerCase().trim().replace(/\s+/g," ").replace(/^(?:more|less|higher|lower|greater|smaller|denser|heavier|lighter)\s+/i,"");}
   resolve(label){
     const p=PropertyCatalog.normalize(label).replace(/[’']s$/,'');
-    if(/^(?:abundance|abundant|crustal abundance|crust abundance)$/.test(p)||/^(?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?earth(?:'s)?$/.test(p))return{key:'abundance:crust',kind:'dimension',dimension:'crust',label:'Crust'};
+    if(/^(?:abundance|abundant|crustal abundance|crust abundance)$/.test(p)||/^(?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?(?:earth(?:'s )?)?crust$/.test(p)||/^(?:abundance|abundant|common) (?:in|on) (?:the )?earth(?:'s)?$/.test(p)||/^(?:earth|on earth|in earth|earth abundance|abundance (?:in|on) earth|(?:abundant|common) (?:in|on) earth)$/.test(p))return{key:'abundance:crust',kind:'dimension',dimension:'crust',label:'Crust'};
     if(/^(?:ocean abundance|abundance in (?:the )?ocean|(?:abundant|common) in (?:the )?ocean|ocean|in (?:the )?ocean)$/.test(p))return{key:'abundance:ocean',kind:'dimension',dimension:'ocean',label:'Ocean'};
-    if(/^(?:meteorite abundance|abundance in (?:the )?meteorites?|(?:abundant|common) in (?:the )?meteorites?|meteorites?|in (?:the )?meteorites?)$/.test(p))return{key:'abundance:meteorite',kind:'dimension',dimension:'meteorite',label:'Meteorites'};
-    if(/^(?:solar abundance|sun abundance|abundance in (?:the )?sun|(?:abundant|common) in (?:the )?sun|sun|solar)$/.test(p))return{key:'abundance:solar',kind:'dimension',dimension:'solar',label:'Sun'};
+    if(/^(?:meteorite abundance|abundance (?:in|on) (?:the )?meteorites?|(?:abundant|common) (?:in|on) (?:the )?meteorites?|meteorites?|in (?:the )?meteorites?|on (?:the )?meteorites?)$/.test(p))return{key:'abundance:meteorite',kind:'dimension',dimension:'meteorite',label:'Meteorites'};
+    if(/^(?:solar abundance|sun abundance|abundance (?:in|on) (?:the )?sun|(?:abundant|common) (?:in|on) (?:the )?sun|sun|solar|abundance in solar system)$/.test(p))return{key:'abundance:solar',kind:'dimension',dimension:'solar',label:'Sun'};
     if(/^(?:universe abundance|abundance in (?:the )?universe|(?:abundant|common) in (?:the )?universe|universe|in (?:the )?universe)$/.test(p))return{key:'abundance:universe',kind:'dimension',dimension:'universe',label:'Universe'};
     if(/^(?:human abundance|humans? abundance|abundance in (?:the )?(?:humans?|human body)|(?:abundant|common) in (?:the )?(?:humans?|human body)|human|humans|in (?:the )?(?:humans?|human body))$/.test(p))return{key:'abundance:humans',kind:'dimension',dimension:'humans',label:'Humans'};
     let m=p.match(/^(?:ie|ionization(?: energy)?)\s*(\d+)$/);
@@ -102,6 +102,7 @@ class PropertyCatalog {
     m=p.match(/^(1st|2nd|3rd|4th|5th|6th|7th|8th|9th|10th)\s+ionization(?: energy)?$/);
     if(m)return{key:`ionization:${parseInt(m[1],10)}`,kind:'sequence',stage:parseInt(m[1],10),label:`${m[1]} ionization energy`};
     if(/^(?:ionization energy|ionization)$/.test(p))return{key:'ionization:1',kind:'sequence',stage:1,label:'First ionization energy'};
+    if(/^(?:toxicity|toxicity level)$/.test(p))return{key:'toxicity',kind:'ordinal',label:'Toxicity'};
     if(/^(?:stable isotopes?|isotopes?)$/.test(p))return{key:'stableIsotopes',kind:'collection',label:'Stable isotopes'};
     if(/^(?:melts?|melting|freezes?|freezing|solidif(?:y|ies|ying)|liquef(?:y|ies|ying)|liquefaction)$/.test(p))return{key:'melt',kind:'scalar',label:'Melting point'};
     if(/^(?:boils?|boiling|condenses?|condense|condensing|vaporizes?|vaporize|evaporates?|evaporate)$/.test(p))return{key:'boil',kind:'scalar',label:'Boiling point'};
@@ -141,6 +142,7 @@ class ElementDataRepository {
     const cacheKey=`${el.z}:${key}`; if(this.propertyCache.has(cacheKey))return this.propertyCache.get(cacheKey).slice();
     let values=[];
     if(key.startsWith('abundance:'))values=[this.abundance(el.z,key.split(':')[1])].filter(v=>v!=null&&Number.isFinite(v)&&v>=0);
+    else if(key==='toxicity'){const rank=['very low','low','moderate','high','very high'].indexOf(toxicityLabel(el.tox).toLowerCase());values=rank>=0?[rank]:[];}
     else if(key.startsWith('ionization:')){const stage=Math.max(1,parseInt(key.split(':')[1],10));const v=this.ionizations(el.z)[stage-1];values=Number.isFinite(v)?[v]:[];}
     else if(key==='stableIsotopes')values=this.stableIsotopes(el.z).filter(Number.isFinite);
     else if(key==='melt')values=[KtoC(el.melt)].filter(Number.isFinite);
@@ -391,10 +393,10 @@ function evaluateCondition(el,cond,tempC){
   if(m){const relation=m[1],n=parseFloat(m[2]),vals=DATA_MODEL.stableIsotopes(el.z);if(!vals.length)return false;const greater=/^(?:above|over|greater than)$/.test(relation);return vals.some(v=>greater?v>n:v<n);}
   m=p.match(/^all\s+stable\s+isotopes?\s+(above|below|over|under|greater than|less than)\s+(\d+(?:\.\d+)?)$/);
   if(m){const relation=m[1],n=parseFloat(m[2]),vals=DATA_MODEL.stableIsotopes(el.z);if(!vals.length)return false;const greater=/^(?:above|over|greater than)$/.test(relation);return vals.every(v=>greater?v>n:v<n);}
-  /* Cross-dimension abundance comparison, e.g. "more abundant in humans than in crust". */
-  m=p.match(/^(?:more|higher|greater|less|lower)\s+(?:abundant|common)\s+in\s+(?:the\s+)?(humans?|human body|universe|ocean|crust|earth(?:'s)? crust)\s+than\s+(?:in\s+)?(?:the\s+)?(humans?|human body|universe|ocean|crust|earth(?:'s)? crust)$/);
+  /* Cross-dimension abundance comparisons. Earth maps to crustal abundance; the Sun maps to solar abundance. */
+  m=p.match(/^(?:more|higher|greater|less|lower)\s+(?:abundant|common)\s+(?:in|on)\s+(?:the\s+)?(humans?|human body|universe|ocean|meteorites?|crust|earth(?:'s)?(?:\s+crust)?|sun|solar(?: system)?)\s+than\s+(?:(?:in|on)\s+)?(?:the\s+)?(humans?|human body|universe|ocean|meteorites?|crust|earth(?:'s)?(?:\s+crust)?|sun|solar(?: system)?)$/);
   if(m){
-    const dim=a=>/human/.test(a)?'humans':/universe/.test(a)?'universe':/ocean/.test(a)?'ocean':'crust';
+    const dim=a=>/human/.test(a)?'humans':/universe/.test(a)?'universe':/ocean/.test(a)?'ocean':/meteorite/.test(a)?'meteorite':/sun|solar/.test(a)?'solar':'crust';
     const leftDim=dim(m[1]),rightDim=dim(m[2]),left=DATA_MODEL.abundance(el.z,leftDim),right=DATA_MODEL.abundance(el.z,rightDim);
     const leftMeta=PROPERTY_CATALOG.dimensionMeta(leftDim),rightMeta=PROPERTY_CATALOG.dimensionMeta(rightDim);
     if(!leftMeta||!rightMeta||leftMeta.kind!==rightMeta.kind||left==null||right==null)return false;
@@ -417,15 +419,21 @@ function evaluateCondition(el,cond,tempC){
   }
   m=p.match(/^(.+?)\s+(above|below|over|under|greater than|less than|higher than|lower than|more than|than)\s+(.+)$/);
   if(m){
-    const prop=canonicalSearchProperty(m[1]);
+    const propertyLabel=m[1].trim(),relation=m[2],rawRhs=m[3].trim();
+    let rhs=rawRhs,prop=canonicalSearchProperty(propertyLabel);
+    const locationSuffix=rhs.match(/^(.*?)\s+(?:in|on)\s+(?:the\s+)?(earth(?:'s)?(?:\s+crust)?|crust|ocean|meteorites?|sun|solar(?: system)?|universe|humans?|human body)$/);
+    if(locationSuffix&&/(?:abundance|abundant|common)/i.test(propertyLabel)){
+      const place=locationSuffix[2];
+      const dimension=/human/.test(place)?'humans':/universe/.test(place)?'universe':/ocean/.test(place)?'ocean':/meteorite/.test(place)?'meteorite':/sun|solar/.test(place)?'solar':'crust';
+      prop='abundance:'+dimension;rhs=locationSuffix[1].trim();
+    }
     if(prop){
-      const relation=m[2],rhs=m[3].trim();
       const endpoint=compareEndpoint(rhs,prop);
       if(endpoint){
         const vals=getPropValues(el,prop);
         const endpointValues=endpoint.kind==='property'?getPropValues(el,endpoint.spec):endpoint.values;
         if(!vals.length||!endpointValues.length)return false;
-        const greater=(relation==="than")?/^(?:more|higher|greater)\s+/.test(m[1].trim()):/^(?:above|over|greater than|higher than|more than)$/.test(relation);
+        const greater=(relation==='than')?/^(?:more|higher|greater)\s+/.test(propertyLabel):/^(?:above|over|greater than|higher than|more than)$/.test(relation);
         return vals.some(a=>endpointValues.some(b=>greater?a>b:a<b));
       }
     }
@@ -910,32 +918,43 @@ function wireQuickTables(){
 }
 function ordinalLabel(n){const map={1:'1st',2:'2nd',3:'3rd'};return map[n]||`${n}th`;}
 function formatAbundanceDimension(dimension,value){return formatAbundance(value);}
-function abundanceDistributionTable(el){
+function abundanceDistributionTable(el,compareEl=null){
   const defs=[['crust','Crust'],['ocean','Ocean'],['meteorite','Meteorites'],['solar','Sun'],['universe','Universe'],['humans','Human body']];
-  const available=defs.map(([dim,label])=>({dim,label,value:DATA_MODEL.abundance(el.z,dim)})).filter(x=>x.value!=null);
+  const available=defs.map(([dim,label],index)=>({dim,label,value:DATA_MODEL.abundance(el.z,dim),index}))
+    .filter(x=>x.value!=null)
+    .sort((a,b)=>{
+      const ak=Number.isFinite(a.value)&&a.value>=0,bk=Number.isFinite(b.value)&&b.value>=0;
+      if(ak!==bk)return ak?-1:1;
+      if(ak&&bk&&a.value!==b.value)return b.value-a.value;
+      return a.index-b.index;
+    });
   if(!available.length)return'—';
-  const first=available[0];
-  const firstValue=formatAbundanceDimension(first.dim,first.value);
+  const first=available[0],firstValue=formatAbundanceDimension(first.dim,first.value);
+  const firstArrow=compareEl&&Number.isFinite(first.value)?arrow(first.value,DATA_MODEL.abundance(compareEl.z,first.dim)):'';
   const summaryValue=Number.isFinite(first.value)&&first.value>=0
-    ? clickableValue(`abundance:${first.dim}`,first.value,`${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`,'distribution-value')
+    ? clickableValue(`abundance:${first.dim}`,first.value,`${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`,'distribution-value')+firstArrow
     : `${escapeHtml(first.label)}: ${escapeHtml(firstValue)}`;
   const summary=available.length>1?`${summaryValue}, ...`:summaryValue;
   const rows=available.map(x=>{
     const clickable=Number.isFinite(x.value)&&x.value>=0;
     const valueHtml=clickable?clickableValue(`abundance:${x.dim}`,x.value,formatAbundanceDimension(x.dim,x.value),'distribution-value'):escapeHtml(formatAbundanceDimension(x.dim,x.value));
-    return `<tr><td>${escapeHtml(x.label)}</td><td>${valueHtml}</td></tr>`;
+    const compareValue=compareEl?DATA_MODEL.abundance(compareEl.z,x.dim):null;
+    const comparisonArrow=compareEl&&Number.isFinite(x.value)?arrow(x.value,compareValue):'';
+    return `<tr><td>${escapeHtml(x.label)}</td><td>${valueHtml}${comparisonArrow}</td></tr>`;
   });
   return quickTable(summary,['Environment','Abundance'],rows,'Hover for abundance distribution');
 }
-function ionizationTable(el){
+function ionizationTable(el,compareEl=null){
   const vals=getIonizations(el.z);if(!vals.length)return'—';
   const first=vals[0];
   const firstHtml=clickableValue('ionization:1',first,`${parseFloat(first.toPrecision(6))} kJ/mol`,'distribution-value');
   const summary=vals.length>1?`${firstHtml}, ...`:firstHtml;
+  const compareVals=compareEl?getIonizations(compareEl.z):[];
   const rows=vals.map((v,i)=>{
     const stage=i+1;
     const value=clickableValue(`ionization:${stage}`,v,`${parseFloat(v.toPrecision(6))} kJ/mol`,'distribution-value');
-    return `<tr><td>${ordinalLabel(stage)}</td><td>${value}</td></tr>`;
+    const comparisonArrow=compareEl?arrow(v,compareVals[i]):'';
+    return `<tr><td>${ordinalLabel(stage)}</td><td>${value}${comparisonArrow}</td></tr>`;
   });
   return quickTable(summary,['Ionization','Energy'],rows,'Hover for ionization energies');
 }
@@ -944,7 +963,7 @@ function isotopeTable(el){
   if(!masses.length)return'—';
   const first=masses[0];
   const firstHtml=clickableValue('stableIsotope',first,isotopeNuclideHtml(el.sym,first),'distribution-value');
-  const summary=masses.length>1?`${firstHtml}, ...`:firstHtml;
+  const summary=masses.length>1?`${firstHtml}, ... (${masses.length} stable)`:firstHtml;
   const rows=masses.map((mass,i)=>{
     const massHtml=clickableValue('stableIsotope',mass,isotopeNuclideHtml(el.sym,mass),'distribution-value');
     const abundance=Number.isFinite(abs[i])?parseFloat((abs[i]*100).toPrecision(5))+'%':'—';
@@ -952,46 +971,72 @@ function isotopeTable(el){
   });
   return quickTable(summary,['Isotope','Natural abundance'],rows,'Hover for stable isotope data');
 }
+function toxicityRank(value){
+  const rank=['very low','low','moderate','high','very high'].indexOf(toxicityLabel(value).toLowerCase());
+  return rank<0?null:rank;
+}
 function showDetails(el){
   const meltC=KtoC(el.melt),boilC=KtoC(el.boil),neutrons=Math.round(el.mass-el.z),ph=phase(el,currentTempC),cmp=(comparisonMode&&selected&&selected.z!==el.z)?selected:null;
   const magVal=magType(el.z,currentTempC);
-  const line=(label,value,a,b,clickable=false,propData=null)=>{const ar=(cmp&&a!=null&&b!=null)?arrow(a,b):"";let valueHtml=value;if(clickable&&propData){const attrs=Object.entries(propData).map(([k,v])=>`data-${k}="${escapeHtml(v)}"`).join(" ");valueHtml=`<span class="clickable-prop" ${attrs}>${value}</span>`;}return`<div class="detail-row"><strong>${label}:</strong> ${valueHtml}${ar}</div>`;};
+  const line=(label,value,a,b,clickable=false,propData=null)=>{
+    const ar=(cmp&&a!=null&&b!=null)?arrow(a,b):'';
+    let valueHtml=value;
+    if(clickable&&propData){const attrs=Object.entries(propData).map(([k,v])=>`data-${k}="${escapeHtml(v)}"`).join(' ');valueHtml=`<span class="clickable-prop" ${attrs}>${value}</span>`;}
+    return `<div class="detail-row"><strong>${label}:</strong> ${valueHtml}${ar}</div>`;
+  };
   const tempDisplay=`${tempUnitValue(currentTempC,tempUnitMode)} °${tempUnitMode}`;
   const title=`<span class="detail-title-element">${nuclideHtml(el)}</span> <span class="detail-title-name">${el.name}</span> <span class="additional-info">(${el.latin||'—'})</span>`;
   let basic=`<div class="detail-section ${detailsTab==='basic'?'active':''}" data-section="basic">`;
-  basic+=line("Latin name",el.latin||'—');
-  basic+=line("Atomic Number (Z)",el.z);
-  basic+=line("Neutrons (N)",neutrons);
-  basic+=line("Category",el.cat,null,null,true,{prop:"category",value:el.cat});
-  basic+=line("Mass (g/mol)",el.mass.toFixed(3)+" g/mol",el.mass,cmp?.mass,true,{prop:"mass",value:el.mass});
-  basic+=line("Density (g/cm³)",el.density!=null?el.density+" g/cm³":"—",el.density,cmp?.density,el.density!=null,{prop:"density",value:el.density});
-  const meltVal=meltC!=null?meltC.toFixed(1):null,boilVal=boilC!=null?boilC.toFixed(1):null;
-  basic+=line("Melting Point",meltVal?`${tempUnitValue(meltC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",meltC,cmp?KtoC(cmp.melt):null,meltVal!=null,{prop:"melt",value:meltVal});
-  basic+=line("Boiling Point",boilVal?`${tempUnitValue(boilC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:"—",boilC,cmp?KtoC(cmp.boil):null,boilVal!=null,{prop:"boil",value:boilVal});
-  basic+=line("Phase at "+tempUnitValue(currentTempC,tempUnitMode)+" °"+tempUnitMode,ph||"unknown",null,null,ph!=="",{prop:"phase",value:ph});
-  basic+=line("Common Oxidation State",el.oxidation>0?"+"+el.oxidation:String(el.oxidation),null,null,true,{prop:"oxidation",value:el.oxidation});
-  basic+=line("Electronic Config.",el.config||"—");
+  basic+=line('Latin Name',el.latin||'—');
+  basic+=line('Atomic Number (Z)',el.z);
+  basic+=line('Neutrons (N)',neutrons);
+  basic+=line('Category',el.cat,null,null,true,{prop:'category',value:el.cat});
+  basic+=line('Atomic Mass',el.mass.toFixed(3)+' g/mol',el.mass,cmp?.mass,true,{prop:'mass',value:el.mass});
+  basic+=line('Density',el.density!=null?el.density+' g/cm³':'—',el.density,cmp?.density,el.density!=null,{prop:'density',value:el.density});
+  basic+=line('Melting Point',meltC!=null?`${tempUnitValue(meltC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:'—',meltC,cmp?KtoC(cmp.melt):null,meltC!=null,{prop:'melt',value:meltC});
+  basic+=line('Boiling Point',boilC!=null?`${tempUnitValue(boilC,tempUnitMode).toFixed(1)} °${tempUnitMode}`:'—',boilC,cmp?KtoC(cmp.boil):null,boilC!=null,{prop:'boil',value:boilC});
+  basic+=line(`Phase at ${tempDisplay}`,ph||'—',null,null,!!ph,{prop:'phase',value:ph});
+  basic+=line('Common Oxidation State',el.oxidation>0?'+'+el.oxidation:String(el.oxidation),null,null,true,{prop:'oxidation',value:el.oxidation});
+  basic+=line('Electronic Configuration',el.config||'—');
   basic+='</div>';
+
   let extra=`<div class="detail-section ${detailsTab==='extra'?'active':''}" data-section="extra">`;
-  extra+=line("Electronegativity",el.en!=null?el.en:"—",el.en,cmp?.en,el.en!=null,{prop:"en",value:el.en});
-  const ions=getIonizations(el.z),firstIE=ions[0]??el.ie;
-  extra+=line("Ionization energies",firstIE!=null?ionizationTable(el):"—",firstIE,cmp?getIonizations(cmp.z)[0]:null,false,null);
-  const e0str=el.e0!==0?el.e0.toFixed(2):null;extra+=line("Standard electrode potential (E°)",e0str?e0str+" V":"—",el.e0!==0?el.e0:null,cmp&&cmp.e0!==0?cmp.e0:null,e0str!=null,{prop:"e0",value:e0str});
-  extra+=line("Radiation Level",el.halflife>0?"Radioactive":"—",null,null,true,{prop:"radiation",value:el.halflife>0?"Radioactive":"—"});extra+=line("Half-life",formatHalfLife(el.halflife));
-  extra+=line("Toxicity Level",toxicityLabel(el.tox),null,null,true,{prop:"toxicity",value:toxicityLabel(el.tox)});extra+=line("Magnetic response",magVal,null,null,true,{prop:"magnetism",value:magVal});
-  const yearPart=el.year!=null?clickableValue("year",el.year,el.year):"Ancient / unknown";
-  const sourcePart=el.discoverySource?`, ${clickableValue("discoverySource",el.discoverySource,escapeHtml(el.discoverySource))}`:"";
-  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\s+and\s+/i).map(c=>flagHtml(c)).join(" ")}`:"";
-  extra+=line("Discovery",yearPart+sourcePart+countryPart);
-  extra+=line("Abundance Distribution",abundanceDistributionTable(el));
-  const srcArr=(el.sources||"").split(/,\s*/).filter(Boolean);extra+=line("Known Occurencies",compactList(srcArr,3,sourceHtml));
-  const conductivity=EXTRA_CONDUCTIVITY[el.z],heat=EXTRA_HEAT[el.z],thermal=THERMAL_CONDUCTIVITY[el.z];
-  extra+=line("Electrical conductivity",`${clickableValue("electricalConductivity",conductivity??"",conductivity!=null?(conductivity===0?"~0 S/m":conductivity.toExponential(3)+" S/m"):"—")} ${clickableValue("electricalType",ELECTRICAL_TYPE[el.z]||"N/A",ELECTRICAL_TYPE[el.z]||"N/A","additional-info")}`);
-  const tType=thermalType(thermal);
-  extra+=line("Thermal conductivity",`${clickableValue("thermal",thermal??"",thermal!=null?thermal+" W/(m·K)":"—")} ${clickableValue("thermalType",tType,tType,"additional-info")}`);
-  extra+=line("Specific heat",heat!=null?clickableValue("specificHeat",heat,heat+" J/g·K"):"—");
-  extra+=line("Stable isotopes",isotopeTable(el));extra+='</div>';
-  let html=`<h2>${title}</h2><div class="details-header-bar"></div><p style="margin-bottom:4px;color:var(--accent);font-weight:500;">🌡️ ${tempDisplay}</p>`;if(cmp)html+=`<p><em style="color:var(--accent)">Comparing with ${cmp.sym} (${cmp.name})</em></p>`;html+=`<div class="details-tabs"><button class="details-tab ${detailsTab==='basic'?'active':''}" data-tab="basic">Basic</button><button class="details-tab ${detailsTab==='extra'?'active':''}" data-tab="extra">Extra</button></div>${basic}${extra}`;details.innerHTML=html;
+  extra+=line('Electronegativity',el.en!=null?el.en:'—',el.en,cmp?.en,el.en!=null,{prop:'en',value:el.en});
+  const ions=getIonizations(el.z);
+  extra+=line('Ionization Energies',ions.length?ionizationTable(el,cmp):'—');
+  const e0str=el.e0!==0?el.e0.toFixed(2):null;
+  extra+=line('Standard Electrode Potential',e0str!=null?e0str+' V':'—',el.e0!==0?el.e0:null,cmp&&cmp.e0!==0?cmp.e0:null,e0str!=null,{prop:'e0',value:e0str});
+  extra+=line(`Magnetic Response at ${tempDisplay}`,magVal||'—',null,null,!!magVal,{prop:'magnetism',value:magVal});
+
+  const conductivity=EXTRA_CONDUCTIVITY[el.z],compareConductivity=cmp?EXTRA_CONDUCTIVITY[cmp.z]:null;
+  const heat=EXTRA_HEAT[el.z],compareHeat=cmp?EXTRA_HEAT[cmp.z]:null;
+  const thermal=THERMAL_CONDUCTIVITY[el.z],compareThermal=cmp?THERMAL_CONDUCTIVITY[cmp.z]:null;
+  const electricalType=String(ELECTRICAL_TYPE[el.z]||'—').replace(/^N\/A$/i,'—');
+  const electricalTypeHtml=electricalType==='—'?'':` ${clickableValue('electricalType',electricalType,electricalType,'additional-info')}`;
+  const conductivityHtml=Number.isFinite(conductivity)?clickableValue('electricalConductivity',conductivity,conductivity===0?'~0 S/m':conductivity.toExponential(3)+' S/m'):'—';
+  extra+=line('Electrical Conductivity',conductivityHtml+electricalTypeHtml,conductivity,compareConductivity,Number.isFinite(conductivity));
+  const tType=thermalType(thermal),thermalTypeHtml=tType==='—'?'':` ${clickableValue('thermalType',tType,tType,'additional-info')}`;
+  const thermalHtml=Number.isFinite(thermal)?clickableValue('thermal',thermal,thermal+' W/(m·K)'):'—';
+  extra+=line('Thermal Conductivity',thermalHtml+thermalTypeHtml,thermal,compareThermal,Number.isFinite(thermal));
+  extra+=line('Specific Heat',Number.isFinite(heat)?clickableValue('specificHeat',heat,heat+' J/(g·K)'):'—',heat,compareHeat,Number.isFinite(heat));
+
+  extra+=line('Radiation Level',el.halflife>0?'Radioactive':'—',null,null,true,{prop:'radiation',value:el.halflife>0?'Radioactive':'—'});
+  extra+=line('Half-Life',formatHalfLife(el.halflife));
+  extra+=line('Toxicity Level',toxicityLabel(el.tox),toxicityRank(el.tox),cmp?toxicityRank(cmp.tox):null,true,{prop:'toxicity',value:toxicityLabel(el.tox)});
+  const yearPart=el.year!=null?clickableValue('year',el.year,el.year):'—';
+  const sourcePart=el.discoverySource?`, ${clickableValue('discoverySource',el.discoverySource,escapeHtml(el.discoverySource))}`:'';
+  const countryPart=el.discoveryCountry?` ${el.discoveryCountry.split(/\s+and\s+/i).map(c=>flagHtml(c)).join(' ')}`:'';
+  extra+=line('Discovery',yearPart+sourcePart+countryPart,el.year,cmp?.year,el.year!=null,{prop:'year',value:el.year});
+  extra+=line('Abundance Distribution',abundanceDistributionTable(el,cmp));
+  const srcArr=(el.sources||'').split(/,\s*/).filter(Boolean);
+  extra+=line('Known Occurrences',compactList(srcArr,3,sourceHtml));
+  const stableIsotopeCount=DATA_MODEL.stableIsotopes(el.z).length,compareIsotopeCount=cmp?DATA_MODEL.stableIsotopes(cmp.z).length:null;
+  extra+=line('Stable Isotopes',isotopeTable(el),stableIsotopeCount,compareIsotopeCount);
+  extra+='</div>';
+  let html=`<h2>${title}</h2><div class="details-header-bar"></div><p style="margin-bottom:4px;color:var(--accent);font-weight:500;">🌡️ ${tempDisplay}</p>`;
+  if(cmp)html+=`<p><em style="color:var(--accent)">Comparing with ${cmp.sym} (${cmp.name})</em></p>`;
+  html+=`<div class="details-tabs"><button class="details-tab ${detailsTab==='basic'?'active':''}" data-tab="basic">Basic</button><button class="details-tab ${detailsTab==='extra'?'active':''}" data-tab="extra">Extra</button></div>${basic}${extra}`;
+  details.innerHTML=html;
   wireQuickTables();
   setupPropertyClicks();
 }
@@ -1076,6 +1121,13 @@ function bumpHistIcon(){
   histBtn.classList.add("bump");
 }
 function normalizeHistKey(s){return String(s||"").toLowerCase().replace(/\s+/g," ").trim();}
+function hasUnfinishedAutocompleteToken(query){
+  const words=String(query||'').toLowerCase().match(/[a-z]+(?:['’-][a-z]+)*/g)||[];
+  const token=words[words.length-1];
+  if(!token||token.length<2||findEl(token)||AUTOCOMPLETE_ENGINE.weights.has(token))return false;
+  for(const word of AUTOCOMPLETE_ENGINE.weights.keys())if(!word.includes(' ')&&word.length>token.length&&word.startsWith(token))return true;
+  return false;
+}
 function rememberSearch(value,opts){
   const force=!!(opts&&opts.force);
   const q=String(value||"").trim();
@@ -1083,7 +1135,7 @@ function rememberSearch(value,opts){
   /* Half-typed queries ("boi" on the way to "boils") almost always match
      nothing and aren't worth cluttering history with — skip them unless the
      user explicitly forces it via the history button. */
-  if(!force&&applyFilter(q,currentTempC).length===0)return false;
+  if(!force&&(hasUnfinishedAutocompleteToken(q)||applyFilter(q,currentTempC).length===0))return false;
   /* Spam-click / retype guard: compared case-insensitively with whitespace
      collapsed, so "Gold", "gold" and "  gold " are all the same entry. */
   if(searchHistory.length&&normalizeHistKey(searchHistory[searchHistory.length-1])===normalizeHistKey(q)){
@@ -1405,50 +1457,25 @@ searchInput.addEventListener("keydown",e=>{
   if(!hasLiveSuggestion())return;
   const bare=!e.shiftKey&&!e.ctrlKey&&!e.metaKey&&!e.altKey;
   if(!bare)return;
-  if(e.key===" " || e.code==="Space"){
-    e.preventDefault();e.stopPropagation();
-    const end=acSelEnd,current=searchInput.value;
-    const next=/\s/.test(current[end]||"")?current:current.slice(0,end)+" "+current.slice(end);
-    clearAutocomplete();
-    searchInput.value=next;
-    searchInput.setSelectionRange(end+1,end+1);
-    prevSearchValue=next;
-    gapSession=null;
-    render(next);
-    if(!historyNavigating)searchHistoryIndex=-1;
-    scheduleRememberSearch(next);
-    updateHistUI();
-  }else if(e.key==="Backspace"||e.key==="Delete"){
-    e.preventDefault();e.stopPropagation();
-    collapseGhostWithBackspace();
-  }else if(e.key==="ArrowLeft"){
-    e.preventDefault();e.stopPropagation();
+  if(e.key==='Tab'||e.key==='Enter'){
+    e.preventDefault();e.stopPropagation();acceptAutocomplete();
+  }else if(e.key===' '||e.code==='Space'){
+    // Space is normal typing; keep only the user's text and let the browser insert it.
     cancelGhostKeepingPrefix();
-  }else if(e.key==="ArrowRight"){
-    e.preventDefault();e.stopPropagation();
-    acceptAutocomplete();
-  }else if(e.key.length===1 && !/\s/.test(e.key)){
-    /* Branch inside a multi-word completion instead of producing a malformed
-       token. Example: "united" → "united states"; typing "k" turns that into
-       "united k" and immediately re-ranks against "united kingdom". */
+  }else if(e.key==='Backspace'||e.key==='Delete'){
+    e.preventDefault();e.stopPropagation();collapseGhostWithBackspace();
+  }else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
+    cancelGhostKeepingPrefix();
+  }else if(e.key.length===1&&!/\s/.test(e.key)){
+    /* Branch inside a multi-word completion instead of producing a malformed token. */
     e.preventDefault();e.stopPropagation();
     const selectedTail=searchInput.value.slice(acSelStart,acSelEnd);
     const leadingSpace=(selectedTail.match(/^\s+/)||[''])[0];
-    const before=acUserText.slice(0,acSelStart);
-    const after=acUserText.slice(acSelStart);
-    const next=before+leadingSpace+e.key+after;
-    const caret=before.length+leadingSpace.length+1;
-    clearAutocomplete();
-    searchInput.value=next;
-    searchInput.setSelectionRange(caret,caret);
-    prevSearchValue=next;
-    const newStart=lastTokenStart(next.slice(0,caret));
-    gapSession={anchor:newStart};
-    tryAutocomplete(false);
-    render(effectiveQuery());
-    if(!historyNavigating)searchHistoryIndex=-1;
-    scheduleRememberSearch(effectiveQuery());
-    updateHistUI();
+    const before=acUserText.slice(0,acSelStart),after=acUserText.slice(acSelStart);
+    const next=before+leadingSpace+e.key+after,caret=before.length+leadingSpace.length+1;
+    clearAutocomplete();searchInput.value=next;searchInput.setSelectionRange(caret,caret);prevSearchValue=next;
+    gapSession={anchor:lastTokenStart(next.slice(0,caret))};tryAutocomplete(false);render(effectiveQuery());
+    if(!historyNavigating)searchHistoryIndex=-1;scheduleRememberSearch(effectiveQuery());updateHistUI();
   }
 });
 tempSlider.addEventListener("input",()=>{
@@ -1488,8 +1515,11 @@ searchInput.addEventListener("input",e=>{
   const erasedSpace=removedChar!=null&&/\s/.test(removedChar);
 
   clearAutocomplete();
+  const charBefore=searchInput.value[caretNow-1]||'';
+  const charAfter=searchInput.value[caretNow]||'';
+  const deletionAtWordEnd=isDeleting&&caretNow>0&&!/[\s,]/.test(charBefore)&&(!charAfter||/[\s,]/.test(charAfter));
   if(isTyping&&data!==" "&&!/\s/.test(data||""))tryAutocomplete(false);
-  else if(erasedSpace)tryAutocomplete(true);
+  else if(erasedSpace||deletionAtWordEnd)tryAutocomplete(true);
 
   const q=effectiveQuery();
   render(q);

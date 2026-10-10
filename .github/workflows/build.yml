@@ -41,6 +41,8 @@ jobs:
         run: npm run test:ui
       - name: Run search regressions
         run: npm run test:search
+      - name: Run toxicity and abundance comparison regressions
+        run: npm run test:relational
       - name: Run pipeline regressions
         run: npm run test:pipe
       - name: Run autocomplete regressions

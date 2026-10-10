@@ -1,14 +1,14 @@
 z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,electricalType,tox,halflife,sources,discoverySource,discoveryCountry,year,isotopes,isotopeAbundance,crustAbundance,oceanAbundance,humanAbundance,universeAbundance,solarAbundance,meteoriteAbundance
-1,1312,0,0.1805,14.304,N/A,Low,0.0,"Universe, water",Henry Cavendish,United Kingdom,1766.0,1;2,0.99986;0.00014,0.14,10.8,0.1,75,75,2.4
-2,2372.3;5250.5,0,0.1513,5.193,N/A,Very low,0.0,Natural gas,Pierre Janssen,Sweden and United Kingdom,1895.0,3;4,2e-06;0.999998,8e-07,,,23,23,
+1,1312,0,0.1805,14.304,—,Low,0.0,"Universe, water",Henry Cavendish,United Kingdom,1766.0,1;2,0.99986;0.00014,0.14,10.8,0.1,75,75,2.4
+2,2372.3;5250.5,0,0.1513,5.193,—,Very low,0.0,Natural gas,Pierre Janssen,Sweden and United Kingdom,1895.0,3;4,2e-06;0.999998,8e-07,,,23,23,
 3,520.2;7298.1;11815,10800000,85,3.582,Conductor,Moderate,0.0,"Australia, Chile, China",Johan August Arfwedson,Sweden,1817.0,6;7,0.04;0.96,0.0017,,3e-06,6e-07,6e-9,0.00017
 4,899.5;1757.1;14848.7;21006.6,25000000,190,1.825,Conductor,Very high,0.0,"USA, China",Louis Nicolas Vauquelin,France,1798.0,9,1,0.00028,,4e-08,1e-07,1e-8,0.0000029
 5,800.6;2427.1;3659.7;25025.8;32826.7,1e-06,27,1.026,Isolator,Moderate,0.0,"Turkey, USA",Gay-Lussac & Thénard,France and United Kingdom,1808.0,10;11,0.1965;0.8035,0.00086,0.00045,7e-05,1e-07,2e-7,0.00016
 6,1086.5;2352.6;4620.5;6222.7;37831;47277.0,10000,140,0.709,Conductor,Low,0.0,Worldwide,,,,12;13,0.9894;0.0106,0.18,0.0028,23,0.5,0.3,1.5
-7,1402.3;2856;4578.1;7475;9444.9;53266.6;64360,0,0.02583,1.04,N/A,Low,0.0,Air,Daniel Rutherford,United Kingdom,1772.0,14;15,0.996205;0.003795,0.002,0.00005,2.6,0.1,0.1,0.14
-8,1313.9;3388.3;5300.5;7469.2;10989.5;13326.5;71330;84078.0,1e-11,0.02658,0.918,N/A,Low,0.0,"Air, oxides",Carl Wilhelm Scheele,Sweden and United Kingdom,1774.0,16;17;18,0.99757;0.0003835;0.002045,46.1,85.7,61,1,0.9,40
-9,1681;3374.2;6050.4;8407.7;11022.7;15164.1;17868;92038.1,0,0.0277,0.824,N/A,Very high,0.0,"China, Mexico",Henri Moissan,France,1886.0,19,1,0.054,0.00013000000000000002,0.0037,4e-05,0.00005,0.0087
-10,2080.7;3952.3;6122;9371;12177;15238.9;19999.0;23069.5,0,0.0491,1.03,N/A,Very low,0.0,Air,Ramsay & Travers,United Kingdom,1898.0,20;21;22,0.9048;0.0027;0.0925,5e-07,,,0.13,0.1,
+7,1402.3;2856;4578.1;7475;9444.9;53266.6;64360,0,0.02583,1.04,—,Low,0.0,Air,Daniel Rutherford,United Kingdom,1772.0,14;15,0.996205;0.003795,0.002,0.00005,2.6,0.1,0.1,0.14
+8,1313.9;3388.3;5300.5;7469.2;10989.5;13326.5;71330;84078.0,1e-11,0.02658,0.918,—,Low,0.0,"Air, oxides",Carl Wilhelm Scheele,Sweden and United Kingdom,1774.0,16;17;18,0.99757;0.0003835;0.002045,46.1,85.7,61,1,0.9,40
+9,1681;3374.2;6050.4;8407.7;11022.7;15164.1;17868;92038.1,0,0.0277,0.824,—,Very high,0.0,"China, Mexico",Henri Moissan,France,1886.0,19,1,0.054,0.00013000000000000002,0.0037,4e-05,0.00005,0.0087
+10,2080.7;3952.3;6122;9371;12177;15238.9;19999.0;23069.5,0,0.0491,1.03,—,Very low,0.0,Air,Ramsay & Travers,United Kingdom,1898.0,20;21;22,0.9048;0.0027;0.0925,5e-07,,,0.13,0.1,
 11,495.8;4562;6910.3;9543;13354;16613;20117;25496,21000000,140,1.228,Conductor,Moderate,0.0,Salt worldwide,Humphry Davy,United Kingdom,1807.0,23,1,2.3,1.077,0.14,0.002,0.004,0.55
 12,737.7;1450.7;7732.7;10542.5;13630;18020;21711;25661,23000000,160,1.023,Conductor,Low,0.0,"China, seawater",Humphry Davy,United Kingdom,1755.0,24;25;26,0.78965;0.10011;0.11025,2.3,0.129,0.027,0.059,0.07,12
 13,577.5;1816.7;2744.8;11577;14842;18379;23326;27465,35000000,235,0.897,Conductor,Low,0.0,"Australia, China, Guinea",Hans Christian Ørsted,Denmark,1825.0,27,1,8.2,,9e-05,0.005,0.006,0.9
@@ -16,7 +16,7 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 15,1011.8;1907;2914.1;4963.6;6273.9;21267;25431;29872,1e-14,0.236,0.769,Conductor,High,0.0,"China, Morocco",Hennig Brand,Germany,1669.0,31,1,0.1,,1.1,0.0007,0.0007,0.11
 16,999.6;2252;3357;4556;7004.3;8495.8;27107;31719,5e-14,0.205,0.71,Isolator,Moderate,0.0,"China, USA, Canada",Antoine Lavoisier,,,32;33;34;36,0.9485;0.00763;0.04365;0.000158,0.042,0.0905,0.2,0.05,0.04,4
 17,1251.2;2298;3822;5158.6;6542;9362;11018;33604,0,0.0089,0.479,Isolator,Very high,0.0,"Seawater, salt",Carl Wilhelm Scheele,Sweden,1774.0,35;37,0.758;0.242,0.017,1.93,0.12,0.0001,0.0008,0.037
-18,1520.6;2665.8;3931;5771;7238;8781;11995;13842,0,0.01772,0.52,N/A,Very low,0.0,Air,Rayleigh & Ramsay,United Kingdom,1894.0,36;38;40,0.01035;0.0215;0.96815,0.00015,,,0.02,0.007,
+18,1520.6;2665.8;3931;5771;7238;8781;11995;13842,0,0.01772,0.52,—,Very low,0.0,Air,Rayleigh & Ramsay,United Kingdom,1894.0,36;38;40,0.01035;0.0215;0.96815,0.00015,,,0.02,0.007,
 19,418.8;3052;4420;5877;7975;9590;11343;14944,14000000,100,0.757,Conductor,Moderate,0.0,"Canada, Russia, Belarus",Humphry Davy,United Kingdom,1807.0,39;41,0.932581;0.067302,2.1,0.0399,0.2,0.0003,0.0004,0.07
 20,589.8;1145.4;4912.4;6491;8153;10496;12270;14206,29000000,200,0.647,Conductor,Low,0.0,Limestone worldwide,Humphry Davy,United Kingdom,1808.0,40;42;43;44;46;48,0.96941;0.00647;0.00135;0.02086;4e-05;0.00187,4.1,0.0412,1.4,0.007,0.007,1.1
 21,633.1;1235;2388.6;7090.6;8843;10679;13310;15250,1800000,16,0.568,Conductor,Moderate,0.0,"China, Russia",Lars Fredrik Nilson,Sweden,1879.0,45,1,0.0022,,,3e-06,0.000004,0.00064
@@ -32,12 +32,12 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 31,578.8;1979.3;2963;6180,7100000,29,0.371,Conductor,Moderate,0.0,"China, Germany, Kazakhstan",Paul-Émile Lecoq de Boisbaudran,France,1875.0,69;71,0.60108;0.39892,0.0019,,,1e-06,0.000004,0.00076
 32,762;1537.5;3302.1;4411;9020,0.02,60,0.32,Semiconductor,Moderate,0.0,"China, Russia",Clemens Winkler,Germany,1886.0,70;72;73;74;76,0.2052;0.2745;0.0776;0.3652;0.0775,0.00015,,,2e-05,0.00002,0.0021
 33,947;1798;2735;4837;6043;12310,0.0033,50,0.329,Conductor,Very high,0.0,"China, Morocco",Albertus Magnus,,1250.0,75,1,0.00021,,5e-06,8e-07,,0.00018
-34,941;2045;2973.7;4144;6590;7880;14990,1e-10,0.52,0.321,N/A,High,0.0,"China, Japan, Belgium",Jöns Jacob Berzelius,Sweden,1817.0,74;76;77;78;80;82,0.0086;0.0923;0.076;0.2369;0.498;0.0882,5e-06,,5e-06,3e-06,,0.0013
+34,941;2045;2973.7;4144;6590;7880;14990,1e-10,0.52,0.321,—,High,0.0,"China, Japan, Belgium",Jöns Jacob Berzelius,Sweden,1817.0,74;76;77;78;80;82,0.0086;0.0923;0.076;0.2369;0.498;0.0882,5e-06,,5e-06,3e-06,,0.0013
 35,1139.9;2103;3470;4560;5760;8550;9940;18600,0,0.12,0.474,Semiconductor,Very high,0.0,"USA, Israel, China",Antoine Balard,France,1826.0,79;81,0.5065;0.4935,0.0003,0.00673,0.00029,7e-07,,0.00012
 36,1350.8;2350.4;3565;5070;6240;7570;10710;12138,0,0.00943,0.248,Conductor,Very low,0.0,Air,Ramsay & Travers,United Kingdom,1898.0,78;80;82;83;84;86,0.00355;0.02286;0.11593;0.115;0.56987;0.17279,1e-08,,,4e-06,,
 37,403;2633;3860;5080;6850;8140;9570;13120,8000000,58,0.363,Conductor,Moderate,0.0,"Canada, Zimbabwe",Bunsen & Kirchhoff,Germany,1861.0,85;87,0.7217;0.2783,0.006,,0.00046,1e-06,0.000003,0.00032
 38,549.5;1064.2;4138;5500;6910;8760;10230;11800,4000000,35,0.301,Isolator,Moderate,0.0,"China, Spain, Mexico",Adair Crawford,United Kingdom,1790.0,84;86;87;88,0.0056;0.0986;0.07;0.8258,0.036,0.00079,0.00046,4e-06,0.000005,0.00086
-39,600;1180;1980;5847;7430;8970;11190;12450,1800000,17,0.298,N/A,Moderate,0.0,"China, Australia",Johan Gadolin,Finland,1794.0,89,1,0.0029,,,7e-07,9.9e-7,0.00019
+39,600;1180;1980;5847;7430;8970;11190;12450,1800000,17,0.298,—,Moderate,0.0,"China, Australia",Johan Gadolin,Finland,1794.0,89,1,0.0029,,,7e-07,9.9e-7,0.00019
 40,640.1;1270;2218;3313;7752;9500,2400000,23,0.278,Conductor,Low,0.0,"Australia, South Africa",Martin Heinrich Klaproth,Germany,1789.0,90;91;92;94;96,0.5147;0.1123;0.1716;0.1736;0.0278,0.013,,5e-06,5e-06,0.000004,0.00066
 41,652.1;1380;2416;3700;4877;9847;12100,6700000,54,0.265,Conductor,Low,0.0,"Brazil, Canada",Charles Hatchett,United Kingdom,1801.0,93,1,0.0017,,,2e-07,4e-7,0.000019
 42,684.3;1560;2618;4480;5257;6640.8;12125;13860,2000000,139,0.251,Conductor,Moderate,0.0,"China, USA, Chile",Carl Wilhelm Scheele,Sweden,1778.0,92;94;95;96;97;98;100,0.14649;0.09187;0.15873;0.16673;0.09582;0.24292;0.09744,0.00011,,1e-05,5e-07,9e-7,0.00012
@@ -47,21 +47,21 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 46,804.4;1870;3177,9500000,71,0.244,Conductor,Moderate,0.0,"Russia, South Africa",William Hyde Wollaston,United Kingdom,1803.0,102;104;105;106;108;110,0.0102;0.1114;0.2233;0.2733;0.2646;0.1172,6.3e-07,,,2e-07,3e-7,0.000065
 47,731;2070;3361;4728,63000000,430,0.235,Conductor,Low,0.0,"Mexico, China, Peru",,,,107;109,0.51839;0.48161,7.5e-06,,,6e-08,1e-7,0.000014
 48,867.8;1631.4;3616,14000000,96,0.233,Conductor,Very high,0.0,"China, South Korea",Friedrich Stromeyer,Germany,1817.0,106;108;110;111;112;113;114;116,0.01245;0.00888;0.1247;0.12795;0.24109;0.12227;0.28754;0.07512,1.5e-05,,7e-05,2e-07,6e-7,0.000044
-49,558.3;1820.7;2704;5210,3500000,82,0.233,N/A,Moderate,0.0,"China, South Korea",Reich & Richter,Germany,1863.0,113,0.04281,1.6e-05,,,3e-08,4e-7,0.0000044
+49,558.3;1820.7;2704;5210,3500000,82,0.233,—,Moderate,0.0,"China, South Korea",Reich & Richter,Germany,1863.0,113,0.04281,1.6e-05,,,3e-08,4e-7,0.0000044
 50,708.6;1411.8;2943;3930.3;7456,9100000,67,0.228,Conductor,Low,0.0,"China, Indonesia, Myanmar",,,,112;114;115;116;117;118;119;120;122;124,0.0097;0.0066;0.0034;0.1454;0.0768;0.2422;0.0859;0.3258;0.0463;0.0579,0.00022,,2e-05,4e-07,9e-7,0.00012
 51,834;1594.9;2440;4260;5400;10400,2500000,24,0.207,Conductor,High,0.0,"China, Russia",,,,121;123,0.5721;0.4279,2e-05,,,4e-08,1e-7,0.000012
 52,869.3;1790;2698;3610;5668;6820;13200,0.01,3,0.202,Semiconductor,High,0.0,"China, Japan",Martin Heinrich Klaproth,Romania,1782.0,120;122;123;124;125;126;128;130,0.0009;0.0255;0.0089;0.0474;0.0707;0.1884;0.3174;0.3408,1e-07,,,9e-07,,0.00021
 53,1008.4;1845.9;3180,1.4e-07,0.449,0.214,Isolator,High,0.0,"Chile, Japan",Bernard Courtois,France,1811.0,127,1,4.5e-05,,2e-05,1e-07,,0.000025
-54,1170.4;2046.4;3099.4,0,0.00565,0.158,N/A,Very low,0.0,Air,Janssen & Lockyer,United Kingdom,1898.0,124;126;128;129;130;131;132;134;136,0.00095;0.00089;0.0191;0.26401;0.04071;0.21232;0.26909;0.10436;0.08857,3e-09,,,1e-06,,
+54,1170.4;2046.4;3099.4,0,0.00565,0.158,—,Very low,0.0,Air,Janssen & Lockyer,United Kingdom,1898.0,124;126;128;129;130;131;132;134;136,0.00095;0.00089;0.0191;0.26401;0.04071;0.21232;0.26909;0.10436;0.08857,3e-09,,,1e-06,,
 55,375.7;2234.3;3400,5000000,36,0.242,Conductor,Moderate,0.0,"Canada, Zimbabwe",Bunsen & Kirchhoff,Germany,1860.0,133,1,0.00019,0.00005,2e-06,8e-08,8e-7,0.000014
-56,502.9;965.2;3600,3100000,18,0.204,N/A,Moderate,0.0,"China, India",Humphry Davy,United Kingdom,1808.0,130;132;134;135;136;137;138,0.0011;0.001;0.0242;0.0659;0.0785;0.1123;0.717,0.034,,3e-05,1e-06,9.9e-7,0.00027
-57,538.1;1067;1850.3;4819;5940,1700000,13,0.195,N/A,Moderate,0.0,"China, Australia",Carl Gustaf Mosander,Sweden,1839.0,139,0.9991119,0.0034,,,2e-07,2e-7,0.000028
+56,502.9;965.2;3600,3100000,18,0.204,—,Moderate,0.0,"China, India",Humphry Davy,United Kingdom,1808.0,130;132;134;135;136;137;138,0.0011;0.001;0.0242;0.0659;0.0785;0.1123;0.717,0.034,,3e-05,1e-06,9.9e-7,0.00027
+57,538.1;1067;1850.3;4819;5940,1700000,13,0.195,—,Moderate,0.0,"China, Australia",Carl Gustaf Mosander,Sweden,1839.0,139,0.9991119,0.0034,,,2e-07,2e-7,0.000028
 58,534.4;1050;1949;3547;6325;7490,1100000,11,0.192,Conductor,Moderate,0.0,"China, Australia","Klaproth, Berzelius & Hisinger",Germany and Sweden,1803.0,136;138;140;142,0.00185;0.00251;0.8845;0.11114,0.006,,,1e-06,4e-7,0.000075
 59,527;1020;2086;3761,1300000,13,0.193,Conductor,Moderate,0.0,China,Carl Gustaf Mosander,Austria,1885.0,141,1,0.00086,,,2e-07,1e-7,0.0000099
 60,533.1;1040;2130;3900,1600000,17,0.19,Conductor,Moderate,0.0,"China, Australia",Carl Gustaf Mosander,Austria,1885.0,142;143;144;145;146;148;150,0.27152;0.12174;0.23798;0.08293;0.17189;0.05756;0.05638,0.0033,,,1e-06,3e-7,0.00005
 61,540;1050;2150;3970,1400000,15,0.18,Conductor,,559000000.0,Nuclear,Marguerite Perey,United States,1945.0,,,-1,,0,,0,0
 62,544.5;1070;2260;3990,1100000,13,0.18,Conductor,Moderate,0.0,China,Lecoq de Boisbaudran,France,1879.0,144;147;148;149;150;152;154,0.0308;0.15;0.1125;0.1382;0.0737;0.2674;0.2274,0.0006,,,5e-07,1e-7,0.000017
-63,547.1;1085;2404;4120,1100000,14,0.182,N/A,Moderate,0.0,China,Eugène-Anatole Demarçay,France,1901.0,151;153,0.4781;0.5219,0.00018,,,5e-08,5e-8,0.0000059
+63,547.1;1085;2404;4120,1100000,14,0.182,—,Moderate,0.0,China,Eugène-Anatole Demarçay,France,1901.0,151;153,0.4781;0.5219,0.00018,,,5e-08,5e-8,0.0000059
 64,593.4;1170;1990;4250,740000,11,0.236,Conductor,Moderate,0.0,China,Jean Charles de Marignac,Switzerland,1880.0,152;154;155;156;157;158;160,0.00204;0.02187;0.14828;0.20493;0.15657;0.2482;0.21811,0.00052,,,2e-07,2e-7,0.000023
 65,565.8;1110;2114;3839,830000,11,0.182,Conductor,Moderate,0.0,China,Carl Gustaf Mosander,Sweden,1843.0,159,1,9e-05,,,5e-08,1e-8,0.0000039
 66,573;1130;2200;3990,900000,11,0.17,Conductor,Moderate,0.0,China,Lecoq de Boisbaudran,France,1886.0,156;158;160;161;162;163;164,0.00056;0.00095;0.02329;0.18889;0.25475;0.24896;0.2826,0.00062,,,2e-07,2e-7,0.000027
@@ -82,38 +82,38 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 81,589.4;1971;2878,5000000,46,0.129,Conductor,Very high,0.0,"China, Kazakhstan",William Crookes,United Kingdom,1861.0,203;205,0.29515;0.70485,5.3e-05,,,5e-08,1e-7,0.0000079
 82,715.6;1450.5;3081.5;4083;6640,4800000,35,0.129,Conductor,Very high,0.0,"China, Australia, USA",,,,204;206;207;208,0.014;0.241;0.221;0.524,0.0014,,0.00017,1e-06,9.9e-7,0.00014
 83,703;1610;2466;4370;5400;8520,870000,8,0.122,Conductor,Moderate,0.0,"China, Vietnam, Mexico",,,1753.0,,1,2.5e-06,,,7e-08,9.9e-7,0.0000069
-84,812.1,,,,Conductor,,3910000000.0,Nuclear,Marie & Pierre Curie,France,1898.0,,,-3,,0,,,
-85,920,,2,,Conductor,,29160.0,Nuclear,"Corson, MacKenzie & Segrè",United States,1940.0,,,-1,,0,,,0
-86,1037,,0.00361,,Conductor,,330350.0,Uranium decay,Friedrich Ernst Dorn,Germany,1900.0,,,-2,,,,,
-87,380,,,,Conductor,,1320.0,Nuclear,Marguerite Perey,France,1939.0,,,-1,,0,,,
-88,509.3;979,,19,,N/A,,50500000000.0,Uranium ores,Marie & Pierre Curie,France,1898.0,,,-2,,1e-13,,,
-89,499;1170;1900;4700,,12,,N/A,,687000000.0,Uranium ores,Friedrich Oskar Giesel,France,1899.0,,,-2,,0,,,
-90,587;1110;1930;2780,670000,54,0.113,N/A,,4.43e+17,"India, Brazil, Australia",Jöns Jacob Berzelius,Sweden,1828.0,,,0.0006,,0,4e-08,0,0.0000039
-91,568,,47,,Conductor,,1030000000000.0,Uranium ores,Fajans & Göhring,Germany and United Kingdom,1913.0,,,-2,,0,,3e-8,
-92,597.6;1420;1900;3145,3600000,27,0.116,N/A,,1.41e+17,"Kazakhstan, Canada, Australia",Martin Heinrich Klaproth,Germany,1789.0,,,0.00027,,1e-07,2e-08,,9.8e-7
-93,604.5;1128;1997;3242,,6,,Conductor,,67700000000000.0,Nuclear reactors,McMillan & Abelson,United States,1940.0,,,-1,,0,,1e-7,0
-94,584.7;1128;2084;3338,,6,,Conductor,,2550000000000000.0,Nuclear reactors,Glenn T. Seaborg team,United States,1940.0,,,-1,,0,,0,0
-95,578;1158;2132;3493,,10,,N/A,,233000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
-96,581;1196;2026;3550,,,,Conductor,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
-97,601;1186;2152;3434,,10,,Conductor,,43600000000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1949.0,,,-1,,0,,0,0
-98,608;1206;2267;3599,,,,N/A,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
-99,619;1216;2334;3734,,,,N/A,,40800000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1952.0,,,-1,,0,,0,0
-100,627;1225;2363;3792,,,,N/A,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
-101,635;1235;2470;3840,,,,N/A,,4450000.0,Nuclear,Lawrence Berkeley team,United States,1955.0,,,-1,,0,,0,0
-102,642;1254;2643;3956,,,,N/A,,3480.0,Nuclear,JINR team,Sweden and United States,1958.0,,,-1,,0,,0,0
-103,470;1428;2228;4910,,,,N/A,,39600.0,Nuclear,Lawrence Berkeley team,United States,1961.0,,,-1,,0,,0,0
-104,580;1390;2300;3080,,,,N/A,,4680.0,Particle accelerators,JINR / LLNL teams,Russia and United States,1964.0,,,-1,,0,,0,0
-105,665;1547;2378;3299;4305,,,,N/A,,100800.0,Accelerators,JINR / LLNL teams,Russia and United States,1968.0,,,-1,,0,,0,0
-106,757;1733;2484;3416;4562;5716,,,,N/A,,300.0,Accelerators,JINR / LLNL teams,United States,1974.0,,,-1,,0,,0,0
-107,740;1690;2570;3600;4730;5990;7230,,,,N/A,,60.0,Accelerators,GSI team,Germany,1976.0,,,-1,,0,,0,0
-108,730;1760;2830;3640;4940;6180;7540;8860,,,,N/A,,16.0,Accelerators,GSI team,Germany,1984.0,,,-1,,0,,0,0
-109,800;1820;2900;3900;4900,,,,N/A,,8.0,Accelerators,GSI team,Germany,1982.0,,,-1,,0,,0,0
-110,960;1890;3030;4000;5100,,,,N/A,,11.0,Accelerators,GSI team,Germany,1994.0,,,-1,,0,,0,0
-111,1020;2070;3080;4100;5300,,,,N/A,,100.0,Accelerators,GSI team,Germany,1994.0,,,-1,,0,,0,
-112,1155;2170;3160;4200;5500,,,,N/A,,28.0,Accelerators,GSI team,Germany,1996.0,,,-1,,0,,,
-113,707.2;2309;3020;4382;5638,,,,N/A,,8.0,Accelerators,RIKEN team,Japan,2003.0,,,-1,,0,,,
-114,832.2;1600;3370;4400;5850,,,,N/A,,2.0,Accelerators,JINR / LLNL teams,Russia,1998.0,,,-1,,0,,,
-115,538.3;1760;2650;4680;5720,,,,N/A,,0.65,Accelerators,JINR / LLNL teams,Russia and United States,2003.0,,,-1,,0,,,
-116,663.9;1330;2850;3810;6080,,,,N/A,,0.06,Accelerators,JINR / LLNL teams,Russia,2000.0,,,-1,,0,,,
-117,736.9;1435.4;2161.9;4012.9;5076.4,,,,N/A,,0.051,Accelerators,JINR / LLNL / ORNL teams,United States,2010.0,,,-1,,0,,,
-118,860.1;1560,,,,N/A,,0.0007,Accelerators,JINR / LLNL teams,Russia and United States,2002.0,,,-1,,0,,,
+84,812.1,2300000,,,Conductor,,3910000000.0,Nuclear,Marie & Pierre Curie,France,1898.0,,,-3,,0,,,
+85,920,,2,,—,,29160.0,Nuclear,"Corson, MacKenzie & Segrè",United States,1940.0,,,-1,,0,,,0
+86,1037,,0.00361,,—,,330350.0,Uranium decay,Friedrich Ernst Dorn,Germany,1900.0,,,-2,,,,,
+87,380,,,,—,,1320.0,Nuclear,Marguerite Perey,France,1939.0,,,-1,,0,,,
+88,509.3;979,,19,,—,,50500000000.0,Uranium ores,Marie & Pierre Curie,France,1898.0,,,-2,,1e-13,,,
+89,499;1170;1900;4700,,12,,—,,687000000.0,Uranium ores,Friedrich Oskar Giesel,France,1899.0,,,-2,,0,,,
+90,587;1110;1930;2780,670000,54,0.113,—,,4.43e+17,"India, Brazil, Australia",Jöns Jacob Berzelius,Sweden,1828.0,,,0.0006,,0,4e-08,0,0.0000039
+91,568,,47,,—,,1030000000000.0,Uranium ores,Fajans & Göhring,Germany and United Kingdom,1913.0,,,-2,,0,,3e-8,
+92,597.6;1420;1900;3145,3600000,27,0.116,—,,1.41e+17,"Kazakhstan, Canada, Australia",Martin Heinrich Klaproth,Germany,1789.0,,,0.00027,,1e-07,2e-08,,9.8e-7
+93,604.5;1128;1997;3242,,6,,—,,67700000000000.0,Nuclear reactors,McMillan & Abelson,United States,1940.0,,,-1,,0,,1e-7,0
+94,584.7;1128;2084;3338,,6,,—,,2550000000000000.0,Nuclear reactors,Glenn T. Seaborg team,United States,1940.0,,,-1,,0,,0,0
+95,578;1158;2132;3493,,10,,—,,233000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
+96,581;1196;2026;3550,,,,—,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
+97,601;1186;2152;3434,,10,,—,,43600000000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1949.0,,,-1,,0,,0,0
+98,608;1206;2267;3599,,,,—,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
+99,619;1216;2334;3734,,,,—,,40800000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1952.0,,,-1,,0,,0,0
+100,627;1225;2363;3792,,,,—,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
+101,635;1235;2470;3840,,,,—,,4450000.0,Nuclear,Lawrence Berkeley team,United States,1955.0,,,-1,,0,,0,0
+102,642;1254;2643;3956,,,,—,,3480.0,Nuclear,JINR team,Sweden and United States,1958.0,,,-1,,0,,0,0
+103,470;1428;2228;4910,,,,—,,39600.0,Nuclear,Lawrence Berkeley team,United States,1961.0,,,-1,,0,,0,0
+104,580;1390;2300;3080,,,,—,,4680.0,Particle accelerators,JINR / LLNL teams,Russia and United States,1964.0,,,-1,,0,,0,0
+105,665;1547;2378;3299;4305,,,,—,,100800.0,Accelerators,JINR / LLNL teams,Russia and United States,1968.0,,,-1,,0,,0,0
+106,757;1733;2484;3416;4562;5716,,,,—,,300.0,Accelerators,JINR / LLNL teams,United States,1974.0,,,-1,,0,,0,0
+107,740;1690;2570;3600;4730;5990;7230,,,,—,,60.0,Accelerators,GSI team,Germany,1976.0,,,-1,,0,,0,0
+108,730;1760;2830;3640;4940;6180;7540;8860,,,,—,,16.0,Accelerators,GSI team,Germany,1984.0,,,-1,,0,,0,0
+109,800;1820;2900;3900;4900,,,,—,,8.0,Accelerators,GSI team,Germany,1982.0,,,-1,,0,,0,0
+110,960;1890;3030;4000;5100,,,,—,,11.0,Accelerators,GSI team,Germany,1994.0,,,-1,,0,,0,0
+111,1020;2070;3080;4100;5300,,,,—,,100.0,Accelerators,GSI team,Germany,1994.0,,,-1,,0,,0,
+112,1155;2170;3160;4200;5500,,,,—,,28.0,Accelerators,GSI team,Germany,1996.0,,,-1,,0,,,
+113,707.2;2309;3020;4382;5638,,,,—,,8.0,Accelerators,RIKEN team,Japan,2003.0,,,-1,,0,,,
+114,832.2;1600;3370;4400;5850,,,,—,,2.0,Accelerators,JINR / LLNL teams,Russia,1998.0,,,-1,,0,,,
+115,538.3;1760;2650;4680;5720,,,,—,,0.65,Accelerators,JINR / LLNL teams,Russia and United States,2003.0,,,-1,,0,,,
+116,663.9;1330;2850;3810;6080,,,,—,,0.06,Accelerators,JINR / LLNL teams,Russia,2000.0,,,-1,,0,,,
+117,736.9;1435.4;2161.9;4012.9;5076.4,,,,—,,0.051,Accelerators,JINR / LLNL / ORNL teams,United States,2010.0,,,-1,,0,,,
+118,860.1;1560,,,,—,,0.0007,Accelerators,JINR / LLNL teams,Russia and United States,2002.0,,,-1,,0,,,

@@ -41,7 +41,7 @@ export function loadManifest(root, version){
   const EXTRA_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.electricalConductivity ?? ''))];
   const EXTRA_HEAT=[null,...elements.map(e=>num(byZ.get(e.z)?.specificHeat ?? ''))];
   const THERMAL_CONDUCTIVITY=[null,...elements.map(e=>num(byZ.get(e.z)?.thermalConductivity ?? ''))];
-  const ELECTRICAL_TYPE=[null,...elements.map(e=>byZ.get(e.z)?.electricalType || 'N/A')];
+  const ELECTRICAL_TYPE=[null,...elements.map(e=>byZ.get(e.z)?.electricalType || '—')];
   const EXTRA_ABUNDANCE=[null,...elements.map(e=>({
     crust:num(byZ.get(e.z)?.crustAbundance ?? ''),
     ocean:csvOceanPercent(byZ.get(e.z)?.oceanAbundance ?? ''),
