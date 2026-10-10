@@ -1508,7 +1508,6 @@ searchInput.addEventListener("input",e=>{
   const type=e&&e.inputType||"";
   const data=e&&e.data;
   const isTyping=type==="insertText"||type==="insertCompositionText"||(!type&&searchInput.value.length>prevSearchValue.length);
-  const caretNow=searchInput.selectionStart;
   clearAutocomplete();
   /* Deletions update the query but never initiate autocomplete. */
   if(isTyping&&data!==" "&&!/\s/.test(data||""))tryAutocomplete(false);
