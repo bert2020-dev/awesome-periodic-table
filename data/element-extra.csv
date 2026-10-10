@@ -86,19 +86,19 @@ z,ionizationEnergies,electricalConductivity,thermalConductivity,specificHeat,ele
 85,920,,2,,—,,29160.0,Nuclear,"Corson, MacKenzie & Segrè",United States,1940.0,,,-1,,0,,,0
 86,1037,,0.00361,,—,,330350.0,Uranium decay,Friedrich Ernst Dorn,Germany,1900.0,,,-2,,,,,
 87,380,,,,—,,1320.0,Nuclear,Marguerite Perey,France,1939.0,,,-1,,0,,,
-88,509.3;979,,19,,—,,50500000000.0,Uranium ores,Marie & Pierre Curie,France,1898.0,,,-2,,1e-13,,,
+88,509.3;979,1000000,19,,—,,50500000000.0,Uranium ores,Marie & Pierre Curie,France,1898.0,,,-2,,1e-13,,,
 89,499;1170;1900;4700,,12,,—,,687000000.0,Uranium ores,Friedrich Oskar Giesel,France,1899.0,,,-2,,0,,,
 90,587;1110;1930;2780,670000,54,0.113,—,,4.43e+17,"India, Brazil, Australia",Jöns Jacob Berzelius,Sweden,1828.0,,,0.0006,,0,4e-08,0,0.0000039
-91,568,,47,,—,,1030000000000.0,Uranium ores,Fajans & Göhring,Germany and United Kingdom,1913.0,,,-2,,0,,3e-8,
+91,568,5600000,47,,—,,1030000000000.0,Uranium ores,Fajans & Göhring,Germany and United Kingdom,1913.0,,,-2,,0,,3e-8,
 92,597.6;1420;1900;3145,3600000,27,0.116,—,,1.41e+17,"Kazakhstan, Canada, Australia",Martin Heinrich Klaproth,Germany,1789.0,,,0.00027,,1e-07,2e-08,,9.8e-7
-93,604.5;1128;1997;3242,,6,,—,,67700000000000.0,Nuclear reactors,McMillan & Abelson,United States,1940.0,,,-1,,0,,1e-7,0
-94,584.7;1128;2084;3338,,6,,—,,2550000000000000.0,Nuclear reactors,Glenn T. Seaborg team,United States,1940.0,,,-1,,0,,0,0
+93,604.5;1128;1997;3242,830000,6,,—,,67700000000000.0,Nuclear reactors,McMillan & Abelson,United States,1940.0,,,-1,,0,,1e-7,0
+94,584.7;1128;2084;3338,670000,6,,—,,2550000000000000.0,Nuclear reactors,Glenn T. Seaborg team,United States,1940.0,,,-1,,0,,0,0
 95,578;1158;2132;3493,,10,,—,,233000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
-96,581;1196;2026;3550,,,,—,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
+96,581;1196;2026;3550,,6,,—,,492000000000000.0,Nuclear,Glenn T. Seaborg team,United States,1944.0,,,-1,,0,,0,0
 97,601;1186;2152;3434,,10,,—,,43600000000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1949.0,,,-1,,0,,0,0
-98,608;1206;2267;3599,,,,—,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
+98,608;1206;2267;3599,,10,,—,,28300000000.0,Nuclear,"Thompson, Street, Ghiorso & Seaborg",United States,1950.0,,,-1,,0,,0,0
 99,619;1216;2334;3734,,,,—,,40800000.0,Nuclear,"Thompson, Ghiorso & Seaborg",United States,1952.0,,,-1,,0,,0,0
-100,627;1225;2363;3792,,,,—,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
+100,627;1225;2363;3792,,10,,—,,8683000.0,Nuclear,"Ghiorso, Thompson & Seaborg",United States,1952.0,,,-1,,0,,0,0
 101,635;1235;2470;3840,,,,—,,4450000.0,Nuclear,Lawrence Berkeley team,United States,1955.0,,,-1,,0,,0,0
 102,642;1254;2643;3956,,,,—,,3480.0,Nuclear,JINR team,Sweden and United States,1958.0,,,-1,,0,,0,0
 103,470;1428;2228;4910,,,,—,,39600.0,Nuclear,Lawrence Berkeley team,United States,1961.0,,,-1,,0,,0,0
