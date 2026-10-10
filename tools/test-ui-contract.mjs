@@ -19,6 +19,7 @@ for(const [labels,name] of [[orderedBasic,"basic"],[orderedExtra,"extra"]]){
   for(const label of labels){const next=details.indexOf(label,pos+1);if(next<0)throw new Error(`Missing or reordered ${name} detail: ${label}`);pos=next;}
 }
 for(const obsolete of ["Mass (g/mol)","Density (g/cm³)","Standard Electrode Potential (E°)","Electronic Config.","Known Occurencies"])if(details.includes(obsolete))throw new Error(`Obsolete detail label: ${obsolete}`);
-for(const needle of ["if(e.key==='Tab'||e.key==='Enter')","deletionAtWordEnd","function hasUnfinishedAutocompleteToken","abundanceDistributionTable(el,cmp)","ionizationTable(el,cmp)","compareIsotopeCount=cmp?DATA_MODEL.stableIsotopes(cmp.z).length:null","return b.value-a.value"])if(!app.includes(needle))throw new Error(`Missing behavior contract: ${needle}`);
+if(!app.includes('if(isTyping&&data!==" "&&!/\\s/.test(data||""))tryAutocomplete(false)')||app.includes("deletionAtWordEnd"))throw new Error("Autocomplete must trigger on inserted characters only, never deletions.");
+for(const needle of ["if(e.key==='Tab'||e.key==='Enter')","function hasUnfinishedAutocompleteToken","abundanceDistributionTable(el,cmp)","ionizationTable(el,cmp)","compareIsotopeCount=cmp?DATA_MODEL.stableIsotopes(cmp.z).length:null","return b.value-a.value"])if(!app.includes(needle))throw new Error(`Missing behavior contract: ${needle}`);
 
 console.log('UI contract passed: detail labels/order/units, comparison semantics, abundance sorting, autocomplete behavior, temperature units, and nuclide header.');
