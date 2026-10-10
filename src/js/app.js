@@ -1417,12 +1417,18 @@ function tryAutocomplete(viaErasedSpace){
   searchInput.setSelectionRange(acSelStart,acSelEnd);
   acActive=true;
 }
-function acceptAutocomplete(){
+function acceptAutocomplete(fullSuggestion=false){
   if(!acActive)return false;
-  searchInput.setSelectionRange(acSelEnd,acSelEnd);
+  /* Tab accepts one word; Enter accepts the entire suggested phrase. */
+  const ghost=searchInput.value.slice(acSelStart,acSelEnd);
+  const acceptedTail=fullSuggestion?ghost:(ghost.includes(" ")?((ghost.match(/^\S+/)||[""])[0]):ghost);
+  const next=acUserText.slice(0,acSelStart)+acceptedTail+acUserText.slice(acSelStart);
+  const caret=acSelStart+acceptedTail.length;
   clearAutocomplete();
-  prevSearchValue=searchInput.value;
-  render(searchInput.value);
+  searchInput.value=next;
+  searchInput.setSelectionRange(caret,caret);
+  prevSearchValue=next;
+  render(next);
   updateHistUI();
   return true;
 }
@@ -1458,7 +1464,7 @@ searchInput.addEventListener("keydown",e=>{
   const bare=!e.shiftKey&&!e.ctrlKey&&!e.metaKey&&!e.altKey;
   if(!bare)return;
   if(e.key==='Tab'||e.key==='Enter'){
-    e.preventDefault();e.stopPropagation();acceptAutocomplete();
+    e.preventDefault();e.stopPropagation();acceptAutocomplete(e.key==='Enter');
   }else if(e.key===' '||e.code==='Space'){
     // Space is normal typing; keep only the user's text and let the browser insert it.
     cancelGhostKeepingPrefix();
@@ -1501,25 +1507,9 @@ searchInput.addEventListener("input",e=>{
   const type=e&&e.inputType||"";
   const data=e&&e.data;
   const isTyping=type==="insertText"||type==="insertCompositionText"||(!type&&searchInput.value.length>prevSearchValue.length);
-  const isDeleting=type.startsWith("delete");
-  /* Erasing a space that used to separate two words puts the caret back
-     inside the word before it, so the suggestion system re-triggers there —
-     wherever in the sentence that happens, not just at the very end. For a
-     plain single-character Backspace the caret lands exactly where the
-     removed character used to sit, so prevSearchValue[caret] is that
-     character. */
-  const caretNow=searchInput.selectionStart;
-  const removedChar=isDeleting&&searchInput.selectionStart===searchInput.selectionEnd
-    &&prevSearchValue.length===searchInput.value.length+1
-    ?prevSearchValue[caretNow]:null;
-  const erasedSpace=removedChar!=null&&/\s/.test(removedChar);
-
   clearAutocomplete();
-  const charBefore=searchInput.value[caretNow-1]||'';
-  const charAfter=searchInput.value[caretNow]||'';
-  const deletionAtWordEnd=isDeleting&&caretNow>0&&!/[\s,]/.test(charBefore)&&(!charAfter||/[\s,]/.test(charAfter));
+  /* Deletions update the query but never initiate autocomplete. */
   if(isTyping&&data!==" "&&!/\s/.test(data||""))tryAutocomplete(false);
-  else if(erasedSpace||deletionAtWordEnd)tryAutocomplete(true);
 
   const q=effectiveQuery();
   render(q);
