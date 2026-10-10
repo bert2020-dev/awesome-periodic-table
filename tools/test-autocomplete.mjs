@@ -7,7 +7,9 @@ const appSource=fs.readFileSync(new URL('../src/js/app.js', import.meta.url),'ut
 const autocompleteInput=appSource.slice(appSource.indexOf('searchInput.addEventListener("input",e=>{'),appSource.indexOf('searchInput.addEventListener("blur"'));
 assert.match(autocompleteInput,/if\(isTyping&&data!==.*?tryAutocomplete\(false\)/s,'autocomplete should trigger from inserted characters');
 assert.doesNotMatch(autocompleteInput,/tryAutocomplete\(true\)|erasedSpace|deletionAtWordEnd/,'deletions must not initiate autocomplete');
-assert.match(appSource,/const acceptedTail=ghost\.includes,"accepting a phrase should stop at the current word");
+assert.match(appSource,/function acceptAutocomplete\(fullSuggestion=false\)/,'autocomplete acceptance should support word and phrase modes');
+assert.match(appSource,/acceptAutocomplete\(e\.key==='Enter'\)/,'Enter should accept the full suggestion while Tab accepts one word');
+assert.match(appSource,/const acceptedTail=fullSuggestion\?ghost:/,'Tab acceptance should stop at the current word');
 
 const sandbox={};
 vm.createContext(sandbox);
